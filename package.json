@@ -1,0 +1,7 @@
+{
+    "name": "packagehandling-java",
+    "version": "1.0.0",
+    "description": "Package handling application using CAP Java",
+    "license": "ISC",
+    "repository": "https://github.tools.sap/DigitalLabHungary/packagehandling.git"
+}
