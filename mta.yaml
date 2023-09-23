@@ -1,4 +1,3 @@
----
 _schema-version: '3.1'
 ID: packagehandling
 version: 0.0.1
@@ -24,4 +23,24 @@ modules:
       - name: srv-api # required by consumers of CAP services (e.g. approuter)
         properties:
           srv-url: ${default-url}
-    requires: []
+    requires:
+      - name: packagehandling-db
+
+  - name: packagehandling-db-deployer
+    type: hdb
+    path: db
+    parameters:
+      buildpack: nodejs_buildpack
+    build-parameters:
+      builder: custom
+      commands:
+        - npm run build
+    requires:
+      - name: packagehandling-db
+
+resources:
+  - name: packagehandling-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
