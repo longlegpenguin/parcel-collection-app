@@ -1,0 +1,10 @@
+{
+    "build": {
+        "target": "."
+    },
+    "requires": {
+        "[production]": {
+            "db": "hana"
+        }
+    }
+}
