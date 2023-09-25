@@ -28,4 +28,4 @@ hs_err*
 .idea
 .reloadtrigger
 
-./srv/DummyService.cds
+**/DummyService.cds

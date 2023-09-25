@@ -5,14 +5,12 @@ using {
     User
 } from '@sap/cds/common';
 
-using { com.sap.internal.digitallab.packagehandling.core.StorageSlot } 
-from './StorageSlot.cds';
-using { com.sap.internal.digitallab.packagehandling.core.DeliveryCompany } 
-from './DeliveryCompany.cds';
-using { com.sap.internal.digitallab.packagehandling.core.PackageType } 
-from './PackageType.cds';
-using { com.sap.internal.digitallab.packagehandling.core.PackageStatus } 
-from './PackageStatus.cds';
+using { 
+    com.sap.internal.digitallab.packagehandling.core.StorageSlot,
+    com.sap.internal.digitallab.packagehandling.core.DeliveryCompany,
+    com.sap.internal.digitallab.packagehandling.core.PackageType,
+    com.sap.internal.digitallab.packagehandling.core.PackageStatus
+} from '.';
 
 entity Package : cuid, managed {
     recipient : User not null;
