@@ -15,5 +15,5 @@ entity Storage : cuid, managed {
     totalPackages : Integer;
     currentPackages: Integer;
     // ? storageSlot : Composition of many StorageSlot on storageSlot.storage = $self;
-    packages : Association to many Package;
+    packages : Association to Package;
 }
