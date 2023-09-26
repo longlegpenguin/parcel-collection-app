@@ -7,6 +7,6 @@ using {
 
 entity ApplicationConfig : cuid, managed {
     application : String(255) not null;
-    key_        : String(255) not null;
-    value       : String(255) not null;
+    confkey        : String(255) not null;
+    confvalue       : String(255) not null;
 }
