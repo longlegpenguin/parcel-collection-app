@@ -12,8 +12,5 @@ entity Storage : cuid, managed {
     buildingFloor : UUID not null;
     locationInstructions : String(1000);
     map : String(255);
-    totalPackages : Integer;
-    currentPackages: Integer;
-    // ? storageSlot : Composition of many StorageSlot on storageSlot.storage = $self;
-    packages : Association to Package;
+    storageSlot : Composition of many StorageSlot on storageSlot.storage = $self;
 }

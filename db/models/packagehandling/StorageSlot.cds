@@ -15,6 +15,5 @@ entity StorageSlot : cuid, managed {
     name : String(255) not null;
     storage : Association to one Storage not null;
     status : Association to one SlotStatus not null;
-    totalPackages : Integer;
     packages : Association to many Package on packages.slot = $self;
 }
