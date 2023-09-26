@@ -1,0 +1,3 @@
+ID,createdAt,createdBy,modifiedAt,modifiedBy,name,address,coordinates,phoneNumber,map
+7D5A658D-D9C1-44E6-9DA0-1D29069C4617,2018-08-19T16:11:20.884Z,longlegpenguin@sap.com,,,S1,"Budapest, I, Graphisoft Park Building S, Záhony u. 7, 1031",Some Name,234567,https://www.google.com/maps
+C088942C-8D1E-463C-8097-6CB9D25F23F9,2018-08-19T16:11:20.884Z,longlegpenguin@sap.com,,,S2,"Budapest, I, Graphisoft Park Building S, Záhony u. 7, 1031",Another Name,123456,https://www.google.com/maps
