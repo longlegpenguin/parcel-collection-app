@@ -1,0 +1,4 @@
+locale,code,name,descr
+en,unavailable,Unavailable,"Slot is not available, no packages can be assigned to it."
+en,empty,Empty,"Slot is empty, a package can be added to it."
+en,inuse,In Use,"Slot has at least one package assignment."

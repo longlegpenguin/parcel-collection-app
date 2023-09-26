@@ -1,0 +1,4 @@
+code,name,descr
+unavailable,Unavailable,"Slot is not available, no packages can be assigned to it."
+empty,Empty,"Slot is empty, a package can be added to it."
+inuse,In Use,Slot has at least one package assignment.
