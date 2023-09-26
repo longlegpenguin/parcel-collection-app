@@ -4,15 +4,14 @@ using {
     managed,
     cuid
 } from '@sap/cds/common';
-using { 
-    com.sap.internal.digitallab.packagehandling.common.Building, 
-    com.sap.internal.digitallab.packagehandling.common.FloorType 
+using {
+    com.sap.internal.digitallab.packagehandling.common.Building,
+    com.sap.internal.digitallab.packagehandling.common.FloorType
 } from '.';
 
-
 entity BuildingFloor : cuid, managed {
-    name : String(255) not null;
+    name     : String(255) not null;
     building : Association to one Building not null;
-    type : Association to one FloorType not null;
-    map : String(255);
+    type     : Association to one FloorType not null;
+    map      : String(255);
 }
