@@ -5,3 +5,4 @@ using from './PackageType';
 using from './SlotStatus';
 using from './Storage';
 using from './StorageSlot';
+using from './LocalUserData';
