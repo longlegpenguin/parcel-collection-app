@@ -1,0 +1,3 @@
+ID,createdAt,createdBy,modifiedAt,modifiedBy,name,building_ID,type_code,map
+00C31AA7-A362-45D1-82E7-CB3ED0192DA6,2018-08-19T16:11:20.884Z,I123456,,,S1 - Main,7D5A658D-D9C1-44E6-9DA0-1D29069C4617,type1,https://www.google.com/maps
+00C31AA7-A362-45D1-82E7-CB3ED0192DA8,2018-08-19T16:11:20.884Z,I123456,,,S2 - Main,C088942C-8D1E-463C-8097-6CB9D25F23F9,type1,https://www.google.com/maps
