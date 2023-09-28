@@ -26,7 +26,7 @@ service StorageService {
         map,
         building
     };
-
+    action add (one : Integer) returns Integer;
     action massCreate(
         row : Integer, rowType : String(1), 
         col : Integer, colType : String(1), 
