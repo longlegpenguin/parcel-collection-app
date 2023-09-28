@@ -1,20 +1,28 @@
 
-DROP VIEW IF EXISTS localized_DummyService_SlotStatus;
-DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_core_Package;
-DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_core_StorageSlot;
+DROP VIEW IF EXISTS localized_StorageService_Storage;
+DROP VIEW IF EXISTS localized_StorageService_StorageSlot;
+DROP VIEW IF EXISTS localized_StorageService_SlotStatus;
+DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_common_Receptionist;
+DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_common_Reception;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_core_Storage;
+DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_core_DeliveryCompany;
+DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_common_Building;
+DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_core_StorageSlot;
+DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_core_Package;
+DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_common_BuildingFloor;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_core_SlotStatus;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_core_PackageType;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_core_PackageStatus;
-DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_core_DeliveryCompany;
-DROP VIEW IF EXISTS DummyService_SlotStatus_texts;
-DROP VIEW IF EXISTS DummyService_SlotStatus;
-DROP TABLE IF EXISTS com_sap_internal_digitallab_packagehandling_core_StorageSlot_texts;
-DROP TABLE IF EXISTS com_sap_internal_digitallab_packagehandling_core_Storage_texts;
+DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_common_FloorType;
+DROP VIEW IF EXISTS StorageService_SlotStatus_texts;
+DROP VIEW IF EXISTS StorageService_SlotStatus;
+DROP VIEW IF EXISTS StorageService_StorageSlot;
+DROP VIEW IF EXISTS StorageService_Storage;
 DROP TABLE IF EXISTS com_sap_internal_digitallab_packagehandling_core_SlotStatus_texts;
 DROP TABLE IF EXISTS com_sap_internal_digitallab_packagehandling_core_PackageType_texts;
 DROP TABLE IF EXISTS com_sap_internal_digitallab_packagehandling_core_PackageStatus_texts;
-DROP TABLE IF EXISTS com_sap_internal_digitallab_packagehandling_core_DeliveryCompany_texts;
+DROP TABLE IF EXISTS com_sap_internal_digitallab_packagehandling_common_FloorType_texts;
+DROP TABLE IF EXISTS com_sap_internal_digitallab_packagehandling_core_LocalUserData;
 DROP TABLE IF EXISTS com_sap_internal_digitallab_packagehandling_core_StorageSlot;
 DROP TABLE IF EXISTS com_sap_internal_digitallab_packagehandling_core_Storage;
 DROP TABLE IF EXISTS com_sap_internal_digitallab_packagehandling_core_SlotStatus;
@@ -22,6 +30,106 @@ DROP TABLE IF EXISTS com_sap_internal_digitallab_packagehandling_core_PackageTyp
 DROP TABLE IF EXISTS com_sap_internal_digitallab_packagehandling_core_PackageStatus;
 DROP TABLE IF EXISTS com_sap_internal_digitallab_packagehandling_core_Package;
 DROP TABLE IF EXISTS com_sap_internal_digitallab_packagehandling_core_DeliveryCompany;
+DROP TABLE IF EXISTS com_sap_internal_digitallab_packagehandling_common_User;
+DROP TABLE IF EXISTS com_sap_internal_digitallab_packagehandling_common_Receptionist;
+DROP TABLE IF EXISTS com_sap_internal_digitallab_packagehandling_common_Reception;
+DROP TABLE IF EXISTS com_sap_internal_digitallab_packagehandling_common_FloorType;
+DROP TABLE IF EXISTS com_sap_internal_digitallab_packagehandling_common_BuildingFloor;
+DROP TABLE IF EXISTS com_sap_internal_digitallab_packagehandling_common_Building;
+DROP TABLE IF EXISTS com_sap_internal_digitallab_packagehandling_common_ApplicationConfig;
+
+CREATE TABLE com_sap_internal_digitallab_packagehandling_common_ApplicationConfig (
+  ID NVARCHAR(36) NOT NULL,
+  createdAt TIMESTAMP(7),
+  createdBy NVARCHAR(255),
+  modifiedAt TIMESTAMP(7),
+  modifiedBy NVARCHAR(255),
+  application NVARCHAR(255) NOT NULL,
+  confkey NVARCHAR(255) NOT NULL,
+  confvalue NVARCHAR(255) NOT NULL,
+  PRIMARY KEY(ID)
+); 
+
+CREATE TABLE com_sap_internal_digitallab_packagehandling_common_Building (
+  ID NVARCHAR(36) NOT NULL,
+  createdAt TIMESTAMP(7),
+  createdBy NVARCHAR(255),
+  modifiedAt TIMESTAMP(7),
+  modifiedBy NVARCHAR(255),
+  name NVARCHAR(255) NOT NULL,
+  address NVARCHAR(255),
+  coordinates NVARCHAR(255),
+  phoneNumber NVARCHAR(255),
+  map NVARCHAR(255),
+  PRIMARY KEY(ID)
+); 
+
+CREATE TABLE com_sap_internal_digitallab_packagehandling_common_BuildingFloor (
+  ID NVARCHAR(36) NOT NULL,
+  createdAt TIMESTAMP(7),
+  createdBy NVARCHAR(255),
+  modifiedAt TIMESTAMP(7),
+  modifiedBy NVARCHAR(255),
+  name NVARCHAR(255) NOT NULL,
+  building_ID NVARCHAR(36) NOT NULL,
+  type_code NVARCHAR(255) NOT NULL,
+  map NVARCHAR(255),
+  PRIMARY KEY(ID)
+); 
+
+CREATE TABLE com_sap_internal_digitallab_packagehandling_common_FloorType (
+  name NVARCHAR(255),
+  descr NVARCHAR(1000),
+  code NVARCHAR(255) NOT NULL,
+  PRIMARY KEY(code)
+); 
+
+CREATE TABLE com_sap_internal_digitallab_packagehandling_common_Reception (
+  ID NVARCHAR(36) NOT NULL,
+  createdAt TIMESTAMP(7),
+  createdBy NVARCHAR(255),
+  modifiedAt TIMESTAMP(7),
+  modifiedBy NVARCHAR(255),
+  building_ID NVARCHAR(36) NOT NULL,
+  name NVARCHAR(255) NOT NULL,
+  locationDesc NVARCHAR(1000),
+  phoneNumber NVARCHAR(255),
+  openMon NVARCHAR(5),
+  openTue NVARCHAR(5),
+  openWed NVARCHAR(5),
+  openThu NVARCHAR(5),
+  openFri NVARCHAR(5),
+  openSat NVARCHAR(5),
+  openSun NVARCHAR(5),
+  openHol NVARCHAR(5),
+  PRIMARY KEY(ID)
+); 
+
+CREATE TABLE com_sap_internal_digitallab_packagehandling_common_Receptionist (
+  ID NVARCHAR(36) NOT NULL,
+  createdAt TIMESTAMP(7),
+  createdBy NVARCHAR(255),
+  modifiedAt TIMESTAMP(7),
+  modifiedBy NVARCHAR(255),
+  user_ID NVARCHAR(36) NOT NULL,
+  reception_ID NVARCHAR(36) NOT NULL,
+  guard BOOLEAN,
+  PRIMARY KEY(ID)
+); 
+
+CREATE TABLE com_sap_internal_digitallab_packagehandling_common_User (
+  ID NVARCHAR(36) NOT NULL,
+  createdAt TIMESTAMP(7),
+  createdBy NVARCHAR(255),
+  modifiedAt TIMESTAMP(7),
+  modifiedBy NVARCHAR(255),
+  sapId NVARCHAR(12) NOT NULL,
+  firstName NVARCHAR(255) NOT NULL,
+  lastName NVARCHAR(255) NOT NULL,
+  mailAddress NVARCHAR(255) NOT NULL,
+  phoneNumber NVARCHAR(255),
+  PRIMARY KEY(ID)
+); 
 
 CREATE TABLE com_sap_internal_digitallab_packagehandling_core_DeliveryCompany (
   ID NVARCHAR(36) NOT NULL,
@@ -83,9 +191,6 @@ CREATE TABLE com_sap_internal_digitallab_packagehandling_core_Storage (
   buildingFloor NVARCHAR(36) NOT NULL,
   locationInstructions NVARCHAR(1000),
   map NVARCHAR(255),
-  totalPackages INTEGER,
-  currentPackages INTEGER,
-  packages_ID NVARCHAR(36),
   PRIMARY KEY(ID)
 ); 
 
@@ -98,15 +203,24 @@ CREATE TABLE com_sap_internal_digitallab_packagehandling_core_StorageSlot (
   name NVARCHAR(255) NOT NULL,
   storage_ID NVARCHAR(36) NOT NULL,
   status_code NVARCHAR(255) NOT NULL,
-  totalPackages INTEGER,
   PRIMARY KEY(ID)
 ); 
 
-CREATE TABLE com_sap_internal_digitallab_packagehandling_core_DeliveryCompany_texts (
-  locale NVARCHAR(14) NOT NULL,
+CREATE TABLE com_sap_internal_digitallab_packagehandling_core_LocalUserData (
   ID NVARCHAR(36) NOT NULL,
-  name NVARCHAR(255) NOT NULL,
-  PRIMARY KEY(locale, ID)
+  sapId NVARCHAR(255),
+  remoteId NVARCHAR(36),
+  termsAccepted BOOLEAN,
+  termsAcceptedAt TIMESTAMP(7),
+  PRIMARY KEY(ID)
+); 
+
+CREATE TABLE com_sap_internal_digitallab_packagehandling_common_FloorType_texts (
+  locale NVARCHAR(14) NOT NULL,
+  name NVARCHAR(255),
+  descr NVARCHAR(1000),
+  code NVARCHAR(255) NOT NULL,
+  PRIMARY KEY(locale, code)
 ); 
 
 CREATE TABLE com_sap_internal_digitallab_packagehandling_core_PackageStatus_texts (
@@ -133,44 +247,47 @@ CREATE TABLE com_sap_internal_digitallab_packagehandling_core_SlotStatus_texts (
   PRIMARY KEY(locale, code)
 ); 
 
-CREATE TABLE com_sap_internal_digitallab_packagehandling_core_Storage_texts (
-  locale NVARCHAR(14) NOT NULL,
-  ID NVARCHAR(36) NOT NULL,
-  name NVARCHAR(255) NOT NULL,
-  locationInstructions NVARCHAR(1000),
-  map NVARCHAR(255),
-  PRIMARY KEY(locale, ID)
-); 
+CREATE VIEW StorageService_Storage AS SELECT
+  Storage_0.ID,
+  Storage_0.createdAt,
+  Storage_0.createdBy,
+  Storage_0.modifiedAt,
+  Storage_0.modifiedBy,
+  Storage_0.name,
+  Storage_0.buildingFloor,
+  Storage_0.locationInstructions,
+  Storage_0.map
+FROM com_sap_internal_digitallab_packagehandling_core_Storage AS Storage_0; 
 
-CREATE TABLE com_sap_internal_digitallab_packagehandling_core_StorageSlot_texts (
-  locale NVARCHAR(14) NOT NULL,
-  ID NVARCHAR(36) NOT NULL,
-  name NVARCHAR(255) NOT NULL,
-  PRIMARY KEY(locale, ID)
-); 
+CREATE VIEW StorageService_StorageSlot AS SELECT
+  StorageSlot_0.ID,
+  StorageSlot_0.createdAt,
+  StorageSlot_0.createdBy,
+  StorageSlot_0.modifiedAt,
+  StorageSlot_0.modifiedBy,
+  StorageSlot_0.name,
+  StorageSlot_0.storage_ID,
+  StorageSlot_0.status_code
+FROM com_sap_internal_digitallab_packagehandling_core_StorageSlot AS StorageSlot_0; 
 
-CREATE VIEW DummyService_SlotStatus AS SELECT
+CREATE VIEW StorageService_SlotStatus AS SELECT
   SlotStatus_0.name,
   SlotStatus_0.descr,
   SlotStatus_0.code
 FROM com_sap_internal_digitallab_packagehandling_core_SlotStatus AS SlotStatus_0; 
 
-CREATE VIEW DummyService_SlotStatus_texts AS SELECT
+CREATE VIEW StorageService_SlotStatus_texts AS SELECT
   texts_0.locale,
   texts_0.name,
   texts_0.descr,
   texts_0.code
 FROM com_sap_internal_digitallab_packagehandling_core_SlotStatus_texts AS texts_0; 
 
-CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_core_DeliveryCompany AS SELECT
-  L_0.ID,
-  L_0.createdAt,
-  L_0.createdBy,
-  L_0.modifiedAt,
-  L_0.modifiedBy,
+CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_common_FloorType AS SELECT
   coalesce(localized_1.name, L_0.name) AS name,
-  L_0.logo
-FROM (com_sap_internal_digitallab_packagehandling_core_DeliveryCompany AS L_0 LEFT JOIN com_sap_internal_digitallab_packagehandling_core_DeliveryCompany_texts AS localized_1 ON localized_1.ID = L_0.ID AND localized_1.locale = @locale); 
+  coalesce(localized_1.descr, L_0.descr) AS descr,
+  L_0.code
+FROM (com_sap_internal_digitallab_packagehandling_common_FloorType AS L_0 LEFT JOIN com_sap_internal_digitallab_packagehandling_common_FloorType_texts AS localized_1 ON localized_1.code = L_0.code AND localized_1.locale = @locale); 
 
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_core_PackageStatus AS SELECT
   coalesce(localized_1.name, L_0.name) AS name,
@@ -190,32 +307,17 @@ CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_core_SlotStatu
   L_0.code
 FROM (com_sap_internal_digitallab_packagehandling_core_SlotStatus AS L_0 LEFT JOIN com_sap_internal_digitallab_packagehandling_core_SlotStatus_texts AS localized_1 ON localized_1.code = L_0.code AND localized_1.locale = @locale); 
 
-CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_core_Storage AS SELECT
-  L_0.ID,
-  L_0.createdAt,
-  L_0.createdBy,
-  L_0.modifiedAt,
-  L_0.modifiedBy,
-  coalesce(localized_1.name, L_0.name) AS name,
-  L_0.buildingFloor,
-  coalesce(localized_1.locationInstructions, L_0.locationInstructions) AS locationInstructions,
-  coalesce(localized_1.map, L_0.map) AS map,
-  L_0.totalPackages,
-  L_0.currentPackages,
-  L_0.packages_ID
-FROM (com_sap_internal_digitallab_packagehandling_core_Storage AS L_0 LEFT JOIN com_sap_internal_digitallab_packagehandling_core_Storage_texts AS localized_1 ON localized_1.ID = L_0.ID AND localized_1.locale = @locale); 
-
-CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_core_StorageSlot AS SELECT
-  L_0.ID,
-  L_0.createdAt,
-  L_0.createdBy,
-  L_0.modifiedAt,
-  L_0.modifiedBy,
-  coalesce(localized_1.name, L_0.name) AS name,
-  L_0.storage_ID,
-  L_0.status_code,
-  L_0.totalPackages
-FROM (com_sap_internal_digitallab_packagehandling_core_StorageSlot AS L_0 LEFT JOIN com_sap_internal_digitallab_packagehandling_core_StorageSlot_texts AS localized_1 ON localized_1.ID = L_0.ID AND localized_1.locale = @locale); 
+CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_common_BuildingFloor AS SELECT
+  L.ID,
+  L.createdAt,
+  L.createdBy,
+  L.modifiedAt,
+  L.modifiedBy,
+  L.name,
+  L.building_ID,
+  L.type_code,
+  L.map
+FROM com_sap_internal_digitallab_packagehandling_common_BuildingFloor AS L; 
 
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_core_Package AS SELECT
   L.ID,
@@ -234,9 +336,109 @@ CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_core_Package A
   L.comment
 FROM com_sap_internal_digitallab_packagehandling_core_Package AS L; 
 
-CREATE VIEW localized_DummyService_SlotStatus AS SELECT
+CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_core_StorageSlot AS SELECT
+  L.ID,
+  L.createdAt,
+  L.createdBy,
+  L.modifiedAt,
+  L.modifiedBy,
+  L.name,
+  L.storage_ID,
+  L.status_code
+FROM com_sap_internal_digitallab_packagehandling_core_StorageSlot AS L; 
+
+CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_common_Building AS SELECT
+  L.ID,
+  L.createdAt,
+  L.createdBy,
+  L.modifiedAt,
+  L.modifiedBy,
+  L.name,
+  L.address,
+  L.coordinates,
+  L.phoneNumber,
+  L.map
+FROM com_sap_internal_digitallab_packagehandling_common_Building AS L; 
+
+CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_core_DeliveryCompany AS SELECT
+  L.ID,
+  L.createdAt,
+  L.createdBy,
+  L.modifiedAt,
+  L.modifiedBy,
+  L.name,
+  L.logo
+FROM com_sap_internal_digitallab_packagehandling_core_DeliveryCompany AS L; 
+
+CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_core_Storage AS SELECT
+  L.ID,
+  L.createdAt,
+  L.createdBy,
+  L.modifiedAt,
+  L.modifiedBy,
+  L.name,
+  L.buildingFloor,
+  L.locationInstructions,
+  L.map
+FROM com_sap_internal_digitallab_packagehandling_core_Storage AS L; 
+
+CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_common_Reception AS SELECT
+  L.ID,
+  L.createdAt,
+  L.createdBy,
+  L.modifiedAt,
+  L.modifiedBy,
+  L.building_ID,
+  L.name,
+  L.locationDesc,
+  L.phoneNumber,
+  L.openMon,
+  L.openTue,
+  L.openWed,
+  L.openThu,
+  L.openFri,
+  L.openSat,
+  L.openSun,
+  L.openHol
+FROM com_sap_internal_digitallab_packagehandling_common_Reception AS L; 
+
+CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_common_Receptionist AS SELECT
+  L.ID,
+  L.createdAt,
+  L.createdBy,
+  L.modifiedAt,
+  L.modifiedBy,
+  L.user_ID,
+  L.reception_ID,
+  L.guard
+FROM com_sap_internal_digitallab_packagehandling_common_Receptionist AS L; 
+
+CREATE VIEW localized_StorageService_SlotStatus AS SELECT
   SlotStatus_0.name,
   SlotStatus_0.descr,
   SlotStatus_0.code
 FROM localized_com_sap_internal_digitallab_packagehandling_core_SlotStatus AS SlotStatus_0; 
+
+CREATE VIEW localized_StorageService_StorageSlot AS SELECT
+  StorageSlot_0.ID,
+  StorageSlot_0.createdAt,
+  StorageSlot_0.createdBy,
+  StorageSlot_0.modifiedAt,
+  StorageSlot_0.modifiedBy,
+  StorageSlot_0.name,
+  StorageSlot_0.storage_ID,
+  StorageSlot_0.status_code
+FROM localized_com_sap_internal_digitallab_packagehandling_core_StorageSlot AS StorageSlot_0; 
+
+CREATE VIEW localized_StorageService_Storage AS SELECT
+  Storage_0.ID,
+  Storage_0.createdAt,
+  Storage_0.createdBy,
+  Storage_0.modifiedAt,
+  Storage_0.modifiedBy,
+  Storage_0.name,
+  Storage_0.buildingFloor,
+  Storage_0.locationInstructions,
+  Storage_0.map
+FROM localized_com_sap_internal_digitallab_packagehandling_core_Storage AS Storage_0; 
 
