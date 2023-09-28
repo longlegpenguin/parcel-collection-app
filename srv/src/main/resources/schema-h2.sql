@@ -1,7 +1,7 @@
 
-DROP VIEW IF EXISTS localized_StorageService_Storage;
-DROP VIEW IF EXISTS localized_StorageService_StorageSlot;
-DROP VIEW IF EXISTS localized_StorageService_SlotStatus;
+DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_StorageService_Storage;
+DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_StorageService_StorageSlot;
+DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_StorageService_SlotStatus;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_common_Receptionist;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_common_Reception;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_core_Storage;
@@ -14,10 +14,12 @@ DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_core_S
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_core_PackageType;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_core_PackageStatus;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_common_FloorType;
-DROP VIEW IF EXISTS StorageService_SlotStatus_texts;
-DROP VIEW IF EXISTS StorageService_SlotStatus;
-DROP VIEW IF EXISTS StorageService_StorageSlot;
-DROP VIEW IF EXISTS StorageService_Storage;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_StorageService_SlotStatus_texts;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_StorageService_BuildingFloor;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_StorageService_Building;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_StorageService_SlotStatus;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_StorageService_StorageSlot;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_StorageService_Storage;
 DROP TABLE IF EXISTS com_sap_internal_digitallab_packagehandling_core_SlotStatus_texts;
 DROP TABLE IF EXISTS com_sap_internal_digitallab_packagehandling_core_PackageType_texts;
 DROP TABLE IF EXISTS com_sap_internal_digitallab_packagehandling_core_PackageStatus_texts;
@@ -247,7 +249,7 @@ CREATE TABLE com_sap_internal_digitallab_packagehandling_core_SlotStatus_texts (
   PRIMARY KEY(locale, code)
 ); 
 
-CREATE VIEW StorageService_Storage AS SELECT
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_StorageService_Storage AS SELECT
   Storage_0.ID,
   Storage_0.createdAt,
   Storage_0.createdBy,
@@ -259,7 +261,7 @@ CREATE VIEW StorageService_Storage AS SELECT
   Storage_0.map
 FROM com_sap_internal_digitallab_packagehandling_core_Storage AS Storage_0; 
 
-CREATE VIEW StorageService_StorageSlot AS SELECT
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_StorageService_StorageSlot AS SELECT
   StorageSlot_0.ID,
   StorageSlot_0.createdAt,
   StorageSlot_0.createdBy,
@@ -270,13 +272,29 @@ CREATE VIEW StorageService_StorageSlot AS SELECT
   StorageSlot_0.status_code
 FROM com_sap_internal_digitallab_packagehandling_core_StorageSlot AS StorageSlot_0; 
 
-CREATE VIEW StorageService_SlotStatus AS SELECT
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_StorageService_SlotStatus AS SELECT
   SlotStatus_0.name,
   SlotStatus_0.descr,
   SlotStatus_0.code
 FROM com_sap_internal_digitallab_packagehandling_core_SlotStatus AS SlotStatus_0; 
 
-CREATE VIEW StorageService_SlotStatus_texts AS SELECT
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_StorageService_Building AS SELECT
+  Building_0.ID,
+  Building_0.name,
+  Building_0.map,
+  Building_0.address,
+  Building_0.coordinates,
+  Building_0.phoneNumber
+FROM com_sap_internal_digitallab_packagehandling_common_Building AS Building_0; 
+
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_StorageService_BuildingFloor AS SELECT
+  BuildingFloor_0.ID,
+  BuildingFloor_0.name,
+  BuildingFloor_0.map,
+  BuildingFloor_0.building_ID
+FROM com_sap_internal_digitallab_packagehandling_common_BuildingFloor AS BuildingFloor_0; 
+
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_StorageService_SlotStatus_texts AS SELECT
   texts_0.locale,
   texts_0.name,
   texts_0.descr,
@@ -413,13 +431,13 @@ CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_common_Recepti
   L.guard
 FROM com_sap_internal_digitallab_packagehandling_common_Receptionist AS L; 
 
-CREATE VIEW localized_StorageService_SlotStatus AS SELECT
+CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_StorageService_SlotStatus AS SELECT
   SlotStatus_0.name,
   SlotStatus_0.descr,
   SlotStatus_0.code
 FROM localized_com_sap_internal_digitallab_packagehandling_core_SlotStatus AS SlotStatus_0; 
 
-CREATE VIEW localized_StorageService_StorageSlot AS SELECT
+CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_StorageService_StorageSlot AS SELECT
   StorageSlot_0.ID,
   StorageSlot_0.createdAt,
   StorageSlot_0.createdBy,
@@ -430,7 +448,7 @@ CREATE VIEW localized_StorageService_StorageSlot AS SELECT
   StorageSlot_0.status_code
 FROM localized_com_sap_internal_digitallab_packagehandling_core_StorageSlot AS StorageSlot_0; 
 
-CREATE VIEW localized_StorageService_Storage AS SELECT
+CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_StorageService_Storage AS SELECT
   Storage_0.ID,
   Storage_0.createdAt,
   Storage_0.createdBy,

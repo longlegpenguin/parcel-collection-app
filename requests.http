@@ -1,0 +1,7 @@
+## Read Storage
+
+# GET http://localhost:8080/odata/v4/StorageService/Storage
+
+GET http://localhost:4004/odata/v4/StorageService/Storage
+
+## 
