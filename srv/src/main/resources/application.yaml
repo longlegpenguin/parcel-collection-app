@@ -4,4 +4,25 @@ spring:
   web.resources.static-locations: file:./app/
 cds:
   datasource.auto-config.enabled: false
-  sql.supportedLocales: "*"
+  sql.supportedLocales: "*" ## cut
+  odata-v4.endpoint.path: "/api"
+  odata-v4.serializer.enabled: true
+  multi-tenancy:
+    compatibility.enabled: false
+    mtxs.enabled: true
+  security:
+    authentication.normalize-provider-tenant: true
+    mock.users:
+      admin:
+        password: admin
+        roles:
+        - Administrator
+        attributes:
+          businessPartner:
+          - "10401010"
+      user:
+        password: user
+      manager:
+        password: manager
+        roles:
+        - FacilityManager

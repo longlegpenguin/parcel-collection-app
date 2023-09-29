@@ -49,7 +49,6 @@ public class StorageServiceHandler implements EventHandler {
                 slot.setStatus(slotStatus);
                 CqnInsert insert = Insert.into(StorageSlot_.class).entry(slot);
                 db.run(insert);
-                // storageService.emit(context);
             }
         }   
         context.setResult(201);
