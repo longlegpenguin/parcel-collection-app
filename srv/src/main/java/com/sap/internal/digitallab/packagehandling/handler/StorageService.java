@@ -38,10 +38,11 @@ public class StorageService implements EventHandler {
                 StorageSlot slot = StorageSlot.create();
                 slot.setName(slotName);
                 slot.setStorageId(context.getStorage());
-                slot.setStatus(SlotStatus.create());
+                SlotStatus slotStatus = SlotStatus.create();
+                slotStatus.setCode("empty");
+                // slot.setStatus();
                 CqnInsert insert = Insert.into(StorageSlot_.class).entry(slot);
                 db.run(insert);
-                
             }
         }   
         context.setResult(201);
@@ -55,5 +56,10 @@ public class StorageService implements EventHandler {
 
     private String translateSlotNameCode(int code, String type) {
         return type.equals("C") ? (char)(code + 64) + "" : (code + "");
+    }
+
+    private boolean checkSlotNameExist(String name, String storage) {
+
+        return true;
     }
 }

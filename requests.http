@@ -11,17 +11,17 @@
 # POST http://localhost:8080/odata/v4/StorageService/massCreate(row=3,rowType='C',col=4,colType='N',storage='5') HTTP/1.1
 # POST http://localhost:8080/odata/v4/StorageService/massCreate?row=3&rowType='C'&col=4&colType='N'&storage='5' HTTP/1.1
 # POST http://localhost:8080/odata/v4/StorageService/massCreate?$filter=(row=3,rowType='C',col=4,colType='N',storage='5') HTTP/1.1
-POST http://localhost:8080/odata/v4/StorageService/massCreate HTTP/1.1
-Content-Type: application/json
-Authorization: Basic authenticated:
+# POST http://localhost:8080/odata/v4/StorageService/massCreate HTTP/1.1
+# Content-Type: application/json
+# Authorization: Basic authenticated:
 
-{
-    "row" :3,
-    "rowType" : "C",
-    "col" : 4,
-    "colType" : "N",
-    "storage" : "92A5F984-7C3B-4A36-9883-4F7EDBA1D9F3"
-}
+# {
+#     "row" :3,
+#     "rowType" : "C",
+#     "col" : 4,
+#     "colType" : "N",
+#     "storage" : "92A5F984-7C3B-4A36-9883-4F7EDBA1D9F3"
+# }
 
 
 # GET http://localhost:8080/odata/v4/StorageService/Storage
@@ -37,4 +37,12 @@ Authorization: Basic authenticated:
 # {"one":1}
 
 
+### Insert new storage
+POST http://localhost:8080/odata/v4/StorageService/Storage HTTP/1.1
+Content-Type: application/json
+Authorization: Basic authenticated:
 
+{
+    "name" : "S200",
+    "buildingFloor" : "7D5A658D-D9C1-44E6-9DA0-1D29069C4617"
+}
