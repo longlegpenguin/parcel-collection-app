@@ -11,7 +11,8 @@ service StorageService {
     entity StorageSlot   as projection on core.StorageSlot;
     entity SlotStatus    as projection on core.SlotStatus;
 
-    @readonly entity Building      as projection on common.Building {
+    @readonly
+    entity Building      as projection on common.Building {
         ID,
         name,
         map,
@@ -20,16 +21,13 @@ service StorageService {
         phoneNumber
     };
 
-    @readonly entity BuildingFloor as projection on common.BuildingFloor {
+    @readonly
+    entity BuildingFloor as projection on common.BuildingFloor {
         ID,
         name,
         map,
         building
     };
-    action add (one : Integer) returns Integer;
-    action massCreate(
-        row : Integer, rowType : String(1), 
-        col : Integer, colType : String(1), 
-        storage : UUID
-        ) returns Integer;
+
+    action massCreate(row : Integer, rowType : String(1), col : Integer, colType : String(1), storage : UUID) returns Integer;
 }
