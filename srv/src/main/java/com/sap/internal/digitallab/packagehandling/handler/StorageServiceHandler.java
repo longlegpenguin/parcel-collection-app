@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import cds.gen.com.sap.internal.digitallab.packagehandling.core.SlotStatus;
 import cds.gen.com.sap.internal.digitallab.packagehandling.core.StorageSlot;
 import cds.gen.com.sap.internal.digitallab.packagehandling.core.StorageSlot_;
+import cds.gen.com.sap.internal.digitallab.packagehandling.core.Storage_;
 import cds.gen.com.sap.internal.digitallab.packagehandling.service.storageservice.MassCreateContext;
 import cds.gen.com.sap.internal.digitallab.packagehandling.service.storageservice.StorageService_;
 
@@ -15,8 +16,11 @@ import com.sap.cds.ql.Select;
 import com.sap.cds.ql.cqn.CqnInsert;
 import com.sap.cds.ql.cqn.CqnSelect;
 import com.sap.cds.ql.cqn.CqnSelectList;
+import com.sap.cds.services.EventContext;
 import com.sap.cds.services.cds.ApplicationService;
+import com.sap.cds.services.cds.CqnService;
 import com.sap.cds.services.handler.EventHandler;
+import com.sap.cds.services.handler.annotations.Before;
 import com.sap.cds.services.handler.annotations.On;
 import com.sap.cds.services.handler.annotations.ServiceName;
 import com.sap.cds.services.persistence.PersistenceService;
@@ -34,10 +38,10 @@ public class StorageServiceHandler implements EventHandler {
 
     /**
      * Custom implementation for massCreate action
-     * //(event = "massCreate", entity = StorageSlot_.CDS_NAME)
+     * 
      * @param context MassCreateContext
      */
-    @On 
+    @On
     public void massCreateAction(MassCreateContext context) {
 
         String rowType = context.getRowType();
@@ -46,7 +50,6 @@ public class StorageServiceHandler implements EventHandler {
 
         for (int i = 0; i < context.getRow(); i++) {
             for (int j = 0; j < context.getCol(); j++) {
-
                 String slotName = genSlotName(i, j, rowType, colType);
                 String storage_ID = context.getStorage();
 
@@ -55,17 +58,57 @@ public class StorageServiceHandler implements EventHandler {
                     cnt++;
                 }
             }
-        }   
+        }
         context.setResult(cnt);
     }
 
+    /**
+     * Throws exception if the storage being deleting contains non-empty slots.
+     * 
+     * @param context EventContext
+     */
+    @Before(event = CqnService.EVENT_DELETE, entity = Storage_.CDS_NAME)
+    public void validateStorageRemovable(EventContext context) {
+        // TODO
+    }
+
+    /**
+     * Deletes storage and its slots.
+     * 
+     * @param context EventContext
+     */
+    @On(event = CqnService.EVENT_DELETE, entity = Storage_.CDS_NAME)
+    public void deleteStorage(EventContext context) {
+        // TODO
+    }
+
+    @Before(event = CqnService.EVENT_READ, entity = Storage_.CDS_NAME)
+    public void calculateTotalPackages(EventContext context) {
+        // TODO
+    }
+
+    @Before(event = CqnService.EVENT_READ, entity = StorageSlot_.CDS_NAME)
+    public void calculateSlotTotalPackages(EventContext context) {
+        // TODO
+    }
+    
+    @Before(event = CqnService.EVENT_READ, entity = Storage_.CDS_NAME)
+    public void calculateStorageDeleteMc(EventContext context) {
+        // TODO
+    }
+    @Before(event = CqnService.EVENT_READ, entity = StorageSlot_.CDS_NAME)
+    public void calculateSlotDeleteMc(EventContext context) {
+        // TODO
+    }
+
     private String translateSlotNameCode(int code, String type) {
-        return type.equals("C") ? (char)(code + 65) + "" : (code + "");
+        return type.equals("C") ? (char) (code + 65) + "" : (code + "");
     }
 
     private boolean isSlotNameExist(String name, String storage) {
-        CqnSelect select = Select.from(StorageSlot_.class).columns(s -> s.name()).where(s -> s.storage_ID().eq(storage));
-        return db.run(select).stream().anyMatch(row-> row.get("name").equals(name));
+        CqnSelect select = Select.from(StorageSlot_.class).columns(s -> s.name())
+                .where(s -> s.storage_ID().eq(storage));
+        return db.run(select).stream().anyMatch(row -> row.get("name").equals(name));
     }
 
     private String genSlotName(int rowCode, int colCode, String rowType, String colType) {

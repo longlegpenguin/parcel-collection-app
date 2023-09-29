@@ -16,4 +16,6 @@ entity Storage : cuid, managed {
                                   on storageSlot.storage = $self;
     virtual totalPackages   : Integer;
     virtual currentPackages : Integer;
+    virtual delete_ac       : Boolean;
+    virtual update_ac       : Boolean;
 }

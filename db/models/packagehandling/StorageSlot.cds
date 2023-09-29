@@ -18,4 +18,6 @@ entity StorageSlot : cuid, managed {
     packages              : Association to many Package
                                 on packages.slot = $self;
     virtual totalPackages : Integer;
+    virtual delete_ac     : Boolean;
+    virtual update_ac     : Boolean;
 }
