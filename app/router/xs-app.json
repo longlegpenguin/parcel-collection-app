@@ -1,6 +1,6 @@
 {
-  "authenticationMethod": "none",
   "welcomeFile": "app/index.html",
+  "authenticationMethod": "none",
   "routes": [
     {
       "source": "^/app/(.*)$",
@@ -10,6 +10,11 @@
     },
     {
       "source": "^/appconfig/",
+      "localDir": ".",
+      "cacheControl": "no-cache, no-store, must-revalidate"
+    },
+    {
+      "source": "^/storageservice-ui/",
       "localDir": ".",
       "cacheControl": "no-cache, no-store, must-revalidate"
     },

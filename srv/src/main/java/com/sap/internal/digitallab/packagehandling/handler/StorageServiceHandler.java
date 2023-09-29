@@ -3,6 +3,7 @@ package com.sap.internal.digitallab.packagehandling.handler;
 import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import cds.gen.com.sap.internal.digitallab.packagehandling.core.SlotStatus;
@@ -14,6 +15,7 @@ import cds.gen.com.sap.internal.digitallab.packagehandling.service.storageservic
 
 import com.sap.cds.ql.Insert;
 import com.sap.cds.ql.cqn.CqnInsert;
+import com.sap.cds.services.cds.ApplicationService;
 import com.sap.cds.services.handler.EventHandler;
 import com.sap.cds.services.handler.annotations.On;
 import com.sap.cds.services.handler.annotations.ServiceName;
@@ -21,10 +23,14 @@ import com.sap.cds.services.persistence.PersistenceService;
 
 @Component
 @ServiceName(StorageService_.CDS_NAME)
-public class StorageService implements EventHandler {
+public class StorageServiceHandler implements EventHandler {
 
     @Autowired
     PersistenceService db;
+
+    // @Autowired
+    // @Qualifier("StorageService")
+    // private ApplicationService storageService;
 
     @On //(event = "massCreate", entity = StorageSlot_.CDS_NAME)
     public void massCreateAction(MassCreateContext context) {
@@ -40,9 +46,10 @@ public class StorageService implements EventHandler {
                 slot.setStorageId(context.getStorage());
                 SlotStatus slotStatus = SlotStatus.create();
                 slotStatus.setCode("empty");
-                // slot.setStatus();
+                slot.setStatus(slotStatus);
                 CqnInsert insert = Insert.into(StorageSlot_.class).entry(slot);
                 db.run(insert);
+                // storageService.emit(context);
             }
         }   
         context.setResult(201);
