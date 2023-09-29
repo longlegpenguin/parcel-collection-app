@@ -6,8 +6,6 @@
     <packaging>pom</packaging>
     <name>packagehandling parent</name>
     <properties>
-        
-        
         <revision>0.0.1</revision>
         <jdk.version>17</jdk.version>
         <cds.services.version>2.2.0</cds.services.version>
@@ -20,8 +18,6 @@
     </modules>
     <dependencyManagement>
         <dependencies>
-            
-            
             <dependency>
                 <groupId>com.sap.cds</groupId>
                 <artifactId>cds-services-bom</artifactId>
@@ -40,11 +36,6 @@
     </dependencyManagement>
     <build>
         <plugins>
-            
-            
-            
-            
-            
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>

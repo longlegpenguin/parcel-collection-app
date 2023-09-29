@@ -9,7 +9,7 @@
     "@sap/ux-specification": "^1.108.15"
   },
   "sapux": [
-    "app/storageservice-ui"
+    "app/storage-ui"
   ],
   "dependencies": {
     "@sap/xssec": "^3.3.5",

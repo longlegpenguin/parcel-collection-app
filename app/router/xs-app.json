@@ -1,6 +1,6 @@
 {
   "welcomeFile": "app/index.html",
-  "authenticationMethod": "none",
+  "authenticationMethod": "route",
   "routes": [
     {
       "source": "^/app/(.*)$",
@@ -14,7 +14,7 @@
       "cacheControl": "no-cache, no-store, must-revalidate"
     },
     {
-      "source": "^/storageservice-ui/",
+      "source": "^/storage-ui/",
       "localDir": ".",
       "cacheControl": "no-cache, no-store, must-revalidate"
     },
