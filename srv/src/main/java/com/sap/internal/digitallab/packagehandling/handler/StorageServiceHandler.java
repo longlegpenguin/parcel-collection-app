@@ -1,11 +1,16 @@
 package com.sap.internal.digitallab.packagehandling.handler;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import cds.gen.com.sap.internal.digitallab.packagehandling.core.SlotStatus;
+import cds.gen.com.sap.internal.digitallab.packagehandling.core.Storage;
 import cds.gen.com.sap.internal.digitallab.packagehandling.core.StorageSlot;
+import cds.gen.com.sap.internal.digitallab.packagehandling.core.Package;
+import cds.gen.com.sap.internal.digitallab.packagehandling.core.Package_;
 import cds.gen.com.sap.internal.digitallab.packagehandling.core.StorageSlot_;
 import cds.gen.com.sap.internal.digitallab.packagehandling.core.Storage_;
 import cds.gen.com.sap.internal.digitallab.packagehandling.service.storageservice.MassCreateContext;
@@ -91,14 +96,36 @@ public class StorageServiceHandler implements EventHandler {
     public void calculateSlotTotalPackages(EventContext context) {
         // TODO
     }
-    
-    @Before(event = CqnService.EVENT_READ, entity = Storage_.CDS_NAME)
-    public void calculateStorageDeleteMc(EventContext context) {
-        // TODO
+
+    /**
+     * Calculate virtual field DeleteAc of Storage,
+     * true if a all slots in the storage have DeleteAC true.
+     * 
+     * @param storage Storage to be checked.
+     */
+    @Before(event = { CqnService.EVENT_READ, CqnService.EVENT_DELETE, CqnService.EVENT_CREATE,
+            CqnService.EVENT_UPDATE }, entity = Storage_.CDS_NAME)
+    public void calculateStorageDeleteAc(Storage storage) {
+        List<StorageSlot> slots = storage.getStorageSlot();
+        boolean canDelete = slots.stream().allMatch(s -> {
+            calculateSlotDeleteAc(s);
+            return s.getDeleteAc();
+        });
+        storage.setDeleteAc(canDelete);
     }
-    @Before(event = CqnService.EVENT_READ, entity = StorageSlot_.CDS_NAME)
-    public void calculateSlotDeleteMc(EventContext context) {
-        // TODO
+
+    /**
+     * Calculate virtual field DeleteAc,
+     * true if slot status is not inuse.
+     * 
+     * @param slot StorageSlot slot to be checked.
+     */
+    @Before(event = { CqnService.EVENT_READ, CqnService.EVENT_DELETE }, entity = StorageSlot_.CDS_NAME)
+    public void calculateSlotDeleteAc(StorageSlot slot) {
+        slot.setDeleteAc(!slot.getStatus().getCode().equals("inuse"));
+        // List<Package> packages = slot.getPackages();
+        // slot.setDeleteAc(
+        // packages.stream().allMatch(p -> p.getStatusCode().equals("empty")));
     }
 
     private String translateSlotNameCode(int code, String type) {
