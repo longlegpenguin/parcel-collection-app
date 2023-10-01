@@ -29,7 +29,7 @@ Authorization: Basic YWRtaW46YWRtaW4=
 
 
 ### Get specific storage
-GET http://localhost:8080/api/StorageService/Storage(92a5f984-7c3b-4a36-9883-4f7edba1d9f3)
+GET http://localhost:8080/api/StorageService/Storage(ID=92a5f984-7c3b-4a36-9883-4f7edba1d9f3,IsActiveEntity=true)
 Content-Type: application/json
 Authorization: Basic YWRtaW46YWRtaW4=
 
