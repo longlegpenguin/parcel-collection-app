@@ -60,7 +60,7 @@ modules:
     provides:
       - name: app-api
         properties:
-          url: ${default-url}
+          url: '${default-url}'
 
 resources:
   - name: packagehandling-db
