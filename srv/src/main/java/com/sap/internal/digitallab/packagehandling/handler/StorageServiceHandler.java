@@ -79,12 +79,6 @@ public class StorageServiceHandler implements EventHandler {
         context.setResult(cnt);
     }
 
-    @On(event = { CqnService.EVENT_CREATE })
-    public void createSlot(List<StorageSlot> slots) {
-        LOGGER.atInfo().log("Called at Create slot: {}", slots);
-        // slots.forEach(s -> s.setStatus(emptySlotStatus()));
-    }
-
     /**
      * ------------------------------------------------------------------------------
      * Virtual fields caculations
@@ -97,15 +91,15 @@ public class StorageServiceHandler implements EventHandler {
         LOGGER.atInfo().log("{} storages is selected", storages.size());
     }
 
-    @After(event = { CqnService.EVENT_READ, CqnService.EVENT_CREATE }, entity = StorageSlot_.CDS_NAME)
+    @After(event = { CqnService.EVENT_READ }, entity = StorageSlot_.CDS_NAME)
     public void calSlotTotalPackages(Stream<StorageSlot> slots) {
         slots.forEach(
                 slot -> slot.setTotalPackages(
                         cntTotalPackageInSingleSlot(slot.getId())));
     }
 
-    @After(event = { CqnService.EVENT_READ, CqnService.EVENT_CREATE })
-    public void calTotalPackagesMultipleStorages(Stream<Storage> storages) {
+    @After(event = { CqnService.EVENT_READ }, entity = Storage_.CDS_NAME)
+    public void calTotalPackagesMultipleStorages(List<Storage> storages) {
         storages.forEach(this::calTotalPackagesSingleStorage);
     }
 
@@ -126,8 +120,7 @@ public class StorageServiceHandler implements EventHandler {
      * @param storage list of Storages to be checked.
      */
     @After(event = {
-            CqnService.EVENT_READ,
-            CqnService.EVENT_CREATE })
+            CqnService.EVENT_READ }, entity = Storage_.CDS_NAME)
     public void calStorageDeleteAc(List<Storage> storages) {
         storages.forEach(this::calSingleStorageDeleteAc);
     }
@@ -139,8 +132,7 @@ public class StorageServiceHandler implements EventHandler {
      * @param slots Stream<StorageSlot> slots to be checked.
      */
     @After(event = {
-            CqnService.EVENT_READ,
-            CqnService.EVENT_CREATE }, entity = StorageSlot_.CDS_NAME)
+            CqnService.EVENT_READ }, entity = StorageSlot_.CDS_NAME)
     public void calMultipleSlotsDeleteAc(List<StorageSlot> slots) {
         LOGGER.atInfo().log("Size of slots: {}", slots.size());
         slots.forEach(this::calSingleSlotDeleteAc);
@@ -152,16 +144,16 @@ public class StorageServiceHandler implements EventHandler {
      * ------------------------------------------------------------------------------
      */
 
-    @On(event = CqnService.EVENT_DELETE)
-    public void anyDelete(EventContext context) {
-        CdsEntity slot = context.getTarget();
-        LOGGER.atInfo().log("On deletion occurs {}", slot);
-    }
+    // @On(event = CqnService.EVENT_DELETE)
+    // public void anyDelete(EventContext context) {
+    // CdsEntity slot = context.getTarget();
+    // LOGGER.atInfo().log("On deletion occurs {}", slot);
+    // }
 
-    @Before(event = CqnService.EVENT_DELETE)
-    public void anyBeforeDelete(EventContext context) {
-        LOGGER.atInfo().log("Before deletion occurs");
-    }
+    // @Before(event = CqnService.EVENT_DELETE)
+    // public void anyBeforeDelete(EventContext context) {
+    // LOGGER.atInfo().log("Before deletion occurs");
+    // }
 
     /**
      * ------------------------------------------------------------------------------
@@ -228,7 +220,7 @@ public class StorageServiceHandler implements EventHandler {
     private void calConfirmedPackagesSingleStorage(Storage storage) {
 
         LOGGER.atInfo().log("Iamhere---------------------");
-        
+
         Result rowsOfSlotsEntity = selectSlotsByStorateId(storage.getId());
         LOGGER.atInfo().log("Iamdone---------------------");
 
@@ -277,12 +269,8 @@ public class StorageServiceHandler implements EventHandler {
     }
 
     private void calSingleStorageDeleteAc(Storage storage) {
-        CqnSelect select = Select
-                .from(StorageSlot_.class)
-                .columns("name", "status_code")
-                .where(s -> s.storage_ID().eq(storage.getId()));
 
-        Result rows = db.run(select);
+        Result rows = selectSlotsByStorateId(storage.getId() + "");
         LOGGER.atInfo().log("slots is {}", rows);
         boolean canDelete = rows
                 .stream()
