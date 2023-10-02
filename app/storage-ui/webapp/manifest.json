@@ -20,6 +20,8 @@
         "uri": "/api/StorageService/",
         "type": "OData",
         "settings": {
+          "annotations": [],
+          "localUri": "localService/metadata.xml",
           "odataVersion": "4.0"
         }
       }

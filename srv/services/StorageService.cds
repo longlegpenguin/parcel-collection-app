@@ -31,7 +31,7 @@ service StorageService {
         building
     };
 
-    action massCreate(row : Integer, rowType : String(1), col : Integer, colType : String(1), storage : UUID) returns Integer;
+    action massCreate(row : Integer, rowType : String(1), col : Integer, colType : String(1), storage : type of Storage : ID) returns Integer;
 }
 
 /**
@@ -43,8 +43,7 @@ annotate core.Storage with {
 };
 
 annotate core.StorageSlot with {
-    name    @mandatory;
-    storage @mandatory;
-    status  @readonly;
-    storage @assert.target;
+    name     @mandatory;
+    storage  @mandatory  @assert.target;
+    status   @readonly   @cds.on.insert: {status_code: 'empty'};
 };

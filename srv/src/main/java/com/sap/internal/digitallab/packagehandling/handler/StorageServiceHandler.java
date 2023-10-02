@@ -61,7 +61,6 @@ public class StorageServiceHandler implements EventHandler {
     public void massCreateAction(MassCreateContext context) {
 
         LOGGER.atInfo().log("Called at mass create ");
-
         String rowType = context.getRowType();
         String colType = context.getColType();
         int cnt = 0;
@@ -78,6 +77,12 @@ public class StorageServiceHandler implements EventHandler {
             }
         }
         context.setResult(cnt);
+    }
+
+    @On(event = { CqnService.EVENT_CREATE })
+    public void createSlot(List<StorageSlot> slots) {
+        LOGGER.atInfo().log("Called at Create slot: {}", slots);
+        // slots.forEach(s -> s.setStatus(emptySlotStatus()));
     }
 
     /**
@@ -105,7 +110,7 @@ public class StorageServiceHandler implements EventHandler {
     }
 
     @After(event = CqnService.EVENT_READ, entity = Storage_.CDS_NAME)
-    public void calCurrentPackagesMultipleStorages(Stream<Storage> storages) {
+    public void calCurrentPackagesMultipleStorages(List<Storage> storages) {
         storages.forEach(this::calConfirmedPackagesSingleStorage);
     }
 
@@ -222,14 +227,17 @@ public class StorageServiceHandler implements EventHandler {
      */
     private void calConfirmedPackagesSingleStorage(Storage storage) {
 
+        LOGGER.atInfo().log("Iamhere---------------------");
+        
         Result rowsOfSlotsEntity = selectSlotsByStorateId(storage.getId());
+        LOGGER.atInfo().log("Iamdone---------------------");
 
         int total = rowsOfSlotsEntity
                 .stream()
                 .mapToInt(r -> cntConfirmedInSingleSlot(r.get("ID").toString()))
                 .sum();
 
-        storage.setCurrentPackages(total);
+        storage.setCurrentPackages(Integer.valueOf(total));
         LOGGER.atInfo().log("{} has {} packages", storage.getId(), total);
     }
 
@@ -263,8 +271,9 @@ public class StorageServiceHandler implements EventHandler {
     }
 
     private void calSingleSlotDeleteAc(StorageSlot slot) {
+
         slot.setDeleteAc(
-                !(slot.getStatusCode().equals("inuse")));
+                cntConfirmedInSingleSlot(slot.getId()) == 0);
     }
 
     private void calSingleStorageDeleteAc(Storage storage) {
@@ -275,7 +284,9 @@ public class StorageServiceHandler implements EventHandler {
 
         Result rows = db.run(select);
         LOGGER.atInfo().log("slots is {}", rows);
-        boolean canDelete = rows.stream().allMatch(r -> !r.get("status_code").equals("inuse"));
+        boolean canDelete = rows
+                .stream()
+                .allMatch(r -> !r.get("status_code").equals("inuse"));
         storage.setDeleteAc(canDelete);
     }
 
@@ -284,7 +295,7 @@ public class StorageServiceHandler implements EventHandler {
                 .from(StorageSlot_.class)
                 .columns("ID", "status_code")
                 .where(s -> s.storage_ID().eq(storageId));
-
+        LOGGER.atInfo().log("SELECT!!!!!!!!!!!!!!!!!!!!!!");
         return db.run(select);
     }
 

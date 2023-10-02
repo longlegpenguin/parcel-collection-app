@@ -61,3 +61,15 @@ Authorization: Basic YWRtaW46YWRtaW4=
 ### 
 DELETE http://localhost:8080/api/StorageService/StorageSlot(ID=94b5eef2-8ec5-4c2e-87e6-d78809f01c68,IsActiveEntity=false) HTTP/1.1
 Authorization: Basic YWRtaW46YWRtaW4=
+
+/Storage(ID=adf15060-9907-4ea3-be7e-db12a6277165,IsActiveEntity=true)/
+### 
+GET http://localhost:8080/api/StorageService/StorageSlot(ID=9be3cedc-e657-4a8b-b37e-ffc494d96952,IsActiveEntity=true) HTTP/1.1
+Authorization: Basic YWRtaW46YWRtaW4=
+### 
+GET http://localhost:8080/api/StorageService/Storage(ID=adf15060-9907-4ea3-be7e-db12a6277165,IsActiveEntity=true)/storageSlot(ID=9be3cedc-e657-4a8b-b37e-ffc494d96952,IsActiveEntity=true) HTTP/1.1
+Authorization: Basic YWRtaW46YWRtaW4=
+
+###
+GET http://localhost:8080/api/StorageService/Storage(ID=adf15060-9907-4ea3-be7e-db12a6277165,IsActiveEntity=true)/storageSlot(ID=94b5eef2-8ec5-4c2e-87e6-d78809f01c68,IsActiveEntity=true)
+Authorization: Basic YWRtaW46YWRtaW4=
