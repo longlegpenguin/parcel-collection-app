@@ -2,11 +2,20 @@ using com.sap.internal.digitallab.packagehandling.service.StorageService as serv
 
 annotate service.Storage with @odata.draft.enabled;
 // annotate service.StorageSlot with @odata.draft.enabled;
-annotate service.Storage with @(Capabilities.DeleteRestrictions: {Deletable: delete_ac, //Search-Term: #DynamicCRUD
-}, );
+annotate service.Storage with @(
+    Capabilities.DeleteRestrictions: {
+        Deletable: delete_ac, //Search-Term: #DynamicCRUD
+    }, 
+);
+
+annotate service.StorageSlot with @(
+    Capabilities.DeleteRestrictions: {
+        Deletable: delete_ac, //Search-Term: #DynamicCRUD
+    }, 
+);
 
 annotate service.Storage with @(
-    UI.SelectionFields: [buildingFloor ],
+    UI.SelectionFields: [buildingFloor],
     UI.LineItem       : [
         {
             $Type: 'UI.DataField',
@@ -88,6 +97,11 @@ annotate service.Storage with @(
 );
 
 annotate service.StorageSlot with @UI: {LineItem: [
+    {
+        $Type : 'UI.DataFieldForAction',
+        Action: 'com.sap.internal.digitallab.packagehandling.service.StorageService.EntityContainer/massCreate',
+        Label : '{i18n>Mass Create}'
+    },
     {
         $Type: 'UI.DataField',
         Label: 'Name',
