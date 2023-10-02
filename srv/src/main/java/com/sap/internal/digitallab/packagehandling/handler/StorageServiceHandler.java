@@ -16,24 +16,16 @@ import cds.gen.com.sap.internal.digitallab.packagehandling.service.storageservic
 import cds.gen.com.sap.internal.digitallab.packagehandling.service.storageservice.Storage_;
 import cds.gen.com.sap.internal.digitallab.packagehandling.service.storageservice.MassCreateContext;
 import cds.gen.com.sap.internal.digitallab.packagehandling.service.storageservice.StorageService_;
-import cds.gen.com.sap.internal.digitallab.packagehandling.core.Package;
 import cds.gen.com.sap.internal.digitallab.packagehandling.core.Package_;
 
 import com.sap.cds.Result;
 import com.sap.cds.ql.Insert;
 import com.sap.cds.ql.Select;
-import com.sap.cds.ql.Update;
 import com.sap.cds.ql.cqn.CqnInsert;
 import com.sap.cds.ql.cqn.CqnSelect;
-import com.sap.cds.ql.cqn.CqnSelectList;
-import com.sap.cds.ql.cqn.CqnUpdate;
 import com.sap.cds.reflect.CdsEntity;
-import com.sap.cds.services.ErrorStatus;
-import com.sap.cds.services.ErrorStatuses;
 import com.sap.cds.services.EventContext;
-import com.sap.cds.services.ServiceException;
 import com.sap.cds.services.cds.ApplicationService;
-import com.sap.cds.services.cds.CdsReadEventContext;
 import com.sap.cds.services.cds.CqnService;
 import com.sap.cds.services.handler.EventHandler;
 import com.sap.cds.services.handler.annotations.After;
@@ -41,7 +33,6 @@ import com.sap.cds.services.handler.annotations.Before;
 import com.sap.cds.services.handler.annotations.On;
 import com.sap.cds.services.handler.annotations.ServiceName;
 import com.sap.cds.services.persistence.PersistenceService;
-import com.sap.internal.digitallab.MessageKeys;
 
 @Component
 @ServiceName(StorageService_.CDS_NAME)
@@ -105,26 +96,17 @@ public class StorageServiceHandler implements EventHandler {
     public void calSlotTotalPackages(Stream<StorageSlot> slots) {
         slots.forEach(
                 slot -> slot.setTotalPackages(
-                        slot.getPackages() == null ? 0 : slot.getPackages().size()));
-
+                        cntTotalPackageInSingleSlot(slot.getId())));
     }
 
     @After(event = { CqnService.EVENT_READ, CqnService.EVENT_CREATE })
     public void calTotalPackagesMultipleStorages(Stream<Storage> storages) {
-        storages.forEach(this::calculateTotalPackagesSingleStorage);
+        storages.forEach(this::calTotalPackagesSingleStorage);
     }
 
     @After(event = CqnService.EVENT_READ, entity = Storage_.CDS_NAME)
     public void calCurrentPackagesMultipleStorages(Stream<Storage> storages) {
-
-        storages.forEach(storage -> {
-            List<StorageSlot> slots = storage.getStorageSlot();
-            storage.setCurrentPackages(
-                    (slots == null)
-                            ? 0
-                            : calConfirmedInSlot(slots));
-        });
-
+        storages.forEach(this::calConfirmedPackagesSingleStorage);
     }
 
     /**
@@ -220,30 +202,64 @@ public class StorageServiceHandler implements EventHandler {
      * 
      * @param storage Storage
      */
-    private void calculateTotalPackagesSingleStorage(Storage storage) {
-        List<StorageSlot> slots = storage.getStorageSlot();
-        if (slots == null) {
-            storage.setTotalPackages(0);
-        } else {
-            int total = slots.stream().mapToInt(s -> s.getTotalPackages()).sum();
-            storage.setTotalPackages(total);
-            LOGGER.atInfo().log("{} has {} packages", storage.getId(), total);
-        }
+    private void calTotalPackagesSingleStorage(Storage storage) {
+
+        Result rowsOfSlotsEntity = selectSlotsByStorateId(storage.getId());
+
+        int total = rowsOfSlotsEntity
+                .stream()
+                .mapToInt(r -> cntTotalPackageInSingleSlot(r.get("ID").toString()))
+                .sum();
+
+        storage.setTotalPackages(total);
+        LOGGER.atInfo().log("{} has {} packages", storage.getId(), total);
     }
 
-    private int calConfirmedInSlot(List<StorageSlot> slots) {
-        return slots.stream().mapToInt(slot -> {
-            List<Package> packages = slot.getPackages();
-            return (packages != null)
-                    ? countConfirmedPackages(packages)
-                    : 0;
-        }).sum();
+    /**
+     * Sets the given storage's total package number.
+     * 
+     * @param storage Storage
+     */
+    private void calConfirmedPackagesSingleStorage(Storage storage) {
+
+        Result rowsOfSlotsEntity = selectSlotsByStorateId(storage.getId());
+
+        int total = rowsOfSlotsEntity
+                .stream()
+                .mapToInt(r -> cntConfirmedInSingleSlot(r.get("ID").toString()))
+                .sum();
+
+        storage.setCurrentPackages(total);
+        LOGGER.atInfo().log("{} has {} packages", storage.getId(), total);
     }
 
-    private int countConfirmedPackages(List<Package> packages) {
-        return (int) (packages.stream()
-                .filter(p -> p.getStatusCode().equals("confirmed"))
-                .count());
+    /**
+     * Calculates the number of confirmed packages in a slot.
+     * 
+     * @param slotId UUID of the slot.
+     * @return the number.
+     */
+    private int cntConfirmedInSingleSlot(String slotId) {
+
+        Result rowsOfPackage = selectPackagesBySlotId(slotId);
+        return (int) rowsOfPackage
+                .stream()
+                .filter(r -> r.get("status_code").equals("confirmed"))
+                .count();
+    }
+
+    /**
+     * Calculates the total number of packages in a slot.
+     * 
+     * @param slotId UUID of the slot.
+     * @return the number.
+     */
+    private int cntTotalPackageInSingleSlot(String slotId) {
+
+        Result rowsOfPackage = selectPackagesBySlotId(slotId);
+        return (int) rowsOfPackage
+                .stream()
+                .count();
     }
 
     private void calSingleSlotDeleteAc(StorageSlot slot) {
@@ -261,5 +277,23 @@ public class StorageServiceHandler implements EventHandler {
         LOGGER.atInfo().log("slots is {}", rows);
         boolean canDelete = rows.stream().allMatch(r -> !r.get("status_code").equals("inuse"));
         storage.setDeleteAc(canDelete);
+    }
+
+    private Result selectSlotsByStorateId(String storageId) {
+        CqnSelect select = Select
+                .from(StorageSlot_.class)
+                .columns("ID", "status_code")
+                .where(s -> s.storage_ID().eq(storageId));
+
+        return db.run(select);
+    }
+
+    private Result selectPackagesBySlotId(String slotId) {
+        CqnSelect select = Select
+                .from(Package_.class)
+                .columns("ID", "status_code")
+                .where(s -> s.slot_ID().eq(slotId));
+
+        return db.run(select);
     }
 }
