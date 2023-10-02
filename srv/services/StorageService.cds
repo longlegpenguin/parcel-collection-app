@@ -3,7 +3,9 @@ namespace com.sap.internal.digitallab.packagehandling.service;
 using {com.sap.internal.digitallab.packagehandling.core as core} from '../../db/models/packagehandling/';
 using {com.sap.internal.digitallab.packagehandling.common as common} from '../../db/models/common/';
 
-
+/**
+ * Service definition
+ */
 @path: 'StorageService'
 service StorageService {
 
@@ -31,3 +33,18 @@ service StorageService {
 
     action massCreate(row : Integer, rowType : String(1), col : Integer, colType : String(1), storage : UUID) returns Integer;
 }
+
+/**
+ * Input validation
+ */
+annotate core.Storage with {
+    name          @mandatory;
+    buildingFloor @mandatory;
+};
+
+annotate core.StorageSlot with {
+    name    @mandatory;
+    storage @mandatory;
+    status  @readonly;
+    storage @assert.target;
+};
