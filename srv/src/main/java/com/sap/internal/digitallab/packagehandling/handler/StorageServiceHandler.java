@@ -19,6 +19,7 @@ import cds.gen.com.sap.internal.digitallab.packagehandling.service.storageservic
 import cds.gen.com.sap.internal.digitallab.packagehandling.core.Package;
 import cds.gen.com.sap.internal.digitallab.packagehandling.core.Package_;
 
+import com.sap.cds.Result;
 import com.sap.cds.ql.Insert;
 import com.sap.cds.ql.Select;
 import com.sap.cds.ql.Update;
@@ -26,8 +27,13 @@ import com.sap.cds.ql.cqn.CqnInsert;
 import com.sap.cds.ql.cqn.CqnSelect;
 import com.sap.cds.ql.cqn.CqnSelectList;
 import com.sap.cds.ql.cqn.CqnUpdate;
+import com.sap.cds.reflect.CdsEntity;
+import com.sap.cds.services.ErrorStatus;
+import com.sap.cds.services.ErrorStatuses;
 import com.sap.cds.services.EventContext;
+import com.sap.cds.services.ServiceException;
 import com.sap.cds.services.cds.ApplicationService;
+import com.sap.cds.services.cds.CdsReadEventContext;
 import com.sap.cds.services.cds.CqnService;
 import com.sap.cds.services.handler.EventHandler;
 import com.sap.cds.services.handler.annotations.After;
@@ -35,6 +41,7 @@ import com.sap.cds.services.handler.annotations.Before;
 import com.sap.cds.services.handler.annotations.On;
 import com.sap.cds.services.handler.annotations.ServiceName;
 import com.sap.cds.services.persistence.PersistenceService;
+import com.sap.internal.digitallab.MessageKeys;
 
 @Component
 @ServiceName(StorageService_.CDS_NAME)
@@ -44,9 +51,9 @@ public class StorageServiceHandler implements EventHandler {
     PersistenceService db;
 
     private static final Logger LOGGER = LoggerFactory.getLogger("storage_logger");
-    // @Autowired
-    // @Qualifier("StorageService")
-    // private ApplicationService storageService;
+    @Autowired
+    @Qualifier(StorageService_.CDS_NAME)
+    private ApplicationService storageService;
 
     /**
      * ------------------------------------------------------------------------------
@@ -121,6 +128,11 @@ public class StorageServiceHandler implements EventHandler {
     }
 
     /**
+     * ------------------------------------------------------------------------------
+     * Virtual action control fields caculations
+     * ------------------------------------------------------------------------------
+     */
+    /**
      * Calculate virtual field DeleteAc of Storages,
      * true if a all slots in the storage have DeleteAC true.
      *
@@ -152,30 +164,17 @@ public class StorageServiceHandler implements EventHandler {
      * Custom preprocessing, handling and postprocessing.
      * ------------------------------------------------------------------------------
      */
-    /**
-     * Throws exception if the storage being deleting contains non-empty slots.
-     *
-     * @param context EventContext
-     */
-    // @Before(event = CqnService.EVENT_DELETE, entity = Storage_.CDS_NAME)
-    // public void validateStorageRemovable(EventContext context) {
-    // // TODO
-    // }
 
-    // /**
-    // * Deletes storage and its slots.
-    // *
-    // * @param context EventContext
-    // */
-    // @On(event = CqnService.EVENT_DELETE, entity = Storage_.CDS_NAME)
-    // public void deleteStorage(EventContext context) {
-    // // TODO
-    // }
+    @On(event = CqnService.EVENT_DELETE)
+    public void anyDelete(EventContext context) {
+        CdsEntity slot = context.getTarget();
+        LOGGER.atInfo().log("On deletion occurs {}", slot);
+    }
 
-    // @After(event = CqnService.EVENT_READ, entity = Storage_.CDS_NAME)
-    // public void calculateTotalPackages(List<Storage> storages) {
-    // storages.stream().forEach(this::calculateTotalPackages);
-    // }
+    @Before(event = CqnService.EVENT_DELETE)
+    public void anyBeforeDelete(EventContext context) {
+        LOGGER.atInfo().log("Before deletion occurs");
+    }
 
     /**
      * ------------------------------------------------------------------------------
@@ -253,12 +252,14 @@ public class StorageServiceHandler implements EventHandler {
     }
 
     private void calSingleStorageDeleteAc(Storage storage) {
-        List<StorageSlot> slots = storage.getStorageSlot();
-        if (slots != null) {
-            boolean canDelete = slots.stream().allMatch(s -> s.getDeleteAc());
-            storage.setDeleteAc(canDelete);
-        } else {
-            storage.setDeleteAc(true);
-        }
+        CqnSelect select = Select
+                .from(StorageSlot_.class)
+                .columns("name", "status_code")
+                .where(s -> s.storage_ID().eq(storage.getId()));
+
+        Result rows = db.run(select);
+        LOGGER.atInfo().log("slots is {}", rows);
+        boolean canDelete = rows.stream().allMatch(r -> !r.get("status_code").equals("inuse"));
+        storage.setDeleteAc(canDelete);
     }
 }

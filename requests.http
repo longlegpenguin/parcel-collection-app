@@ -45,9 +45,19 @@ Authorization: Basic YWRtaW46YWRtaW4=
 
 {
     "name" : "S200",
+    "locationInstructions": "Ghost place",
+    "map": "https://longlegpenguin.githu.io",
     "buildingFloor" : "7D5A658D-D9C1-44E6-9DA0-1D29069C4617"
 }
 
 # GET http://localhost:8080/odata/v4/StorageService/Storage
 # Content-Type: application/json
 # Authorization: Basic authenticated:
+
+### Delete a slot
+DELETE http://localhost:8080/api/StorageService/StorageSlot(ID=94b5eef2-8ec5-4c2e-87e6-d78809f01c68,IsActiveEntity=true) HTTP/1.1
+Authorization: Basic YWRtaW46YWRtaW4=
+
+### 
+DELETE http://localhost:8080/api/StorageService/StorageSlot(ID=94b5eef2-8ec5-4c2e-87e6-d78809f01c68,IsActiveEntity=false) HTTP/1.1
+Authorization: Basic YWRtaW46YWRtaW4=
