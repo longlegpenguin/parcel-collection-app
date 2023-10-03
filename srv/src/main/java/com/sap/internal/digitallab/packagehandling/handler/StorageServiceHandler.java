@@ -23,13 +23,10 @@ import com.sap.cds.ql.Insert;
 import com.sap.cds.ql.Select;
 import com.sap.cds.ql.cqn.CqnInsert;
 import com.sap.cds.ql.cqn.CqnSelect;
-import com.sap.cds.reflect.CdsEntity;
-import com.sap.cds.services.EventContext;
 import com.sap.cds.services.cds.ApplicationService;
 import com.sap.cds.services.cds.CqnService;
 import com.sap.cds.services.handler.EventHandler;
 import com.sap.cds.services.handler.annotations.After;
-import com.sap.cds.services.handler.annotations.Before;
 import com.sap.cds.services.handler.annotations.On;
 import com.sap.cds.services.handler.annotations.ServiceName;
 import com.sap.cds.services.persistence.PersistenceService;
@@ -144,17 +141,6 @@ public class StorageServiceHandler implements EventHandler {
      * ------------------------------------------------------------------------------
      */
 
-    // @On(event = CqnService.EVENT_DELETE)
-    // public void anyDelete(EventContext context) {
-    // CdsEntity slot = context.getTarget();
-    // LOGGER.atInfo().log("On deletion occurs {}", slot);
-    // }
-
-    // @Before(event = CqnService.EVENT_DELETE)
-    // public void anyBeforeDelete(EventContext context) {
-    // LOGGER.atInfo().log("Before deletion occurs");
-    // }
-
     /**
      * ------------------------------------------------------------------------------
      * Helper functions
@@ -219,10 +205,7 @@ public class StorageServiceHandler implements EventHandler {
      */
     private void calConfirmedPackagesSingleStorage(Storage storage) {
 
-        LOGGER.atInfo().log("Iamhere---------------------");
-
         Result rowsOfSlotsEntity = selectSlotsByStorateId(storage.getId());
-        LOGGER.atInfo().log("Iamdone---------------------");
 
         int total = rowsOfSlotsEntity
                 .stream()
@@ -263,14 +246,12 @@ public class StorageServiceHandler implements EventHandler {
     }
 
     private void calSingleSlotDeleteAc(StorageSlot slot) {
-
-        slot.setDeleteAc(
-                cntConfirmedInSingleSlot(slot.getId()) == 0);
+        slot.setDeleteAc(cntConfirmedInSingleSlot(slot.getId()) == 0);
     }
 
     private void calSingleStorageDeleteAc(Storage storage) {
 
-        Result rows = selectSlotsByStorateId(storage.getId() + "");
+        Result rows = selectSlotsByStorateId(storage.getId());
         LOGGER.atInfo().log("slots is {}", rows);
         boolean canDelete = rows
                 .stream()
@@ -283,7 +264,6 @@ public class StorageServiceHandler implements EventHandler {
                 .from(StorageSlot_.class)
                 .columns("ID", "status_code")
                 .where(s -> s.storage_ID().eq(storageId));
-        LOGGER.atInfo().log("SELECT!!!!!!!!!!!!!!!!!!!!!!");
         return db.run(select);
     }
 
