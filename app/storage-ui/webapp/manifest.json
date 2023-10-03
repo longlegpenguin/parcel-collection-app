@@ -119,7 +119,7 @@
           "target": "StorageObjectPage"
         },
         {
-          "pattern": "Storage({key})/storageSlot({key2}):?query:",
+          "pattern": "storageSlot({key2}):?query:",
           "name": "StorageSlotObjectPage",
           "target": "StorageSlotObjectPage"
         }
@@ -140,11 +140,13 @@
                   }
                 }
               },
+              "initialLoad": true,
               "controlConfiguration": {
                 "@com.sap.vocabularies.UI.v1.LineItem": {
                   "tableSettings": {
                     "type": "ResponsiveTable",
-                    "selectionMode": "Auto"
+                    "selectionMode": "Auto",
+                    "showCounts": true
                   }
                 }
               }
@@ -159,11 +161,54 @@
             "settings": {
               "editableHeaderContent": false,
               "entitySet": "Storage",
+              "sectionLayout": "Tabs",
+              "variantManagement": "Control",
+              "showRelatedApps": true,
               "navigation": {
                 "storageSlot": {
                   "detail": {
                     "route": "StorageSlotObjectPage"
                   }
+                }
+              }
+            },
+            "controlConfiguration": {
+              "storageSlot/@com.sap.vocabularies.UI.v1.LineItem": {
+                "tableSettings": {
+                  "type": "GridTable",
+                  "enablePaste": true,
+                  "enableFullScreen": true,
+                  "creationMode": {
+                    "name": "Inline",
+                    "createAtEnd": true
+                  },
+                  "personalization": {
+                    "column": true,
+                    "sort": false,
+                    "filter": true
+                  },
+                  "editableHeaderContent": false,
+                  "showRelatedApps": true,
+                  "enableMassEdit": true,
+                  "quickVariantSelection": {
+                    "paths": [
+                      {
+                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionVariant#variant1"
+                      },
+                      {
+                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionVariant#variant2"
+                      },
+                      {
+                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionVariant#variant3"
+                      },
+                      {
+                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionVariant#variant4"
+                      }
+                    ],
+                    "hideTableTitle": false,
+                    "showCounts": true
+                  },
+                  "enableExport": true
                 }
               }
             }
@@ -175,18 +220,19 @@
           "name": "sap.fe.templates.ObjectPage",
           "options": {
             "settings": {
-              "editableHeaderContent": false,
-              "entitySet": "StorageSlot"
+              "editableHeaderContent": true,
+              "entitySet": "StorageSlot",
+              "sectionLayout": "Page"
             }
           }
         }
       }
+    },
+    "sap.fiori": {
+      "registrationIds": [
+        "storage_service_ui"
+      ],
+      "archeType": "transactional"
     }
-  },
-  "sap.fiori": {
-    "registrationIds": [
-      "storage_service_ui"
-    ],
-    "archeType": "transactional"
   }
 }
