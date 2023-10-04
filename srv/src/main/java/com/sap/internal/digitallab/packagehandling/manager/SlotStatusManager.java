@@ -1,11 +1,11 @@
-package com.sap.internal.digitallab.packagehandling.service;
+package com.sap.internal.digitallab.packagehandling.manager;
 
 import org.springframework.stereotype.Component;
 
 import cds.gen.com.sap.internal.digitallab.packagehandling.core.SlotStatus;
 
 @Component
-public class SlotStatusServiceImpl {
+public class SlotStatusManager {
 
     public final String EMPTY_STATUS = "empty";
     public final String UNAVAILABLE_STATUS = "unavailable";

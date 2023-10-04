@@ -1,4 +1,4 @@
-package com.sap.internal.digitallab.packagehandling.service;
+package com.sap.internal.digitallab.packagehandling.manager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,18 +11,20 @@ import com.sap.internal.digitallab.packagehandling.repository.StorageRespository
 import cds.gen.com.sap.internal.digitallab.packagehandling.service.storageservice.Storage;
 
 @Component
-public class StorageServiceImpl /* extends BaseService */ {
+public class StorageManager /* extends BaseManager */ {
 
     private static final Logger LOGGER = LoggerFactory.getLogger("StorageSlotServiceImpl_LOGGER");
 
-    @Autowired
-    private StorageRespository storageResp;
+    private final StorageRespository storageResp;
+    private final StorageSlotManager slotManager;
+    private final SlotStatusManager statusManager;
 
     @Autowired
-    private StorageSlotServiceImpl slotSrv;
-
-    @Autowired
-    private SlotStatusServiceImpl statusSrv;
+    public StorageManager(StorageRespository storageResp, StorageSlotManager slotManager, SlotStatusManager statusManager) {
+        this.slotManager = slotManager;
+        this.statusManager = statusManager;
+        this.storageResp = storageResp;
+    }
 
     /**
      * Updates the given storage's total package number virtual field.
@@ -36,7 +38,7 @@ public class StorageServiceImpl /* extends BaseService */ {
 
         int total = rowsOfSlotsEntity
                 .stream()
-                .mapToInt(r -> slotSrv.cntTotalPackagesNumber(r.get("ID").toString()))
+                .mapToInt(r -> slotManager.cntTotalPackagesNumber(r.get("ID").toString()))
                 .sum();
 
         storage.setTotalPackages(total);
@@ -54,7 +56,7 @@ public class StorageServiceImpl /* extends BaseService */ {
 
         int total = rowsOfSlotsEntity
                 .stream()
-                .mapToInt(r -> slotSrv.cntConfirmedPackagesNumber(r.get("ID").toString()))
+                .mapToInt(r -> slotManager.cntConfirmedPackagesNumber(r.get("ID").toString()))
                 .sum();
 
         storage.setCurrentPackages(total);
@@ -64,14 +66,14 @@ public class StorageServiceImpl /* extends BaseService */ {
      * Evaluates and updates virtual field DeleteAc for storages,
      * true if all slots are not in use.
      * 
-     * @param storage
+     * @param storage Storage from storage service
      */
     public void updateDeleteAc(Storage storage) {
         Result rows = storageResp.selectSlotsById(storage.getId());
         LOGGER.atInfo().log("Read slots {}", rows);
         boolean canDelete = rows
                 .stream()
-                .allMatch(r -> !r.get("status_code").equals(statusSrv.INUSE_STATUS));
+                .noneMatch(r -> r.get("status_code").equals(statusManager.INUSE_STATUS));
         storage.setDeleteAc(canDelete);
     }
 }

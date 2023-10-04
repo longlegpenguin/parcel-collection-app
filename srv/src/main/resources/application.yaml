@@ -3,7 +3,7 @@ spring:
   sql.init.schema-locations: classpath:schema-h2.sql
   web.resources.static-locations: "file:./app/"
 cds:
-  datasource.auto-config.enabled: false
+  data-source.auto-config.enabled: false
   sql.supportedLocales: "*" ## cut
   odata-v4.endpoint.path: "/api"
   odata-v4.serializer.enabled: true
@@ -23,3 +23,5 @@ cds:
         password: manager
         roles:
         - FacilityManager
+server:
+  port: 8084

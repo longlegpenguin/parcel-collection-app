@@ -1,35 +1,35 @@
-package com.sap.internal.digitallab.packagehandling.service;
+package com.sap.internal.digitallab.packagehandling.manager;
 
+import cds.gen.com.sap.internal.digitallab.packagehandling.service.storageservice.StorageSlot;
+import com.sap.cds.Result;
+import com.sap.internal.digitallab.packagehandling.repository.PackageRespository;
+import com.sap.internal.digitallab.packagehandling.repository.StorageSlotRespository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.sap.cds.Result;
-import com.sap.internal.digitallab.packagehandling.repository.PackageRespository;
-import com.sap.internal.digitallab.packagehandling.repository.StorageSlotRespository;
-
-import cds.gen.com.sap.internal.digitallab.packagehandling.service.storageservice.StorageSlot;
-
 @Component
-public class StorageSlotServiceImpl {
+public class StorageSlotManager {
 
     private static final Logger LOGGER = LoggerFactory.getLogger("StorageSlotServiceImpl_LOGGER");
 
-    @Autowired
-    SlotStatusServiceImpl slotStatusSrv;
-
-    @Autowired
+    SlotStatusManager slotStatusManager;
     StorageSlotRespository slotResp;
+    PackageRespository packageResp;
 
     @Autowired
-    PackageRespository packageResp;
+    public StorageSlotManager(SlotStatusManager slotStatusManager, StorageSlotRespository slotResp, PackageRespository packageResp) {
+        this.slotResp = slotResp;
+        this.slotStatusManager = slotStatusManager;
+        this.packageResp = packageResp;
+    }
 
     /**
      * Evaluates and updates virtual field DeleteAc for slots,
      * true if slot status is not inuse.
      *
-     * @param slots Stream<StorageSlot> slots to be checked.
+     * @param slot StorageSlot slot to be checked.
      */
     public void updateDeleteAc(StorageSlot slot) {
         slot.setDeleteAc(cntConfirmedPackagesNumber(slot.getId()) == 0);
@@ -53,7 +53,7 @@ public class StorageSlotServiceImpl {
                 String slotName = genSlotName(i, j, rowType, colType);
 
                 if (!isSlotNameExist(slotName, storageId)) {
-                    slotResp.insert(slotName, slotStatusSrv.emptySlotStatus(), storageId);
+                    slotResp.insert(slotName, slotStatusManager.emptySlotStatus(), storageId);
                     cnt++;
                 }
             }
@@ -114,7 +114,7 @@ public class StorageSlotServiceImpl {
      * @param colCode ordinal number for column
      * @param rowType C for charactor, N for number
      * @param colType C for charactor, N for number
-     * @return
+     * @return name of slot
      */
     private String genSlotName(int rowCode, int colCode, String rowType, String colType) {
         return translateSlotNameCode(rowCode, rowType) + " - " + translateSlotNameCode(colCode, colType);
