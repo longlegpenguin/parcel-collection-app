@@ -1,0 +1,14 @@
+{
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.FacilityManager",
+      "description": "FacilityManager"
+    },
+    {
+      "name": "$XSAPPNAME.Administrator",
+      "description": "Administrator"
+    }
+  ],
+  "attributes": [],
+  "role-templates": []
+}

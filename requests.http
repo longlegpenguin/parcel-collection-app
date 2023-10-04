@@ -1,0 +1,76 @@
+### mass creation
+POST http://localhost:8084/api/StorageService/massCreate HTTP/1.1
+Content-Type: application/json
+Authorization: Basic YWRtaW46YWRtaW4=
+
+{
+    "row" :3,
+    "rowType" : "C",
+    "col" : 4,
+    "colType" : "N",
+    "storage" : "92A5F984-7C3B-4A36-9883-4F7EDBA1D9F3"
+}
+
+### Get storage slot
+GET http://localhost:8084/api/StorageService/StorageSlot
+Content-Type: application/json
+Authorization: Basic YWRtaW46YWRtaW4=
+
+
+### Get storage slot
+GET http://localhost:8080/api/StorageService/
+Content-Type: application/json
+Authorization: Basic YWRtaW46YWRtaW4=
+
+### Get storages
+GET http://localhost:8080/api/StorageService/Storage
+Content-Type: application/json
+Authorization: Basic YWRtaW46YWRtaW4=
+
+
+### Get specific storage
+GET http://localhost:8080/api/StorageService/Storage(ID=92a5f984-7c3b-4a36-9883-4f7edba1d9f3,IsActiveEntity=true)
+Content-Type: application/json
+Authorization: Basic YWRtaW46YWRtaW4=
+
+### Get slot status
+GET http://localhost:8080/api/StorageService/SlotStatus
+Content-Type: application/json
+Authorization: Basic YWRtaW46YWRtaW4=
+
+### Insert new storage
+POST http://localhost:8080/api/StorageService/Storage HTTP/1.1
+Content-Type: application/json
+Authorization: Basic YWRtaW46YWRtaW4=
+
+{
+    "name" : "S200",
+    "locationInstructions": "Ghost place",
+    "map": "https://longlegpenguin.githu.io",
+    "buildingFloor" : "7D5A658D-D9C1-44E6-9DA0-1D29069C4617"
+}
+
+###
+# GET http://localhost:8080/odata/v4/StorageService/Storage
+# Content-Type: application/json
+# Authorization: Basic authenticated:
+
+### Delete a slot
+DELETE http://localhost:8080/api/StorageService/StorageSlot(ID=94b5eef2-8ec5-4c2e-87e6-d78809f01c68,IsActiveEntity=true) HTTP/1.1
+Authorization: Basic YWRtaW46YWRtaW4=
+
+### 
+DELETE http://localhost:8080/api/StorageService/StorageSlot(ID=94b5eef2-8ec5-4c2e-87e6-d78809f01c68,IsActiveEntity=false) HTTP/1.1
+Authorization: Basic YWRtaW46YWRtaW4=
+
+/Storage(ID=adf15060-9907-4ea3-be7e-db12a6277165,IsActiveEntity=true)/
+### 
+GET http://localhost:8084/api/StorageService/StorageSlot(ID=9be3cedc-e657-4a8b-b37e-ffc494d96952) HTTP/1.1
+Authorization: Basic YWRtaW46YWRtaW4=
+### 
+GET http://localhost:8084/api/StorageService/Storage(ID=adf15060-9907-4ea3-be7e-db12a6277165,IsActiveEntity=true)/storageSlot(ID=9be3cedc-e657-4a8b-b37e-ffc494d96952,IsActiveEntity=true) HTTP/1.1
+Authorization: Basic YWRtaW46YWRtaW4=
+
+###
+GET http://localhost:8084/api/StorageService/Storage(ID=adf15060-9907-4ea3-be7e-db12a6277165)/storageSlot(ID=94b5eef2-8ec5-4c2e-87e6-d78809f01c68) HTTP/1.1
+Authorization: Basic YWRtaW46YWRtaW4=

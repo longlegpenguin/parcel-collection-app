@@ -5,6 +5,14 @@
   "license": "ISC",
   "repository": "https://github.tools.sap/DigitalLabHungary/packagehandling.git",
   "devDependencies": {
-    "@sap/cds-dk": "^7"
+    "@sap/cds-dk": "^7",
+    "@sap/ux-specification": "^1.108.15"
+  },
+  "sapux": [
+    "app/storage-ui"
+  ],
+  "dependencies": {
+    "@sap/xssec": "^3.3.5",
+    "passport": "^0.6.0"
   }
 }
