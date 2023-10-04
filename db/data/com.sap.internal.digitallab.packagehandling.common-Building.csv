@@ -1,3 +1,4 @@
 ID,createdAt,createdBy,modifiedAt,modifiedBy,name,address,coordinates,phoneNumber,map
 7D5A658D-D9C1-44E6-9DA0-1D29069C4617,2018-08-19T16:11:20.884Z,I123456,,,S1,"Budapest, I, Graphisoft Park Building S, Záhony u. 7, 1031",Some Name,234567,https://www.google.com/maps
 C088942C-8D1E-463C-8097-6CB9D25F23F9,2018-08-19T16:11:20.884Z,I123456,,,S2,"Budapest, I, Graphisoft Park Building S, Záhony u. 7, 1031",Another Name,123456,https://www.google.com/maps
+701F6D00-6B96-4B6E-AB7F-457364C3ECCB,2018-08-19T16:11:20.884Z,I123457,,,S4,"Budapest, I, Graphisoft Park Building S, Záhony u. 7, 1032",S4 Coor Name,890534,https://www.google.com/maps
