@@ -7,6 +7,10 @@ using {
 using {com.sap.internal.digitallab.packagehandling.core.Package} from './Package.cds';
 using {com.sap.internal.digitallab.packagehandling.core.StorageSlot} from './StorageSlot.cds';
 
+@assert.unique: {nbunique: [
+    name,
+    buildingFloor
+]}
 entity Storage : cuid, managed {
     name                    : String(255) not null;
     buildingFloor           : UUID not null;

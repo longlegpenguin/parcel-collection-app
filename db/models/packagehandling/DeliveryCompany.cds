@@ -6,6 +6,8 @@ using {
 } from '@sap/cds/common';
 using {com.sap.internal.digitallab.packagehandling.core.Package} from './Package.cds';
 
+@assert.unique: {nbunique: [name]}
+
 entity DeliveryCompany : cuid, managed {
     name     : String(255) not null;
     logo     : String(255)  @Core.IsURL  @Core.IsMediaType;

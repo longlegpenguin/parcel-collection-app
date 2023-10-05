@@ -2,6 +2,7 @@
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_StorageService_Storage;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_StorageService_StorageSlot;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_StorageService_SlotStatus;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_StorageService_DraftAdministrativeData;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_common_Receptionist;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_common_Reception;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_core_Storage;
@@ -20,6 +21,9 @@ DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_StorageS
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_StorageService_SlotStatus;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_StorageService_StorageSlot;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_StorageService_Storage;
+DROP TABLE IF EXISTS com_sap_internal_digitallab_packagehandling_service_StorageService_StorageSlot_drafts;
+DROP TABLE IF EXISTS com_sap_internal_digitallab_packagehandling_service_StorageService_Storage_drafts;
+DROP TABLE IF EXISTS DRAFT_DraftAdministrativeData;
 DROP TABLE IF EXISTS com_sap_internal_digitallab_packagehandling_core_SlotStatus_texts;
 DROP TABLE IF EXISTS com_sap_internal_digitallab_packagehandling_core_PackageType_texts;
 DROP TABLE IF EXISTS com_sap_internal_digitallab_packagehandling_core_PackageStatus_texts;
@@ -141,7 +145,8 @@ CREATE TABLE com_sap_internal_digitallab_packagehandling_core_DeliveryCompany (
   modifiedBy NVARCHAR(255),
   name NVARCHAR(255) NOT NULL,
   logo NVARCHAR(255),
-  PRIMARY KEY(ID)
+  PRIMARY KEY(ID),
+  CONSTRAINT com_sap_internal_digitallab_packagehandling_core_DeliveryCompany_nbunique UNIQUE (name)
 ); 
 
 CREATE TABLE com_sap_internal_digitallab_packagehandling_core_Package (
@@ -193,7 +198,8 @@ CREATE TABLE com_sap_internal_digitallab_packagehandling_core_Storage (
   buildingFloor NVARCHAR(36) NOT NULL,
   locationInstructions NVARCHAR(1000),
   map NVARCHAR(255),
-  PRIMARY KEY(ID)
+  PRIMARY KEY(ID),
+  CONSTRAINT com_sap_internal_digitallab_packagehandling_core_Storage_nbunique UNIQUE (name, buildingFloor)
 ); 
 
 CREATE TABLE com_sap_internal_digitallab_packagehandling_core_StorageSlot (
@@ -205,7 +211,8 @@ CREATE TABLE com_sap_internal_digitallab_packagehandling_core_StorageSlot (
   name NVARCHAR(255) NOT NULL,
   storage_ID NVARCHAR(36) NOT NULL,
   status_code NVARCHAR(255) NOT NULL,
-  PRIMARY KEY(ID)
+  PRIMARY KEY(ID),
+  CONSTRAINT com_sap_internal_digitallab_packagehandling_core_StorageSlot_nbunique UNIQUE (name, storage_ID)
 ); 
 
 CREATE TABLE com_sap_internal_digitallab_packagehandling_core_LocalUserData (
@@ -247,6 +254,51 @@ CREATE TABLE com_sap_internal_digitallab_packagehandling_core_SlotStatus_texts (
   descr NVARCHAR(1000),
   code NVARCHAR(255) NOT NULL,
   PRIMARY KEY(locale, code)
+); 
+
+CREATE TABLE DRAFT_DraftAdministrativeData (
+  DraftUUID NVARCHAR(36) NOT NULL,
+  CreationDateTime TIMESTAMP(7),
+  CreatedByUser NVARCHAR(256),
+  DraftIsCreatedByMe BOOLEAN,
+  LastChangeDateTime TIMESTAMP(7),
+  LastChangedByUser NVARCHAR(256),
+  InProcessByUser NVARCHAR(256),
+  DraftIsProcessedByMe BOOLEAN,
+  PRIMARY KEY(DraftUUID)
+); 
+
+CREATE TABLE com_sap_internal_digitallab_packagehandling_service_StorageService_Storage_drafts (
+  ID NVARCHAR(36) NOT NULL,
+  createdAt TIMESTAMP(7) NULL,
+  createdBy NVARCHAR(255) NULL,
+  modifiedAt TIMESTAMP(7) NULL,
+  modifiedBy NVARCHAR(255) NULL,
+  name NVARCHAR(255) NULL,
+  buildingFloor NVARCHAR(36) NULL,
+  locationInstructions NVARCHAR(1000) NULL,
+  map NVARCHAR(255) NULL,
+  IsActiveEntity BOOLEAN,
+  HasActiveEntity BOOLEAN,
+  HasDraftEntity BOOLEAN,
+  DraftAdministrativeData_DraftUUID NVARCHAR(36) NOT NULL,
+  PRIMARY KEY(ID)
+); 
+
+CREATE TABLE com_sap_internal_digitallab_packagehandling_service_StorageService_StorageSlot_drafts (
+  ID NVARCHAR(36) NOT NULL,
+  createdAt TIMESTAMP(7) NULL,
+  createdBy NVARCHAR(255) NULL,
+  modifiedAt TIMESTAMP(7) NULL,
+  modifiedBy NVARCHAR(255) NULL,
+  name NVARCHAR(255) NULL,
+  storage_ID NVARCHAR(36) NULL,
+  status_code NVARCHAR(255) NULL,
+  IsActiveEntity BOOLEAN,
+  HasActiveEntity BOOLEAN,
+  HasDraftEntity BOOLEAN,
+  DraftAdministrativeData_DraftUUID NVARCHAR(36) NOT NULL,
+  PRIMARY KEY(ID)
 ); 
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_StorageService_Storage AS SELECT
@@ -430,6 +482,17 @@ CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_common_Recepti
   L.reception_ID,
   L.guard
 FROM com_sap_internal_digitallab_packagehandling_common_Receptionist AS L; 
+
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_StorageService_DraftAdministrativeData AS SELECT
+  DraftAdministrativeData.DraftUUID,
+  DraftAdministrativeData.CreationDateTime,
+  DraftAdministrativeData.CreatedByUser,
+  DraftAdministrativeData.DraftIsCreatedByMe,
+  DraftAdministrativeData.LastChangeDateTime,
+  DraftAdministrativeData.LastChangedByUser,
+  DraftAdministrativeData.InProcessByUser,
+  DraftAdministrativeData.DraftIsProcessedByMe
+FROM DRAFT_DraftAdministrativeData AS DraftAdministrativeData; 
 
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_StorageService_SlotStatus AS SELECT
   SlotStatus_0.name,

@@ -11,6 +11,10 @@ using {
     com.sap.internal.digitallab.packagehandling.core.Package
 } from '.';
 
+@assert.unique: {nbunique: [
+    name,
+    storage
+]}
 entity StorageSlot : cuid, managed {
     name                  : String(255) not null;
     storage               : Association to one Storage not null;
