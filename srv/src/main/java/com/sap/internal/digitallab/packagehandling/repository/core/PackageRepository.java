@@ -1,4 +1,4 @@
-package com.sap.internal.digitallab.packagehandling.repository;
+package com.sap.internal.digitallab.packagehandling.repository.core;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +13,7 @@ import com.sap.cds.services.persistence.PersistenceService;
 import cds.gen.com.sap.internal.digitallab.packagehandling.core.Package_;
 
 @Component
-public class PackageRespository {
+public class PackageRepository {
     private static final Logger LOGGER = LoggerFactory.getLogger("PackageRespository_Logger");
 
     @Autowired
@@ -22,7 +22,7 @@ public class PackageRespository {
     /**
      * SELECT id, status_code FROM package where slot_id = $SlotId;
      * 
-     * @param SlotId
+     * @param slotId
      * @return Result rows
      */
     public Result readBySlotId(String slotId) {

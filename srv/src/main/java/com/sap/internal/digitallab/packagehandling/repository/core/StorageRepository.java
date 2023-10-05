@@ -1,4 +1,4 @@
-package com.sap.internal.digitallab.packagehandling.repository;
+package com.sap.internal.digitallab.packagehandling.repository.core;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +13,7 @@ import com.sap.cds.Result;
 import cds.gen.com.sap.internal.digitallab.packagehandling.core.StorageSlot_;
 
 @Component
-public class StorageRespository /* extends BaseRepository */ {
+public class StorageRepository /* extends BaseRepository */ {
 
     @Autowired
     PersistenceService db;

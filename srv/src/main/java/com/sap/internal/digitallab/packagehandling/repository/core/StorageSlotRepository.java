@@ -1,4 +1,4 @@
-package com.sap.internal.digitallab.packagehandling.repository;
+package com.sap.internal.digitallab.packagehandling.repository.core;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +17,7 @@ import cds.gen.com.sap.internal.digitallab.packagehandling.core.StorageSlot;
 import cds.gen.com.sap.internal.digitallab.packagehandling.core.StorageSlot_;
 
 @Component
-public class StorageSlotRespository {
+public class StorageSlotRepository {
 
     @Autowired
     PersistenceService db;
@@ -25,9 +25,10 @@ public class StorageSlotRespository {
     private static final Logger LOGGER = LoggerFactory.getLogger("slot_resp_logger");
 
     /**
-     * INSERT INTO storageslot VALUES ($slot);
-     * 
-     * @param slot slot to be inserted
+     * INSERT INTO storageslot VALUES ($name, $status, $storageId);
+     * @param name name of new slot
+     * @param status SlotStatus of new slot
+     * @param storageId String
      */
     public void insert(String name, SlotStatus status, String storageId) {
         StorageSlot slot = createSlot(name, storageId, status);
@@ -38,13 +39,13 @@ public class StorageSlotRespository {
     /**
      * SELECT name FROM storageslot where storage_id = $storageId;
      * 
-     * @param storageId
+     * @param storageId String
      * @return Result rows.
      */
     public Result selectNamesByStorageId(String storageId) {
         CqnSelect select = Select
                 .from(StorageSlot_.class)
-                .columns(s -> s.name())
+                .columns(StorageSlot_::name)
                 .where(s -> s.storage_ID().eq(storageId));
         return db.run(select);
     }
