@@ -1,9 +1,9 @@
-package com.sap.internal.digitallab.packagehandling.manager.core;
+package com.sap.internal.digitallab.packagehandling.manager;
 
 import cds.gen.com.sap.internal.digitallab.packagehandling.service.storageservice.StorageSlot;
 import com.sap.cds.Result;
-import com.sap.internal.digitallab.packagehandling.repository.core.PackageRepository;
-import com.sap.internal.digitallab.packagehandling.repository.core.StorageSlotRepository;
+import com.sap.internal.digitallab.packagehandling.repository.PackageRepository;
+import com.sap.internal.digitallab.packagehandling.repository.StorageSlotRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

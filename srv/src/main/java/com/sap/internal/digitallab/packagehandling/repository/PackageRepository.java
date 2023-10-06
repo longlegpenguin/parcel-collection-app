@@ -1,4 +1,4 @@
-package com.sap.internal.digitallab.packagehandling.repository.core;
+package com.sap.internal.digitallab.packagehandling.repository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

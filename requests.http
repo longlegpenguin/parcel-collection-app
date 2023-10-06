@@ -16,6 +16,10 @@ GET http://localhost:8084/api/StorageService/StorageSlot
 Content-Type: application/json
 Authorization: Basic YWRtaW46YWRtaW4=
 
+### Get building floor
+GET http://localhost:8084/api/StorageService/BuildingFloor
+Content-Type: application/json
+Authorization: Basic YWRtaW46YWRtaW4=
 
 ### Get storage slot
 GET http://localhost:8080/api/StorageService/

@@ -1,4 +1,4 @@
-package com.sap.internal.digitallab.packagehandling.manager.core;
+package com.sap.internal.digitallab.packagehandling.manager;
 
 import org.springframework.stereotype.Component;
 
