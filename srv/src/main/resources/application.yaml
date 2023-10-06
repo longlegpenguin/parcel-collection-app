@@ -4,6 +4,9 @@ spring:
   web.resources.static-locations: "file:./app/"
 cds:
   data-source.auto-config.enabled: false
+  data-source:
+    csv:
+      paths: test/data
   sql.supportedLocales: "*" ## cut
   odata-v4.endpoint.path: "/api"
   odata-v4.serializer.enabled: true

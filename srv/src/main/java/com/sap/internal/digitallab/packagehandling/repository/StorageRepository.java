@@ -13,7 +13,7 @@ import com.sap.cds.Result;
 import cds.gen.com.sap.internal.digitallab.packagehandling.core.StorageSlot_;
 
 @Component
-public class StorageRespository /* extends BaseRepository */ {
+public class StorageRepository /* extends BaseRepository */ {
 
     @Autowired
     PersistenceService db;

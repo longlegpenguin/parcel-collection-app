@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.sap.cds.Result;
-import com.sap.internal.digitallab.packagehandling.repository.StorageRespository;
+import com.sap.internal.digitallab.packagehandling.repository.StorageRepository;
 
 import cds.gen.com.sap.internal.digitallab.packagehandling.service.storageservice.Storage;
 
@@ -15,12 +15,12 @@ public class StorageManager /* extends BaseManager */ {
 
     private static final Logger LOGGER = LoggerFactory.getLogger("StorageSlotServiceImpl_LOGGER");
 
-    private final StorageRespository storageResp;
+    private final StorageRepository storageResp;
     private final StorageSlotManager slotManager;
     private final SlotStatusManager statusManager;
 
     @Autowired
-    public StorageManager(StorageRespository storageResp, StorageSlotManager slotManager, SlotStatusManager statusManager) {
+    public StorageManager(StorageRepository storageResp, StorageSlotManager slotManager, SlotStatusManager statusManager) {
         this.slotManager = slotManager;
         this.statusManager = statusManager;
         this.storageResp = storageResp;

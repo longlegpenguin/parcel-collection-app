@@ -2,8 +2,8 @@ package com.sap.internal.digitallab.packagehandling.manager;
 
 import cds.gen.com.sap.internal.digitallab.packagehandling.service.storageservice.StorageSlot;
 import com.sap.cds.Result;
-import com.sap.internal.digitallab.packagehandling.repository.PackageRespository;
-import com.sap.internal.digitallab.packagehandling.repository.StorageSlotRespository;
+import com.sap.internal.digitallab.packagehandling.repository.PackageRepository;
+import com.sap.internal.digitallab.packagehandling.repository.StorageSlotRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +15,11 @@ public class StorageSlotManager {
     private static final Logger LOGGER = LoggerFactory.getLogger("StorageSlotServiceImpl_LOGGER");
 
     SlotStatusManager slotStatusManager;
-    StorageSlotRespository slotResp;
-    PackageRespository packageResp;
+    StorageSlotRepository slotResp;
+    PackageRepository packageResp;
 
     @Autowired
-    public StorageSlotManager(SlotStatusManager slotStatusManager, StorageSlotRespository slotResp, PackageRespository packageResp) {
+    public StorageSlotManager(SlotStatusManager slotStatusManager, StorageSlotRepository slotResp, PackageRepository packageResp) {
         this.slotResp = slotResp;
         this.slotStatusManager = slotStatusManager;
         this.packageResp = packageResp;
