@@ -90,6 +90,10 @@ Authorization: Basic YWRtaW46YWRtaW4=
 GET http://localhost:8084/api/DummyService/Package(ID=07f88a8e-a23b-4305-8866-225038492304) HTTP/1.1
 Authorization: Basic YWRtaW46YWRtaW4=
 
+### Get a package (deliver company = 6480a902-007c-4cdd-a6a3-0f3a88d24fe0)
+GET http://localhost:8084/api/DummyService/Package HTTP/1.1
+Authorization: Basic YWRtaW46YWRtaW4=
+
 ### Get all delevery companies
 GET http://localhost:8084/api/CompanyService/DeliveryCompany HTTP/1.1
 Authorization: Basic YWRtaW46YWRtaW4=
