@@ -141,7 +141,8 @@ CREATE TABLE com_sap_internal_digitallab_packagehandling_core_DeliveryCompany (
   modifiedBy NVARCHAR(255),
   name NVARCHAR(255) NOT NULL,
   logo NVARCHAR(255),
-  PRIMARY KEY(ID)
+  PRIMARY KEY(ID),
+  CONSTRAINT com_sap_internal_digitallab_packagehandling_core_DeliveryCompany_nbunique UNIQUE (name)
 ); 
 
 CREATE TABLE com_sap_internal_digitallab_packagehandling_core_Package (
@@ -193,7 +194,8 @@ CREATE TABLE com_sap_internal_digitallab_packagehandling_core_Storage (
   buildingFloor NVARCHAR(36) NOT NULL,
   locationInstructions NVARCHAR(1000),
   map NVARCHAR(255),
-  PRIMARY KEY(ID)
+  PRIMARY KEY(ID),
+  CONSTRAINT com_sap_internal_digitallab_packagehandling_core_Storage_nbunique UNIQUE (name, buildingFloor)
 ); 
 
 CREATE TABLE com_sap_internal_digitallab_packagehandling_core_StorageSlot (
@@ -205,7 +207,8 @@ CREATE TABLE com_sap_internal_digitallab_packagehandling_core_StorageSlot (
   name NVARCHAR(255) NOT NULL,
   storage_ID NVARCHAR(36) NOT NULL,
   status_code NVARCHAR(255) NOT NULL,
-  PRIMARY KEY(ID)
+  PRIMARY KEY(ID),
+  CONSTRAINT com_sap_internal_digitallab_packagehandling_core_StorageSlot_nbunique UNIQUE (name, storage_ID)
 ); 
 
 CREATE TABLE com_sap_internal_digitallab_packagehandling_core_LocalUserData (
