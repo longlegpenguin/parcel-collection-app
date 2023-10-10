@@ -14,13 +14,16 @@ using {
 } from '.';
 
 entity Package : cuid, managed {
-    recipient        : User not null;
-    comfirmationTime : Timestamp;
-    pickupTime       : Timestamp;
-    slot             : Association to one StorageSlot;
-    deliveryCompany  : Association to one DeliveryCompany;
-    type             : Association to one PackageType not null;
-    status           : Association to one PackageStatus not null;
-    receptionist     : User not null;
-    comment          : String(255);
+    recipient          : User not null;
+    comfirmationTime   : Timestamp;
+    pickupTime         : Timestamp;
+    slot               : Association to one StorageSlot;
+    deliveryCompany    : Association to one DeliveryCompany;
+    type               : Association to one PackageType not null;
+    status             : Association to one PackageStatus not null;
+    receptionist       : User not null;
+    comment            : String(255);
+    virtual delete_ac  : Boolean;
+    virtual confirm_ac : Boolean;
+    virtual pickup_ac  : Boolean;
 }

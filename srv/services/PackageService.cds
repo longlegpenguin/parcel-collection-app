@@ -14,7 +14,12 @@ service PackageService {
         'UPDATE',
         'DELETE'
     ]}])
-    entity Package         as projection on core.Package;
+    entity Package         as projection on core.Package actions {
+        @sap.applicable.path: 'confirm_ac'
+        action confirm(in : many $self, slotId : UUID) returns Boolean;
+        @sap.applicable.path: 'pickup_ac'
+        action pickup(in : $self)                      returns Boolean;
+    };
 
     @readonly
     entity PackageType     as projection on core.PackageType;
@@ -62,7 +67,7 @@ service PackageService {
 /*
  * Input validation
  */
-annotate core.Package with {
+annotate PackageService.Package with {
     recipient     @mandatory;
     type          @mandatory;
     receptionist  @mandatory  @(restrict: [
@@ -79,3 +84,5 @@ annotate core.Package with {
         },
     ]);
 };
+
+annotate PackageService.Package with @(Capabilities.DeleteRestrictions.Deletable: delete_ac);
