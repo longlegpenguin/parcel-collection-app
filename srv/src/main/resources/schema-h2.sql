@@ -1,19 +1,12 @@
 
-DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_PackageService_Building;
-DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_PackageService_Storage;
-DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_PackageService_DeliveryCompany;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_StorageService_Storage;
 DROP VIEW IF EXISTS localized_DummyService_Storage;
 DROP VIEW IF EXISTS localized_DummyService_DeliveryCompany;
-DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_PackageService_BuildingFloor;
-DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_PackageService_StorageSlot;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_PackageService_Package;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_CompanyService_DeliveryCompany;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_StorageService_StorageSlot;
 DROP VIEW IF EXISTS localized_DummyService_StorageSlot;
 DROP VIEW IF EXISTS localized_DummyService_Package;
-DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_PackageService_FloorType;
-DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_PackageService_SlotStatus;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_PackageService_PackageStatus;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_PackageService_PackageType;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_StorageService_SlotStatus;
@@ -32,10 +25,6 @@ DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_core_S
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_core_PackageType;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_core_PackageStatus;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_common_FloorType;
-DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PackageService_FloorType_texts;
-DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PackageService_SlotStatus_texts;
-DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PackageService_FloorType;
-DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PackageService_SlotStatus;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PackageService_PackageStatus_texts;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PackageService_PackageType_texts;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_StorageService_SlotStatus_texts;
@@ -449,60 +438,30 @@ FROM com_sap_internal_digitallab_packagehandling_core_PackageStatus AS PackageSt
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_StorageSlot AS SELECT
   StorageSlot_0.ID,
-  StorageSlot_0.createdAt,
-  StorageSlot_0.createdBy,
-  StorageSlot_0.modifiedAt,
-  StorageSlot_0.modifiedBy,
   StorageSlot_0.name,
-  StorageSlot_0.storage_ID,
-  StorageSlot_0.status_code
+  StorageSlot_0.storage_ID
 FROM com_sap_internal_digitallab_packagehandling_core_StorageSlot AS StorageSlot_0; 
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_Storage AS SELECT
   Storage_0.ID,
-  Storage_0.createdAt,
-  Storage_0.createdBy,
-  Storage_0.modifiedAt,
-  Storage_0.modifiedBy,
   Storage_0.name,
-  Storage_0.buildingFloor,
-  Storage_0.locationInstructions,
-  Storage_0.map
+  Storage_0.buildingFloor
 FROM com_sap_internal_digitallab_packagehandling_core_Storage AS Storage_0; 
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_DeliveryCompany AS SELECT
   DeliveryCompany_0.ID,
-  DeliveryCompany_0.createdAt,
-  DeliveryCompany_0.createdBy,
-  DeliveryCompany_0.modifiedAt,
-  DeliveryCompany_0.modifiedBy,
-  DeliveryCompany_0.name,
-  DeliveryCompany_0.logo
+  DeliveryCompany_0.name
 FROM com_sap_internal_digitallab_packagehandling_core_DeliveryCompany AS DeliveryCompany_0; 
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_Building AS SELECT
   Building_0.ID,
-  Building_0.createdAt,
-  Building_0.createdBy,
-  Building_0.modifiedAt,
-  Building_0.modifiedBy,
-  Building_0.name,
-  Building_0.address,
-  Building_0.coordinates,
-  Building_0.phoneNumber,
-  Building_0.map
+  Building_0.name
 FROM com_sap_internal_digitallab_packagehandling_common_Building AS Building_0; 
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_BuildingFloor AS SELECT
   BuildingFloor_0.ID,
-  BuildingFloor_0.createdAt,
-  BuildingFloor_0.createdBy,
-  BuildingFloor_0.modifiedAt,
-  BuildingFloor_0.modifiedBy,
   BuildingFloor_0.name,
-  BuildingFloor_0.building_ID,
-  BuildingFloor_0.type_code,
-  BuildingFloor_0.map
+  BuildingFloor_0.building_ID
 FROM com_sap_internal_digitallab_packagehandling_common_BuildingFloor AS BuildingFloor_0; 
 
 CREATE VIEW DummyService_PackageType_texts AS SELECT
@@ -546,32 +505,6 @@ CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_P
   texts_0.descr,
   texts_0.code
 FROM com_sap_internal_digitallab_packagehandling_core_PackageStatus_texts AS texts_0; 
-
-CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_SlotStatus AS SELECT
-  SlotStatus_0.name,
-  SlotStatus_0.descr,
-  SlotStatus_0.code
-FROM com_sap_internal_digitallab_packagehandling_core_SlotStatus AS SlotStatus_0; 
-
-CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_FloorType AS SELECT
-  FloorType_0.name,
-  FloorType_0.descr,
-  FloorType_0.code
-FROM com_sap_internal_digitallab_packagehandling_common_FloorType AS FloorType_0; 
-
-CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_SlotStatus_texts AS SELECT
-  texts_0.locale,
-  texts_0.name,
-  texts_0.descr,
-  texts_0.code
-FROM com_sap_internal_digitallab_packagehandling_core_SlotStatus_texts AS texts_0; 
-
-CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_FloorType_texts AS SELECT
-  texts_0.locale,
-  texts_0.name,
-  texts_0.descr,
-  texts_0.code
-FROM com_sap_internal_digitallab_packagehandling_common_FloorType_texts AS texts_0; 
 
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_common_FloorType AS SELECT
   coalesce(localized_1.name, L_0.name) AS name,
@@ -739,18 +672,6 @@ CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_Packag
   PackageStatus_0.code
 FROM localized_com_sap_internal_digitallab_packagehandling_core_PackageStatus AS PackageStatus_0; 
 
-CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_PackageService_SlotStatus AS SELECT
-  SlotStatus_0.name,
-  SlotStatus_0.descr,
-  SlotStatus_0.code
-FROM localized_com_sap_internal_digitallab_packagehandling_core_SlotStatus AS SlotStatus_0; 
-
-CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_PackageService_FloorType AS SELECT
-  FloorType_0.name,
-  FloorType_0.descr,
-  FloorType_0.code
-FROM localized_com_sap_internal_digitallab_packagehandling_common_FloorType AS FloorType_0; 
-
 CREATE VIEW localized_DummyService_Package AS SELECT
   Package_0.ID,
   Package_0.createdAt,
@@ -817,29 +738,6 @@ CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_Packag
   Package_0.comment
 FROM localized_com_sap_internal_digitallab_packagehandling_core_Package AS Package_0; 
 
-CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_PackageService_StorageSlot AS SELECT
-  StorageSlot_0.ID,
-  StorageSlot_0.createdAt,
-  StorageSlot_0.createdBy,
-  StorageSlot_0.modifiedAt,
-  StorageSlot_0.modifiedBy,
-  StorageSlot_0.name,
-  StorageSlot_0.storage_ID,
-  StorageSlot_0.status_code
-FROM localized_com_sap_internal_digitallab_packagehandling_core_StorageSlot AS StorageSlot_0; 
-
-CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_PackageService_BuildingFloor AS SELECT
-  BuildingFloor_0.ID,
-  BuildingFloor_0.createdAt,
-  BuildingFloor_0.createdBy,
-  BuildingFloor_0.modifiedAt,
-  BuildingFloor_0.modifiedBy,
-  BuildingFloor_0.name,
-  BuildingFloor_0.building_ID,
-  BuildingFloor_0.type_code,
-  BuildingFloor_0.map
-FROM localized_com_sap_internal_digitallab_packagehandling_common_BuildingFloor AS BuildingFloor_0; 
-
 CREATE VIEW localized_DummyService_DeliveryCompany AS SELECT
   DeliveryCompany_0.ID,
   DeliveryCompany_0.createdAt,
@@ -873,39 +771,4 @@ CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_Storag
   Storage_0.locationInstructions,
   Storage_0.map
 FROM localized_com_sap_internal_digitallab_packagehandling_core_Storage AS Storage_0; 
-
-CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_PackageService_DeliveryCompany AS SELECT
-  DeliveryCompany_0.ID,
-  DeliveryCompany_0.createdAt,
-  DeliveryCompany_0.createdBy,
-  DeliveryCompany_0.modifiedAt,
-  DeliveryCompany_0.modifiedBy,
-  DeliveryCompany_0.name,
-  DeliveryCompany_0.logo
-FROM localized_com_sap_internal_digitallab_packagehandling_core_DeliveryCompany AS DeliveryCompany_0; 
-
-CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_PackageService_Storage AS SELECT
-  Storage_0.ID,
-  Storage_0.createdAt,
-  Storage_0.createdBy,
-  Storage_0.modifiedAt,
-  Storage_0.modifiedBy,
-  Storage_0.name,
-  Storage_0.buildingFloor,
-  Storage_0.locationInstructions,
-  Storage_0.map
-FROM localized_com_sap_internal_digitallab_packagehandling_core_Storage AS Storage_0; 
-
-CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_PackageService_Building AS SELECT
-  Building_0.ID,
-  Building_0.createdAt,
-  Building_0.createdBy,
-  Building_0.modifiedAt,
-  Building_0.modifiedBy,
-  Building_0.name,
-  Building_0.address,
-  Building_0.coordinates,
-  Building_0.phoneNumber,
-  Building_0.map
-FROM localized_com_sap_internal_digitallab_packagehandling_common_Building AS Building_0; 
 
