@@ -43,3 +43,25 @@ service PackageService {
     };
 
 }
+
+
+/*
+ * Input validation
+ */
+annotate core.Package with {
+    recipient     @mandatory;
+    type          @mandatory;
+    receptionist  @mandatory  @(restrict: [
+        {
+            grant: 'READ',
+            to   : 'Receptionist',
+        },
+        {
+            grant: '*',
+            to   : [
+                'Administrator',
+                'FacilityManager'
+            ]
+        },
+    ]);
+};
