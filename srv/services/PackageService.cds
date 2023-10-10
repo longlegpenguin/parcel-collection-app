@@ -69,7 +69,7 @@ service PackageService {
  */
 annotate PackageService.Package with {
     recipient     @mandatory;
-    type          @mandatory;
+    type          @mandatory @assert.target;
     receptionist  @mandatory  @(restrict: [
         {
             grant: 'READ',
