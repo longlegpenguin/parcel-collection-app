@@ -1,6 +1,8 @@
 package com.sap.internal.digitallab.packagehandling.repository;
 
+import com.sap.cds.ql.Delete;
 import com.sap.cds.ql.Update;
+import com.sap.cds.ql.cqn.CqnDelete;
 import com.sap.cds.ql.cqn.CqnUpdate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -131,5 +133,9 @@ public class PackageRepository {
                 .data(Package.PICKUP_TIME, new Timestamp(System.currentTimeMillis()))
                 .byId(packId);
         db.run(update);
+    }
+
+    public Result run(CqnDelete delete) {
+        return db.run(delete);
     }
 }

@@ -6,12 +6,16 @@ import cds.gen.com.sap.internal.digitallab.packagehandling.service.packageservic
 import cds.gen.com.sap.internal.digitallab.packagehandling.service.packageservice.PickupContext;
 import com.sap.cds.services.ErrorStatuses;
 import com.sap.cds.services.ServiceException;
+import com.sap.cds.services.cds.CdsDeleteEventContext;
+import com.sap.cds.services.cds.CdsUpdateEventContext;
 import com.sap.cds.services.cds.CqnService;
 import com.sap.cds.services.handler.EventHandler;
 import com.sap.cds.services.handler.annotations.After;
+import com.sap.cds.services.handler.annotations.Before;
 import com.sap.cds.services.handler.annotations.On;
 import com.sap.cds.services.handler.annotations.ServiceName;
 import com.sap.internal.digitallab.packagehandling.manager.PackageManager;
+import com.sap.internal.digitallab.packagehandling.utility.EmailSender;
 import com.sap.internal.digitallab.packagehandling.utility.MessageKeys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
+import java.util.Set;
 import java.util.stream.Stream;
 
 @Component
@@ -54,8 +59,6 @@ public class PackageServiceHandler implements EventHandler {
 
         packageIds.forEach(pid -> packMgr.confirmPackage(slotId, pid));
         context.setResult(true);
-
-        // TODO send email to user.
         LOGGER.info("Confirm action received. packages: " + packageIds + " slot: " + slotId);
     }
 
@@ -91,15 +94,29 @@ public class PackageServiceHandler implements EventHandler {
         LOGGER.info("After read a package, updated ACs: ");
     }
 
+    /**
+     * Sets receptionist to current user on update of a package
+     * if current user is a receptionist.
+     *
+     * @param packages packages to update
+     * @param context context of event
+     */
     @On(event = {CqnService.EVENT_UPDATE})
-    public void onUpdatePackage(Stream<Package> packages) {
-        // TODO prefill receptionist.
-        LOGGER.info("On update a package, Get package: " + packages.toList());
+    public void onUpdatePackage(Stream<Package> packages, CdsUpdateEventContext context) {
+        Set<String> userRoles = context.getUserInfo().getRoles();
+        String userId = context.getUserInfo().getId();
+        if (userRoles.contains("Receptionist")) {
+//            packages.forEach(p -> p.setReceptionist(userId));
+        }
+        LOGGER.info("On update a package, Get package: {},\n Current user role: {},\n current user: {}, name: {}",
+                packages.toList(), userRoles, userId, context.getUserInfo().getName());
     }
 
-    @After(event = {CqnService.EVENT_DELETE})
-    public void afterDeletePackage(Stream<Package> packages) {
-        // TODO If confirmed, an email notification is sent to the recipient.
-        LOGGER.info("After delete a package");
+    @On(event = {CqnService.EVENT_DELETE})
+    public void onDeletePackage(CdsDeleteEventContext context) {
+        EmailSender.sendEmail( " Removed a package");
+        packMgr.delPackageUsingCqn(context.getCqn());
+        LOGGER.info("On delete a package Cqn {} ", context.getCqn());
     }
+
 }

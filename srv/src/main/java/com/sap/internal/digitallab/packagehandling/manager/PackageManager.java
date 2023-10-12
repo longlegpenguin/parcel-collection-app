@@ -3,12 +3,17 @@ package com.sap.internal.digitallab.packagehandling.manager;
 import cds.gen.com.sap.internal.digitallab.packagehandling.core.Package;
 import com.sap.cds.Result;
 import com.sap.cds.Row;
+import com.sap.cds.ql.cqn.CqnDelete;
 import com.sap.internal.digitallab.packagehandling.repository.DeliveryCompanyRepository;
 import com.sap.internal.digitallab.packagehandling.repository.PackageRepository;
+import com.sap.internal.digitallab.packagehandling.utility.EmailSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Component
 public class PackageManager {
@@ -64,6 +69,7 @@ public class PackageManager {
      * Confirms a package.
      * Updates status, confirmedAt and slot id.
      * Refreshes status for given slot.
+     * Sends out email.
      *
      * @param slotId id of slot to store package.
      * @param packId id of package to confirm.
@@ -73,11 +79,13 @@ public class PackageManager {
         packRepo.updateStatusCodeById(packStatusMgr.CONFIRMED_STATUS_CODE, packId);
         packRepo.updateConfirmedTimeById(packId);
         slotMgr.refreshStatus(slotId);
+        EmailSender.sendEmail(getPackageWithId(packId).get(Package.RECIPIENT).toString() + " received a package");
     }
 
     /**
      * Sets package to picked up and fill the pickup time.
      * Refreshes status for given slot.
+     * Sends out an email.
      *
      * @param packId id of package to be set.
      */
@@ -86,6 +94,7 @@ public class PackageManager {
         packRepo.updatePickedUpTimeById(packId);
         String slotId = packRepo.readById(packId).single().get(Package.SLOT_ID).toString();
         slotMgr.refreshStatus(slotId);
+        EmailSender.sendEmail(getPackageWithId(packId).get(Package.RECIPIENT).toString() + " picked up a package");
     }
 
     /**
@@ -114,6 +123,16 @@ public class PackageManager {
         });
     }
 
+    public void delPackageUsingCqn(CqnDelete delete) {
+        String data = delete.toString();
+        String id = parseIdFromCqn(data);
+        LOGGER.info("ID: {}", id);
+//        Row pack = getPackageWithId(id);
+        EmailSender.sendEmail("Removed package: " + id);
+//         Result res = packRepo.run(delete);
+//         LOGGER.info("Deleted package: {}", res);
+    }
+
     /**
      * Check if a given company exists in the database.
      *
@@ -134,5 +153,12 @@ public class PackageManager {
     private String readStatusCode(String packageId) {
         Result pack = packRepo.readById(packageId);
         return pack.single().get(Package.STATUS_CODE).toString();
+    }
+
+    private String parseIdFromCqn(String cqn) {
+        Pattern pattern = Pattern.compile("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}");
+        Matcher matcher = pattern.matcher(cqn);
+        LOGGER.info("CQN: {}", cqn);
+        return matcher.group(1);
     }
 }

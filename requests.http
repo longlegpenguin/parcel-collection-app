@@ -145,3 +145,32 @@ Authorization: Basic YWRtaW46YWRtaW4=
 {
   "packageId": "b414b0fe-5645-418c-98c3-4a740bbd7bb5"
 }
+
+### Update a package by receptionist
+PATCH http://localhost:8084/api/PackageService/Package(ID=8fb3403b-1e14-43f5-9bb9-8b20113bb70a) HTTP/1.1
+Content-Type: application/json
+Authorization: Basic cmVjZXA6cmVjZXA=
+
+{
+  "ID": "8fb3403b-1e14-43f5-9bb9-8b20113bb70a",
+  "createdAt": "2020-03-19T09:23:29.028Z",
+  "createdBy": "C456789",
+  "modifiedAt": "2020-03-19T09:23:29.028Z",
+  "modifiedBy": "C456789",
+  "recipient": "I222222",
+  "comfirmationTime": null,
+  "pickupTime": null,
+  "slot_ID": "9be3cedc-e657-4a8b-b37e-ffc494d96952",
+  "deliveryCompany_ID": "724a082e-8f05-4d5e-bbc3-b8acaa30b8fb",
+  "type_code": "normal",
+  "status_code": "new",
+  "receptionist": "C456789",
+  "comment": "no comment",
+  "delete_ac": true,
+  "confirm_ac": true,
+  "pickup_ac": false
+}
+
+### Delete a package
+DELETE http://localhost:8084/api/PackageService/Package(ID=8fb3403b-1e14-43f5-9bb9-8b20113bb70a) HTTP/1.1
+Authorization: Basic YWRtaW46YWRtaW4=
