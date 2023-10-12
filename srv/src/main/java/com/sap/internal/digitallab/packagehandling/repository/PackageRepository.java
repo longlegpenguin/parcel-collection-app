@@ -15,6 +15,8 @@ import com.sap.cds.services.persistence.PersistenceService;
 import cds.gen.com.sap.internal.digitallab.packagehandling.core.Package_;
 import cds.gen.com.sap.internal.digitallab.packagehandling.core.Package;
 
+import java.sql.Timestamp;
+
 @Component
 public class PackageRepository {
     private static final Logger LOGGER = LoggerFactory.getLogger("PackageRepository_Logger");
@@ -75,5 +77,46 @@ public class PackageRepository {
                 .from(Package_.class)
                 .byId(packageId);
         return db.run(select);
+    }
+
+    /**
+     * Updates a package entry with nue slot id.
+     *
+     * @param slotId id of slot to fill in.
+     * @param packId id of package to change the slot id.
+     */
+    public void updateSlotIdById(String slotId, String packId) {
+        CqnUpdate update = Update
+                .entity(Package_.class)
+                .data(Package.SLOT_ID, slotId)
+                .where(p -> p.ID().eq(packId));
+        db.run(update);
+    }
+
+    /**
+     * Updates a package entry with nue slot id.
+     *
+     * @param statusCode status code to fill in.
+     * @param packId id of package to update.
+     */
+    public void updateStatusCodeById(String statusCode, String packId) {
+        CqnUpdate update = Update
+                .entity(Package_.class)
+                .data(Package.STATUS_CODE, statusCode)
+                .byId(packId);
+        db.run(update);
+    }
+
+    /**
+     * Updates a package's confirmation time with now.
+     *
+     * @param packId id of package to update.
+     */
+    public void updateConfirmedTimeById(String packId) {
+        CqnUpdate update = Update
+                .entity(Package_.class)
+                .data(Package.COMFIRMATION_TIME, new Timestamp(System.currentTimeMillis()))
+                .byId(packId);
+        db.run(update);
     }
 }

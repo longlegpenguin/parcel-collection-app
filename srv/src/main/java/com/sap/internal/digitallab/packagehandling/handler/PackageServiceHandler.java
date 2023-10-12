@@ -4,19 +4,21 @@ import cds.gen.com.sap.internal.digitallab.packagehandling.service.packageservic
 import cds.gen.com.sap.internal.digitallab.packagehandling.service.packageservice.Package;
 import cds.gen.com.sap.internal.digitallab.packagehandling.service.packageservice.PackageService_;
 import cds.gen.com.sap.internal.digitallab.packagehandling.service.packageservice.PickupContext;
-import com.sap.cds.ql.cqn.CqnSelect;
+import com.sap.cds.services.ErrorStatuses;
+import com.sap.cds.services.ServiceException;
 import com.sap.cds.services.cds.CqnService;
 import com.sap.cds.services.handler.EventHandler;
 import com.sap.cds.services.handler.annotations.After;
 import com.sap.cds.services.handler.annotations.On;
 import com.sap.cds.services.handler.annotations.ServiceName;
 import com.sap.internal.digitallab.packagehandling.manager.PackageManager;
+import com.sap.internal.digitallab.packagehandling.utility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.stream.Stream;
 
 @Component
@@ -35,14 +37,26 @@ public class PackageServiceHandler implements EventHandler {
      * Actions
      * ------------------------------------------------------------------------------
      */
+
+    /**
+     * Handler for confirm action.
+     *
+     * @param context context of the confirmation action.
+     */
     @On
     public void confirmAction(ConfirmContext context) {
-        // TODO Check the given IDs and slot ID. Set the status of the given packages to confirmed, set the confirmationTime, and set the slot to the selected one.
-//        CqnSelect param = context.getCqn();
-        List<String> packageIds = context.getPackagesIds().stream().toList();
+        Collection<String> packageIds = context.getPackagesIds();
         String slotId = context.getSlotId();
+
+        if (packageIds == null || slotId == null) {
+            throw new ServiceException(ErrorStatuses.NOT_ACCEPTABLE, utility.MessageKeys.MISSING_INPUT);
+        }
+
+        packageIds.forEach(pid -> packMgr.confirmPackage(slotId, pid));
+        context.setResult(true);
+
+        // TODO send email to user.
         LOGGER.info("Confirm action received. packages: " + packageIds + " slot: " + slotId);
-        context.setResult(false);
     }
 
     @On
@@ -70,7 +84,7 @@ public class PackageServiceHandler implements EventHandler {
     @On(event = {CqnService.EVENT_UPDATE})
     public void onUpdatePackage(Stream<Package> packages) {
         // TODO prefill receptionist.
-        LOGGER.info("On update a package, Get package: " + packages.toList().toString());
+        LOGGER.info("On update a package, Get package: " + packages.toList());
     }
 
     @After(event = {CqnService.EVENT_DELETE})

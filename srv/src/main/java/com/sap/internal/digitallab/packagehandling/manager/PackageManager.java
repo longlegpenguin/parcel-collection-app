@@ -12,15 +12,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class PackageManager {
     private static final Logger LOGGER = LoggerFactory.getLogger("PackageManager_Logger");
-    private final DeliveryCompanyRepository companyRepository;
-    private final PackageRepository packageRepository;
-    private final PackageStatusManager packageStatusManager;
+    private final DeliveryCompanyRepository companyRepo;
+    private final PackageRepository packRepo;
+    private final PackageStatusManager packStatusMgr;
+    private final StorageSlotManager slotMgr;
 
     @Autowired
-    public PackageManager(DeliveryCompanyRepository companyRepository, PackageRepository packageRepository, PackageStatusManager packageStatusManager) {
-        this.companyRepository = companyRepository;
-        this.packageRepository = packageRepository;
-        this.packageStatusManager = packageStatusManager;
+    public PackageManager(DeliveryCompanyRepository companyRepo, PackageRepository packRepo, PackageStatusManager packStatusMgr, StorageSlotManager slotMgr) {
+        this.companyRepo = companyRepo;
+        this.packRepo = packRepo;
+        this.packStatusMgr = packStatusMgr;
+        this.slotMgr = slotMgr;
     }
 
     /**
@@ -31,8 +33,8 @@ public class PackageManager {
      */
     public boolean evalDeleteAc(String packageId) {
         String statusCode = readStatusCode(packageId);
-        return statusCode.equals(packageStatusManager.NEW_STATUS_CODE) ||
-                statusCode.equals(packageStatusManager.CONFIRMED_STATUS_CODE);
+        return statusCode.equals(packStatusMgr.NEW_STATUS_CODE) ||
+                statusCode.equals(packStatusMgr.CONFIRMED_STATUS_CODE);
     }
 
     /**
@@ -43,7 +45,7 @@ public class PackageManager {
      */
     public boolean evalConfirmAc(String packageId) {
         String statusCode = readStatusCode(packageId);
-        return statusCode.equals(packageStatusManager.NEW_STATUS_CODE);
+        return statusCode.equals(packStatusMgr.NEW_STATUS_CODE);
     }
 
     /**
@@ -54,7 +56,22 @@ public class PackageManager {
      */
     public boolean evalPickupAc(String packageId) {
         String statusCode = readStatusCode(packageId);
-        return statusCode.equals(packageStatusManager.CONFIRMED_STATUS_CODE);
+        return statusCode.equals(packStatusMgr.CONFIRMED_STATUS_CODE);
+    }
+
+    /**
+     * Confirms a package.
+     * Updates status, confirmedAt and slot id.
+     * Refreshes status for given slot.
+     *
+     * @param slotId id of slot to store package.
+     * @param packId id of package to confirm.
+     */
+    public void confirmPackage(String slotId, String packId) {
+        packRepo.updateSlotIdById(slotId, packId);
+        packRepo.updateStatusCodeById(packStatusMgr.CONFIRMED_STATUS_CODE, packId);
+        packRepo.updateConfirmedTimeById(packId);
+        slotMgr.refreshStatus(slotId);
     }
 
     /**
@@ -62,12 +79,12 @@ public class PackageManager {
      * Updates reference to a non-existing company to null.
      */
     public void updateDeletedDeliveryCompany() {
-        Result rowsOfPackages = packageRepository.selectAllPackages();
+        Result rowsOfPackages = packRepo.selectAllPackages();
         rowsOfPackages.stream().forEach(p -> {
             if (!checkCompanyExistById(
                     p.get(Package.DELIVERY_COMPANY_ID).toString())) {
                 LOGGER.info("Updated Package {} 's company to null", p);
-                packageRepository.removeDeliveryCompanyById(
+                packRepo.removeDeliveryCompanyById(
                         p.get(Package.ID).toString());
             }
         });
@@ -80,7 +97,7 @@ public class PackageManager {
      * @return true if exists.
      */
     private boolean checkCompanyExistById(String companyId) {
-        Result rowsOfCompanies = companyRepository.selectById(companyId);
+        Result rowsOfCompanies = companyRepo.selectById(companyId);
         return (rowsOfCompanies.stream().count() == 1);
     }
 
@@ -91,7 +108,7 @@ public class PackageManager {
      * @return status code.
      */
     private String readStatusCode(String packageId) {
-        Result pack = packageRepository.readById(packageId);
+        Result pack = packRepo.readById(packageId);
         return pack.single().get(Package.STATUS_CODE).toString();
     }
 }
