@@ -64,4 +64,16 @@ public class PackageRepository {
                 .where(p -> p.ID().eq(packageId));
         db.run(update);
     }
+
+    /**
+     * SELECT * FROM package where ID = $packageId;
+     * @param packageId id of package to read
+     * @return single row of result of select.
+     */
+    public Result readById(String packageId) {
+        CqnSelect select = Select
+                .from(Package_.class)
+                .byId(packageId);
+        return db.run(select);
+    }
 }

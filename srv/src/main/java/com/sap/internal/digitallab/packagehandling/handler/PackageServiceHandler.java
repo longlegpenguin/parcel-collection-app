@@ -10,16 +10,25 @@ import com.sap.cds.services.handler.EventHandler;
 import com.sap.cds.services.handler.annotations.After;
 import com.sap.cds.services.handler.annotations.On;
 import com.sap.cds.services.handler.annotations.ServiceName;
+import com.sap.internal.digitallab.packagehandling.manager.PackageManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 @Component
 @ServiceName(PackageService_.CDS_NAME)
 public class PackageServiceHandler implements EventHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger("PackageServiceHandler_logger");
+    private final PackageManager packMgr;
+
+    @Autowired
+    public PackageServiceHandler(PackageManager packMgr) {
+        this.packMgr = packMgr;
+    }
 
     /*
      * ------------------------------------------------------------------------------
@@ -29,8 +38,10 @@ public class PackageServiceHandler implements EventHandler {
     @On
     public void confirmAction(ConfirmContext context) {
         // TODO Check the given IDs and slot ID. Set the status of the given packages to confirmed, set the confirmationTime, and set the slot to the selected one.
-        CqnSelect param = context.getCqn();
-        LOGGER.info("Confirm action received cQN: " + param.toString());
+//        CqnSelect param = context.getCqn();
+        List<String> packageIds = context.getPackagesIds().stream().toList();
+        String slotId = context.getSlotId();
+        LOGGER.info("Confirm action received. packages: " + packageIds + " slot: " + slotId);
         context.setResult(false);
     }
 
@@ -47,10 +58,13 @@ public class PackageServiceHandler implements EventHandler {
      */
     @After(event = {CqnService.EVENT_READ})
     public void afterReadPackage(Stream<Package> packages) {
-        // TODO update 3 ACs.
-        // delete ac Allowed only if the status is new or confirmed.
-        // confirm ac  Only packages with new status can be set.
-        // pick up ac Only status confirmed is supported.
+        packages.forEach(p -> {
+            String pid = p.getId();
+            p.setDeleteAc(packMgr.evalDeleteAc(pid));
+            p.setConfirmAc(packMgr.evalConfirmAc(pid));
+            p.setPickupAc(packMgr.evalPickupAc(pid));
+        });
+        LOGGER.info("After read a package, updated ACs: ");
     }
 
     @On(event = {CqnService.EVENT_UPDATE})
