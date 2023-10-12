@@ -6,6 +6,7 @@ import cds.gen.com.sap.internal.digitallab.packagehandling.service.packageservic
 import cds.gen.com.sap.internal.digitallab.packagehandling.service.packageservice.PickupContext;
 import com.sap.cds.ql.cqn.CqnSelect;
 import com.sap.cds.services.cds.CqnService;
+import com.sap.cds.services.handler.EventHandler;
 import com.sap.cds.services.handler.annotations.After;
 import com.sap.cds.services.handler.annotations.On;
 import com.sap.cds.services.handler.annotations.ServiceName;
@@ -17,7 +18,7 @@ import java.util.stream.Stream;
 
 @Component
 @ServiceName(PackageService_.CDS_NAME)
-public class PackageServiceHandler {
+public class PackageServiceHandler implements EventHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger("PackageServiceHandler_logger");
 
     /*
@@ -52,13 +53,13 @@ public class PackageServiceHandler {
         // pick up ac Only status confirmed is supported.
     }
 
-    @On(event = {CqnService.EVENT_READ})
+    @On(event = {CqnService.EVENT_UPDATE})
     public void onUpdatePackage(Stream<Package> packages) {
         // TODO prefill receptionist.
         LOGGER.info("On update a package, Get package: " + packages.toList().toString());
     }
 
-    @After(event = {CqnService.EVENT_READ})
+    @After(event = {CqnService.EVENT_DELETE})
     public void afterDeletePackage(Stream<Package> packages) {
         // TODO If confirmed, an email notification is sent to the recipient.
         LOGGER.info("After delete a package");

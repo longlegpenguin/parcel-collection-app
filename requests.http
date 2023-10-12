@@ -83,7 +83,7 @@ Authorization: Basic YWRtaW46YWRtaW4=
 ############### Delivery company tests
 
 ### Get all packages
-GET http://localhost:8084/api/DummyService/Package HTTP/1.1
+GET http://localhost:8084/api/PackageService/Package HTTP/1.1
 Authorization: Basic YWRtaW46YWRtaW4=
 
 ### Get a package (deliver company = 6480a902-007c-4cdd-a6a3-0f3a88d24fe0)
@@ -100,3 +100,22 @@ Authorization: Basic YWRtaW46YWRtaW4=
 ### Deletion of a company results relevant pavkages reference removed
 DELETE http://localhost:8084/api/CompanyService/DeliveryCompany(ID=6480a902-007c-4cdd-a6a3-0f3a88d24fe0) HTTP/1.1
 Authorization: Basic YWRtaW46YWRtaW4=
+
+############### Package service test
+### Get all packages
+GET http://localhost:8084/api/PackageService/Package HTTP/1.1
+Authorization: Basic YWRtaW46YWRtaW4=
+
+### Get a package (deliver company = 6480a902-007c-4cdd-a6a3-0f3a88d24fe0)
+GET http://localhost:8084/api/PackageService/Package(ID=07f88a8e-a23b-4305-8866-225038492304) HTTP/1.1
+Authorization: Basic YWRtaW46YWRtaW4=
+
+### Call confirm action
+GET http://localhost:8084/api/PackageService/confirm
+Content-Type: application/json
+Authorization: Basic YWRtaW46YWRtaW4=
+
+{
+  "packageIds": [],
+  "slotId": "9be3cedc-e657-4a8b-b37e-ffc494d96952"
+}
