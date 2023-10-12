@@ -134,8 +134,4 @@ public class PackageRepository {
                 .byId(packId);
         db.run(update);
     }
-
-    public Result run(CqnDelete delete) {
-        return db.run(delete);
-    }
 }
