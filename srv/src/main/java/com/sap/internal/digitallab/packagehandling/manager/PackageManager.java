@@ -2,6 +2,7 @@ package com.sap.internal.digitallab.packagehandling.manager;
 
 import cds.gen.com.sap.internal.digitallab.packagehandling.core.Package;
 import com.sap.cds.Result;
+import com.sap.cds.Row;
 import com.sap.internal.digitallab.packagehandling.repository.DeliveryCompanyRepository;
 import com.sap.internal.digitallab.packagehandling.repository.PackageRepository;
 import org.slf4j.Logger;
@@ -72,6 +73,29 @@ public class PackageManager {
         packRepo.updateStatusCodeById(packStatusMgr.CONFIRMED_STATUS_CODE, packId);
         packRepo.updateConfirmedTimeById(packId);
         slotMgr.refreshStatus(slotId);
+    }
+
+    /**
+     * Sets package to picked up and fill the pickup time.
+     * Refreshes status for given slot.
+     *
+     * @param packId id of package to be set.
+     */
+    public void pickupPackage(String packId) {
+        packRepo.updateStatusCodeById(packStatusMgr.PICKUP_STATUS_CODE, packId);
+        packRepo.updatePickedUpTimeById(packId);
+        String slotId = packRepo.readById(packId).single().get(Package.SLOT_ID).toString();
+        slotMgr.refreshStatus(slotId);
+    }
+
+    /**
+     * Gets a package with its id.
+     *
+     * @param packId id of package to get.
+     * @return Row (map) of the package.
+     */
+    public Row getPackageWithId(String packId) {
+        return packRepo.readById(packId).single();
     }
 
     /**

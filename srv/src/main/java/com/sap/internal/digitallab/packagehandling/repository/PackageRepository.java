@@ -119,4 +119,17 @@ public class PackageRepository {
                 .byId(packId);
         db.run(update);
     }
+
+    /**
+     * Updates a package's picked-up time with now.
+     *
+     * @param packId id of package to update.
+     */
+    public void updatePickedUpTimeById(String packId) {
+        CqnUpdate update = Update
+                .entity(Package_.class)
+                .data(Package.PICKUP_TIME, new Timestamp(System.currentTimeMillis()))
+                .byId(packId);
+        db.run(update);
+    }
 }

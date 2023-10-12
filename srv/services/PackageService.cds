@@ -65,7 +65,7 @@ service PackageService {
     @sap.applicable.path: 'confirm_ac'
     action confirm(packagesIds : many UUID, slotId : UUID)  returns Boolean;
     @sap.applicable.path: 'pickup_ac'
-    action pickup(packageId : UUID)                         returns Boolean;
+    action pickup(packageId : UUID)                         returns Package;
 }
 
 

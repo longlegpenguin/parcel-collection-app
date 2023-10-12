@@ -12,7 +12,7 @@ import com.sap.cds.services.handler.annotations.After;
 import com.sap.cds.services.handler.annotations.On;
 import com.sap.cds.services.handler.annotations.ServiceName;
 import com.sap.internal.digitallab.packagehandling.manager.PackageManager;
-import com.sap.internal.digitallab.packagehandling.utility;
+import com.sap.internal.digitallab.packagehandling.utility.MessageKeys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +49,7 @@ public class PackageServiceHandler implements EventHandler {
         String slotId = context.getSlotId();
 
         if (packageIds == null || slotId == null) {
-            throw new ServiceException(ErrorStatuses.NOT_ACCEPTABLE, utility.MessageKeys.MISSING_INPUT);
+            throw new ServiceException(ErrorStatuses.NOT_ACCEPTABLE, MessageKeys.MISSING_INPUT);
         }
 
         packageIds.forEach(pid -> packMgr.confirmPackage(slotId, pid));
@@ -59,10 +59,20 @@ public class PackageServiceHandler implements EventHandler {
         LOGGER.info("Confirm action received. packages: " + packageIds + " slot: " + slotId);
     }
 
+    /**
+     * Handler for receptionist pickup action.
+     * Sets package to picked up and fill the pickup time.
+     *
+     * @param context (packageId: UUID)
+     */
     @On
     public void pickupAction(PickupContext context) {
-        // TODO Check the given ID.  Sets the status to pickedup, set the pickedUpAt and pickedUpBy fields.
-        context.setResult(false);
+        String packId = context.getPackageId();
+        packMgr.pickupPackage(packId);
+
+        Package pack = Package.create();
+        pack.putAll(packMgr.getPackageWithId(packId));
+        context.setResult(pack);
     }
 
     /*
