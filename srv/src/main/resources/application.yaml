@@ -20,7 +20,7 @@ cds:
         password: admin
         roles:
         - Administrator
-      user:
+      I111111:
         password: user
       manager:
         password: manager
