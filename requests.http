@@ -145,3 +145,7 @@ Authorization: Basic YWRtaW46YWRtaW4=
   "receptionist": "I345678",
   "comment": "no comment"
 }
+
+### Illegal Get a package 
+GET http://localhost:8084/api/RegistrationService/Package HTTP/1.1
+Authorization: Basic YWRtaW46YWRtaW4=

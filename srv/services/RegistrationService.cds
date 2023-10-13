@@ -9,6 +9,9 @@ using {com.sap.internal.digitallab.packagehandling.common as common} from '../..
 @path: 'RegistrationService'
 service RegistrationService {
 
+    @(restrict: [{
+        grant: ['CREATE'],
+    }])
     entity Package         as projection on core.Package;
 
     @readonly
