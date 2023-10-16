@@ -2,10 +2,13 @@
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_StorageService_Storage;
 DROP VIEW IF EXISTS localized_DummyService_Storage;
 DROP VIEW IF EXISTS localized_DummyService_DeliveryCompany;
+DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_PackageService_Package;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_CompanyService_DeliveryCompany;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_StorageService_StorageSlot;
 DROP VIEW IF EXISTS localized_DummyService_StorageSlot;
 DROP VIEW IF EXISTS localized_DummyService_Package;
+DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_PackageService_PackageStatus;
+DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_PackageService_PackageType;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_StorageService_SlotStatus;
 DROP VIEW IF EXISTS localized_DummyService_SlotStatus;
 DROP VIEW IF EXISTS localized_DummyService_PackageStatus;
@@ -22,10 +25,20 @@ DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_core_S
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_core_PackageType;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_core_PackageStatus;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_common_FloorType;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PackageService_PackageStatus_texts;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PackageService_PackageType_texts;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_StorageService_SlotStatus_texts;
 DROP VIEW IF EXISTS DummyService_SlotStatus_texts;
 DROP VIEW IF EXISTS DummyService_PackageStatus_texts;
 DROP VIEW IF EXISTS DummyService_PackageType_texts;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PackageService_BuildingFloor;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PackageService_Building;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PackageService_DeliveryCompany;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PackageService_Storage;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PackageService_StorageSlot;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PackageService_PackageStatus;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PackageService_PackageType;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PackageService_Package;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_CompanyService_DeliveryCompany;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_StorageService_BuildingFloor;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_StorageService_Building;
@@ -394,6 +407,63 @@ CREATE VIEW com_sap_internal_digitallab_packagehandling_service_CompanyService_D
   DeliveryCompany_0.logo
 FROM com_sap_internal_digitallab_packagehandling_core_DeliveryCompany AS DeliveryCompany_0; 
 
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_Package AS SELECT
+  Package_0.ID,
+  Package_0.createdAt,
+  Package_0.createdBy,
+  Package_0.modifiedAt,
+  Package_0.modifiedBy,
+  Package_0.recipient,
+  Package_0.comfirmationTime,
+  Package_0.pickupTime,
+  Package_0.slot_ID,
+  Package_0.deliveryCompany_ID,
+  Package_0.type_code,
+  Package_0.status_code,
+  Package_0.receptionist,
+  Package_0.comment
+FROM com_sap_internal_digitallab_packagehandling_core_Package AS Package_0; 
+
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_PackageType AS SELECT
+  PackageType_0.name,
+  PackageType_0.descr,
+  PackageType_0.code
+FROM com_sap_internal_digitallab_packagehandling_core_PackageType AS PackageType_0; 
+
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_PackageStatus AS SELECT
+  PackageStatus_0.name,
+  PackageStatus_0.descr,
+  PackageStatus_0.code
+FROM com_sap_internal_digitallab_packagehandling_core_PackageStatus AS PackageStatus_0; 
+
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_StorageSlot AS SELECT
+  StorageSlot_0.ID,
+  StorageSlot_0.name,
+  StorageSlot_0.storage_ID
+FROM com_sap_internal_digitallab_packagehandling_core_StorageSlot AS StorageSlot_0; 
+
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_Storage AS SELECT
+  Storage_0.ID,
+  Storage_0.name,
+  Storage_0.buildingFloor
+FROM com_sap_internal_digitallab_packagehandling_core_Storage AS Storage_0; 
+
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_DeliveryCompany AS SELECT
+  DeliveryCompany_0.ID,
+  DeliveryCompany_0.name
+FROM com_sap_internal_digitallab_packagehandling_core_DeliveryCompany AS DeliveryCompany_0; 
+
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_Building AS SELECT
+  Building_0.ID,
+  Building_0.name
+FROM com_sap_internal_digitallab_packagehandling_common_Building AS Building_0; 
+
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_BuildingFloor AS SELECT
+  BuildingFloor_0.ID,
+  BuildingFloor_0.name,
+  BuildingFloor_0.building_ID
+FROM com_sap_internal_digitallab_packagehandling_common_BuildingFloor AS BuildingFloor_0; 
+
 CREATE VIEW DummyService_PackageType_texts AS SELECT
   texts_0.locale,
   texts_0.name,
@@ -421,6 +491,20 @@ CREATE VIEW com_sap_internal_digitallab_packagehandling_service_StorageService_S
   texts_0.descr,
   texts_0.code
 FROM com_sap_internal_digitallab_packagehandling_core_SlotStatus_texts AS texts_0; 
+
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_PackageType_texts AS SELECT
+  texts_0.locale,
+  texts_0.name,
+  texts_0.descr,
+  texts_0.code
+FROM com_sap_internal_digitallab_packagehandling_core_PackageType_texts AS texts_0; 
+
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_PackageStatus_texts AS SELECT
+  texts_0.locale,
+  texts_0.name,
+  texts_0.descr,
+  texts_0.code
+FROM com_sap_internal_digitallab_packagehandling_core_PackageStatus_texts AS texts_0; 
 
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_common_FloorType AS SELECT
   coalesce(localized_1.name, L_0.name) AS name,
@@ -576,6 +660,18 @@ CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_Storag
   SlotStatus_0.code
 FROM localized_com_sap_internal_digitallab_packagehandling_core_SlotStatus AS SlotStatus_0; 
 
+CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_PackageService_PackageType AS SELECT
+  PackageType_0.name,
+  PackageType_0.descr,
+  PackageType_0.code
+FROM localized_com_sap_internal_digitallab_packagehandling_core_PackageType AS PackageType_0; 
+
+CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_PackageService_PackageStatus AS SELECT
+  PackageStatus_0.name,
+  PackageStatus_0.descr,
+  PackageStatus_0.code
+FROM localized_com_sap_internal_digitallab_packagehandling_core_PackageStatus AS PackageStatus_0; 
+
 CREATE VIEW localized_DummyService_Package AS SELECT
   Package_0.ID,
   Package_0.createdAt,
@@ -624,6 +720,23 @@ CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_Compan
   DeliveryCompany_0.name,
   DeliveryCompany_0.logo
 FROM localized_com_sap_internal_digitallab_packagehandling_core_DeliveryCompany AS DeliveryCompany_0; 
+
+CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_PackageService_Package AS SELECT
+  Package_0.ID,
+  Package_0.createdAt,
+  Package_0.createdBy,
+  Package_0.modifiedAt,
+  Package_0.modifiedBy,
+  Package_0.recipient,
+  Package_0.comfirmationTime,
+  Package_0.pickupTime,
+  Package_0.slot_ID,
+  Package_0.deliveryCompany_ID,
+  Package_0.type_code,
+  Package_0.status_code,
+  Package_0.receptionist,
+  Package_0.comment
+FROM localized_com_sap_internal_digitallab_packagehandling_core_Package AS Package_0; 
 
 CREATE VIEW localized_DummyService_DeliveryCompany AS SELECT
   DeliveryCompany_0.ID,

@@ -1,5 +1,9 @@
 package com.sap.internal.digitallab.packagehandling.repository;
 
+import cds.gen.com.sap.internal.digitallab.packagehandling.core.Package;
+import cds.gen.com.sap.internal.digitallab.packagehandling.core.Package_;
+import com.sap.cds.ql.Update;
+import com.sap.cds.ql.cqn.CqnUpdate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +52,21 @@ public class StorageSlotRepository {
                 .columns(StorageSlot_::name)
                 .where(s -> s.storage_ID().eq(storageId));
         return db.run(select);
+    }
+
+    /**
+     * Updates a slot entry with new status code.
+     *
+     * @param statusCode status code to fill in.
+     * @param slotId id of package to update.
+     */
+    public void updateStatusCodeById(String statusCode, String slotId) {
+        CqnUpdate update = Update
+                .entity(StorageSlot_.class)
+                .data(Package.STATUS_CODE, statusCode)
+                .byId(slotId);
+        db.run(update);
+        LOGGER.info("Set slot={} status to {}", slotId, statusCode);
     }
 
     private StorageSlot createSlot(String slotName, String storageId, SlotStatus status) {

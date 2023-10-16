@@ -1,6 +1,8 @@
 package com.sap.internal.digitallab.packagehandling.repository;
 
+import com.sap.cds.ql.Delete;
 import com.sap.cds.ql.Update;
+import com.sap.cds.ql.cqn.CqnDelete;
 import com.sap.cds.ql.cqn.CqnUpdate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +16,8 @@ import com.sap.cds.services.persistence.PersistenceService;
 
 import cds.gen.com.sap.internal.digitallab.packagehandling.core.Package_;
 import cds.gen.com.sap.internal.digitallab.packagehandling.core.Package;
+
+import java.sql.Timestamp;
 
 @Component
 public class PackageRepository {
@@ -62,6 +66,72 @@ public class PackageRepository {
                 .entity(Package_.class)
                 .data(Package.DELIVERY_COMPANY, null)
                 .where(p -> p.ID().eq(packageId));
+        db.run(update);
+    }
+
+    /**
+     * SELECT * FROM package where ID = $packageId;
+     * @param packageId id of package to read
+     * @return single row of result of select.
+     */
+    public Result readById(String packageId) {
+        CqnSelect select = Select
+                .from(Package_.class)
+                .byId(packageId);
+        return db.run(select);
+    }
+
+    /**
+     * Updates a package entry with nue slot id.
+     *
+     * @param slotId id of slot to fill in.
+     * @param packId id of package to change the slot id.
+     */
+    public void updateSlotIdById(String slotId, String packId) {
+        CqnUpdate update = Update
+                .entity(Package_.class)
+                .data(Package.SLOT_ID, slotId)
+                .where(p -> p.ID().eq(packId));
+        db.run(update);
+    }
+
+    /**
+     * Updates a package entry with nue slot id.
+     *
+     * @param statusCode status code to fill in.
+     * @param packId id of package to update.
+     */
+    public void updateStatusCodeById(String statusCode, String packId) {
+        CqnUpdate update = Update
+                .entity(Package_.class)
+                .data(Package.STATUS_CODE, statusCode)
+                .byId(packId);
+        db.run(update);
+    }
+
+    /**
+     * Updates a package's confirmation time with now.
+     *
+     * @param packId id of package to update.
+     */
+    public void updateConfirmedTimeById(String packId) {
+        CqnUpdate update = Update
+                .entity(Package_.class)
+                .data(Package.COMFIRMATION_TIME, new Timestamp(System.currentTimeMillis()))
+                .byId(packId);
+        db.run(update);
+    }
+
+    /**
+     * Updates a package's picked-up time with now.
+     *
+     * @param packId id of package to update.
+     */
+    public void updatePickedUpTimeById(String packId) {
+        CqnUpdate update = Update
+                .entity(Package_.class)
+                .data(Package.PICKUP_TIME, new Timestamp(System.currentTimeMillis()))
+                .byId(packId);
         db.run(update);
     }
 }
