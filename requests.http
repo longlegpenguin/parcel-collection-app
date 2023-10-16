@@ -80,7 +80,7 @@ GET http://localhost:8084/api/StorageService/Storage(ID=adf15060-9907-4ea3-be7e-
 Authorization: Basic YWRtaW46YWRtaW4=
 
 
-############### Delivery company tests
+############### Delivery company tests ###############################################
 
 ### Get all packages
 GET http://localhost:8084/api/PackageService/Package HTTP/1.1
@@ -97,11 +97,16 @@ Authorization: Basic YWRtaW46YWRtaW4=
 ### Get all delevery companies
 GET http://localhost:8084/api/CompanyService/DeliveryCompany HTTP/1.1
 Authorization: Basic YWRtaW46YWRtaW4=
+
 ### Deletion of a company results relevant pavkages reference removed
 DELETE http://localhost:8084/api/CompanyService/DeliveryCompany(ID=6480a902-007c-4cdd-a6a3-0f3a88d24fe0) HTTP/1.1
 Authorization: Basic YWRtaW46YWRtaW4=
 
-############### Package service test
+### Deletion of a company results relevant pavkages reference removed
+DELETE http://localhost:8084/api/CompanyService/DeliveryCompany(ID=6480a902-007c-4cdd-a6a3-0f3a88d24fe0) HTTP/1.1
+Authorization: Basic YWRtaW46YWRtaW4=
+
+############### Package service test ###################################################
 ### Get all storage slots
 GET http://localhost:8084/api/StorageService/StorageSlot HTTP/1.1
 Authorization: Basic YWRtaW46YWRtaW4=
@@ -173,4 +178,52 @@ Authorization: Basic cmVjZXA6cmVjZXA=
 
 ### Delete a package
 DELETE http://localhost:8084/api/PackageService/Package(ID=8fb3403b-1e14-43f5-9bb9-8b20113bb70a) HTTP/1.1
+Authorization: Basic YWRtaW46YWRtaW4= 
+
+####### Registration service test ########################################################
+POST http://localhost:8084/api/RegistrationService/Package HTTP/1.1
+Content-Type: application/json
+Authorization: Basic YWRtaW46YWRtaW4=
+
+{
+  "ID": "9599F81D-E907-4A6A-94C2-68056B6ECA5D",
+  "createdAt": null,
+  "createdBy": null,
+  "modifiedAt": null,
+  "modifiedBy": null,
+  "recipient": "I333333",
+  "comfirmationTime": null,
+  "pickupTime": null,
+  "slot_ID": null,
+  "deliveryCompany_ID": "6480a902-007c-4cdd-a6a3-0f3a88d24fe0",
+  "type_code": "newspaper",
+  "status_code": "confirmed",
+  "receptionist": "I345678",
+  "comment": "no comment"
+}
+
+### Create a slot 
+POST http://localhost:8084/api/RegistrationService/Package HTTP/1.1
+Content-Type: application/json
+Authorization: Basic YWRtaW46YWRtaW4=
+
+{
+  "ID": "69BC3A65-E4E2-4235-864A-96EF2096B5C7",
+  "createdAt": null,
+  "createdBy": null,
+  "modifiedAt": null,
+  "modifiedBy": null,
+  "recipient": "I333333",
+  "comfirmationTime": null,
+  "pickupTime": null,
+  "slot_ID": null,
+  "deliveryCompany_ID": "6480a902-007c-4cdd-a6a3-0f3a88d24fe0",
+  "type_code": "newspaper",
+  "status_code": "",
+  "receptionist": "I345678",
+  "comment": "no comment"
+}
+
+### Illegal Get a package 
+GET http://localhost:8084/api/RegistrationService/Package HTTP/1.1
 Authorization: Basic YWRtaW46YWRtaW4=
