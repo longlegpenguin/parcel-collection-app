@@ -4,3 +4,5 @@ using from './CompanyService';
 using from './CompanyService-auth';
 using from './RegistrationService';
 using from './RegistrationService-auth';
+using from './PackageService';
+using from './PackageService-auth';
