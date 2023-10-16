@@ -14,14 +14,14 @@ public class StorageSlotManager {
 
     private static final Logger LOGGER = LoggerFactory.getLogger("StorageSlotServiceImpl_LOGGER");
 
-    SlotStatusManager slotStatusManager;
+    SlotStatusManager slotStatusMgr;
     StorageSlotRepository slotResp;
     PackageRepository packageResp;
 
     @Autowired
-    public StorageSlotManager(SlotStatusManager slotStatusManager, StorageSlotRepository slotResp, PackageRepository packageResp) {
+    public StorageSlotManager(SlotStatusManager slotStatusMgr, StorageSlotRepository slotResp, PackageRepository packageResp) {
         this.slotResp = slotResp;
-        this.slotStatusManager = slotStatusManager;
+        this.slotStatusMgr = slotStatusMgr;
         this.packageResp = packageResp;
     }
 
@@ -53,7 +53,7 @@ public class StorageSlotManager {
                 String slotName = genSlotName(i, j, rowType, colType);
 
                 if (!isSlotNameExist(slotName, storageId)) {
-                    slotResp.insert(slotName, slotStatusManager.emptySlotStatus(), storageId);
+                    slotResp.insert(slotName, slotStatusMgr.emptySlotStatus(), storageId);
                     cnt++;
                 }
             }
@@ -90,6 +90,22 @@ public class StorageSlotManager {
                 .count();
     }
 
+    /**
+     * Refreshes the status of the slot according to no. of current packages.
+     * empty if = 0, in use if > 0
+     *
+     * @param slotId id of slot to reset.
+     */
+    public void refreshStatus(String slotId) {
+        int noOfCurrentPacks = cntConfirmedPackagesNumber(slotId);
+        if (noOfCurrentPacks == 0) {
+            slotResp.updateStatusCodeById(slotStatusMgr.EMPTY_STATUS, slotId);
+        } else if (noOfCurrentPacks > 0) {
+            slotResp.updateStatusCodeById(slotStatusMgr.INUSE_STATUS, slotId);
+        }
+        LOGGER.info("Refreshed status, no of current packs: {}, slot={}", noOfCurrentPacks, slotId);
+    }
+
     private String translateSlotNameCode(int code, String type) {
         return type.equals("C") ? (char) (code + 65) + "" : (code + "");
     }
@@ -112,8 +128,8 @@ public class StorageSlotManager {
      * 
      * @param rowCode ordinal number for row
      * @param colCode ordinal number for column
-     * @param rowType C for charactor, N for number
-     * @param colType C for charactor, N for number
+     * @param rowType C for character, N for number
+     * @param colType C for character, N for number
      * @return name of slot
      */
     private String genSlotName(int rowCode, int colCode, String rowType, String colType) {

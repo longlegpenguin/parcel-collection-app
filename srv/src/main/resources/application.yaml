@@ -26,5 +26,9 @@ cds:
         password: manager
         roles:
         - FacilityManager
+      recep:
+        password: recep
+        roles:
+          - Receptionist
 server:
   port: 8084
