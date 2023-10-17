@@ -14,13 +14,7 @@ service PackageService {
         'UPDATE',
         'DELETE'
     ]}])
-    entity Package         as projection on core.Package
-//    actions {
-//        @sap.applicable.path: 'confirm_ac'
-//        action confirm(in : many $self, slotId : UUID) returns Boolean;
-//        @sap.applicable.path: 'pickup_ac'
-//        action pickup(in : $self)                      returns Boolean;
-//    };
+    entity Package         as projection on core.Package;
 
     @readonly
     entity PackageType     as projection on core.PackageType;
@@ -63,9 +57,10 @@ service PackageService {
     };
 
     @sap.applicable.path: 'confirm_ac'
-    action confirm(packagesIds : many UUID, slotId : UUID)  returns Boolean;
+    action confirm(packagesIds : many UUID, slotId : UUID) returns Boolean;
+
     @sap.applicable.path: 'pickup_ac'
-    action pickup(packageId : UUID)                         returns Package;
+    action pickup(packageId : UUID)                        returns Package;
 }
 
 
@@ -74,7 +69,7 @@ service PackageService {
  */
 annotate PackageService.Package with {
     recipient     @mandatory;
-    type          @mandatory @assert.target;
+    type          @mandatory  @assert.target;
     receptionist  @mandatory  @(restrict: [
         {
             grant: 'READ',

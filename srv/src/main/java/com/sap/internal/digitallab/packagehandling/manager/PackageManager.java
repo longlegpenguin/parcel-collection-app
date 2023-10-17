@@ -3,6 +3,7 @@ package com.sap.internal.digitallab.packagehandling.manager;
 import cds.gen.com.sap.internal.digitallab.packagehandling.core.Package;
 import com.sap.cds.Result;
 import com.sap.cds.Row;
+import com.sap.cds.ql.cqn.CqnSelect;
 import com.sap.internal.digitallab.packagehandling.repository.DeliveryCompanyRepository;
 import com.sap.internal.digitallab.packagehandling.repository.PackageRepository;
 import com.sap.internal.digitallab.packagehandling.utility.EmailSender;
@@ -20,7 +21,8 @@ public class PackageManager {
     private final StorageSlotManager slotMgr;
 
     @Autowired
-    public PackageManager(DeliveryCompanyRepository companyRepo, PackageRepository packRepo, PackageStatusManager packStatusMgr, StorageSlotManager slotMgr) {
+    public PackageManager(DeliveryCompanyRepository companyRepo, PackageRepository packRepo,
+            PackageStatusManager packStatusMgr, StorageSlotManager slotMgr) {
         this.companyRepo = companyRepo;
         this.packRepo = packRepo;
         this.packStatusMgr = packStatusMgr;
@@ -141,4 +143,13 @@ public class PackageManager {
         return pack.single().get(Package.STATUS_CODE).toString();
     }
 
+    /**
+     * Get the select cqn for given user and status is confirmed of the package
+     * 
+     * @param uname user name
+     * @return CqnSelect
+     */
+    public CqnSelect getFilterUserAndConfirmedStatusCqn(String uname) {
+        return packRepo.getFilterUserAndStatusCqn(uname, packStatusMgr.CONFIRMED_STATUS_CODE);
+    }
 }

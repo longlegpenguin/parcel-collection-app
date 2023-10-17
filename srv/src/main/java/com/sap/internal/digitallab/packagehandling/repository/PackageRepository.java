@@ -71,6 +71,7 @@ public class PackageRepository {
 
     /**
      * SELECT * FROM package where ID = $packageId;
+     * 
      * @param packageId id of package to read
      * @return single row of result of select.
      */
@@ -99,7 +100,7 @@ public class PackageRepository {
      * Updates a package entry with nue slot id.
      *
      * @param statusCode status code to fill in.
-     * @param packId id of package to update.
+     * @param packId     id of package to update.
      */
     public void updateStatusCodeById(String statusCode, String packId) {
         CqnUpdate update = Update
@@ -133,5 +134,20 @@ public class PackageRepository {
                 .data(Package.PICKUP_TIME, new Timestamp(System.currentTimeMillis()))
                 .byId(packId);
         db.run(update);
+    }
+
+    /**
+     * Get the select cqn for given user and status of the package
+     * 
+     * @param uname      user name
+     * @param statusCode status code of the package
+     * @return CqnSelect SELECT * FROM package WHERE recipient = $uname AND
+     *         status_code = $statusCode;
+     */
+    public CqnSelect getFilterUserAndStatusCqn(String uname, String statusCode) {
+        return Select.from(Package_.class)
+                .where(
+                        p -> p.status_code().eq(statusCode)
+                                .and(p.recipient().eq(uname)));
     }
 }
