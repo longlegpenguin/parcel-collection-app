@@ -7,8 +7,37 @@
     {
       "name": "$XSAPPNAME.Administrator",
       "description": "Administrator"
+    },
+    {
+      "name": "$XSAPPNAME.Receptionist",
+      "description": "Receptionist"
     }
   ],
   "attributes": [],
-  "role-templates": []
+  "role-templates": [
+    {
+      "name": "FacilityManager",
+      "description": "generated",
+      "scope-references": [
+        "$XSAPPNAME.FacilityManager"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "Administrator",
+      "description": "generated",
+      "scope-references": [
+        "$XSAPPNAME.Administrator"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "Receptionist",
+      "description": "generated",
+      "scope-references": [
+        "$XSAPPNAME.Receptionist"
+      ],
+      "attribute-references": []
+    }
+  ]
 }
