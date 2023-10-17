@@ -1,12 +1,16 @@
 package com.sap.internal.digitallab.packagehandling.handler;
 
+import java.util.stream.Stream;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.sap.cds.services.cds.CdsReadEventContext;
+import com.sap.cds.services.cds.CqnService;
 import com.sap.cds.services.handler.EventHandler;
+import com.sap.cds.services.handler.annotations.After;
 import com.sap.cds.services.handler.annotations.Before;
 import com.sap.cds.services.handler.annotations.HandlerOrder;
 import com.sap.cds.services.handler.annotations.On;
@@ -59,5 +63,19 @@ public class PickupServiceHandler implements EventHandler {
         String uname = uInfo.getName();
         context.setCqn(
                 packMgr.getFilterUserAndConfirmedStatusCqn(uname));
+    }
+
+    /**
+     * Sets action controls on read.
+     *
+     * @param packages packages to set.
+     */
+    @After(event = { CqnService.EVENT_READ })
+    public void afterReadPackage(Stream<Package> packages) {
+        packages.forEach(p -> {
+            String pid = p.getId();
+            p.setPickupAc(packMgr.evalPickupAc(pid));
+        });
+        LOGGER.info("After read a package, updated ACs: ");
     }
 }
