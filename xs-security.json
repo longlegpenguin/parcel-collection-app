@@ -11,6 +11,10 @@
     {
       "name": "$XSAPPNAME.Receptionist",
       "description": "Receptionist"
+    },
+    {
+      "name": "$XSAPPNAME.User",
+      "description": "User"
     }
   ],
   "attributes": [],
@@ -36,6 +40,14 @@
       "description": "generated",
       "scope-references": [
         "$XSAPPNAME.Receptionist"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "User",
+      "description": "self entered",
+      "scope-references": [
+        "$XSAPPNAME.User"
       ],
       "attribute-references": []
     }
