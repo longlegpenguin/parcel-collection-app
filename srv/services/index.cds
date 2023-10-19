@@ -2,6 +2,8 @@ using from './StorageService';
 using from './StorageService-auth';
 using from './CompanyService';
 using from './CompanyService-auth';
+using from './PickupService';
+using from './PickupService-auth';
 using from './HistoryService';
 using from './HistoryService-auth';
 using from './RegistrationService';

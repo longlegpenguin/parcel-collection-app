@@ -22,6 +22,8 @@ cds:
         - Administrator
       I111111:
         password: user
+        roles:
+        - User
       manager:
         password: manager
         roles:

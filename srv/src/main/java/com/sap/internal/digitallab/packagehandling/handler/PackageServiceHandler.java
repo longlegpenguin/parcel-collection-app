@@ -58,7 +58,7 @@ public class PackageServiceHandler implements EventHandler {
 
         packageIds.forEach(pid -> packMgr.confirmPackage(slotId, pid));
         context.setResult(true);
-        LOGGER.info("Confirm action received. packages: " + packageIds + " slot: " + slotId);
+        LOGGER.info("Confirm action received. packages: {} slot: {}", packageIds, slotId);
     }
 
     /**
