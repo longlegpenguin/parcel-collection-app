@@ -1,6 +1,7 @@
 package com.sap.internal.digitallab.packagehandling.manager;
 
 import cds.gen.com.sap.internal.digitallab.packagehandling.service.storageservice.StorageSlot;
+import com.sap.internal.digitallab.packagehandling.IdsConstants;
 import com.sap.internal.digitallab.packagehandling.repository.StorageSlotRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -18,9 +19,9 @@ class StorageSlotManagerTest {
     private final StorageSlotManager slotMgr;
     private final StorageSlotRepository slotRepo;
     private final String storageWithoutSlots = "2F33D046-13A8-442C-AEBC-5A687891BE7E";
-    private final String storageWithSlots = "92A5F984-7C3B-4A36-9883-4F7EDBA1D9F3";
-    private final String slotInUse = "187EAB04-8339-4936-8300-F0BF83104216";
-    private final String slotEmpty = "8bcf0524-ce22-4f48-b8c2-4de29f9fe52d";
+    private final String storageWithSlots = IdsConstants.storage4;
+    private final String slotInUse = IdsConstants.slot2;
+    private final String slotEmpty = IdsConstants.slot7;
 
 
     @Autowired

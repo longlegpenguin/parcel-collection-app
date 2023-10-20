@@ -1,7 +1,6 @@
 package com.sap.internal.digitallab.packagehandling.repository;
 
 import cds.gen.com.sap.internal.digitallab.packagehandling.core.Package;
-import cds.gen.com.sap.internal.digitallab.packagehandling.core.Package_;
 import com.sap.cds.ql.Update;
 import com.sap.cds.ql.cqn.CqnUpdate;
 import org.slf4j.Logger;
@@ -23,10 +22,14 @@ import cds.gen.com.sap.internal.digitallab.packagehandling.core.StorageSlot_;
 @Component
 public class StorageSlotRepository {
 
-    @Autowired
-    PersistenceService db;
 
+    private final PersistenceService db;
     private static final Logger LOGGER = LoggerFactory.getLogger("slot_resp_logger");
+
+    @Autowired
+    public StorageSlotRepository(PersistenceService db) {
+        this.db = db;
+    }
 
     /**
      * INSERT INTO storageslot VALUES ($name, $status, $storageId);
