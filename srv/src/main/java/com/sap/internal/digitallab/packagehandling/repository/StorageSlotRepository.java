@@ -86,7 +86,6 @@ public class StorageSlotRepository {
     public Result selectById(String id) {
         CqnSelect select = Select
                 .from(StorageSlot_.class)
-                .columns(StorageSlot_::name)
                 .byId(id);
         return db.run(select);
     }
