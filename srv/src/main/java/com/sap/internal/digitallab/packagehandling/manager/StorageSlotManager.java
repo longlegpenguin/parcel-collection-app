@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class StorageSlotManager {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger("StorageSlotServiceImpl_LOGGER");
+    private static final Logger LOGGER = LoggerFactory.getLogger("StorageSlotManager_LOGGER");
 
     SlotStatusManager slotStatusMgr;
     StorageSlotRepository slotResp;
@@ -37,7 +37,7 @@ public class StorageSlotManager {
 
     /**
      * Evaluates and updates total package number virtual fields of given slot.
-     * 
+     *
      * @param slot StorageSlot
      */
     public void updateTotalPackageVf(StorageSlot slot) {
@@ -48,13 +48,23 @@ public class StorageSlotManager {
     public int massCreate(String rowType, int rows, String colType, int cols, String storageId) {
         int cnt = 0;
 
+        if (rowType.equals(colType)) {
+            throw new IllegalArgumentException("Row type and Col type cannot be the same");
+        } else if (!(
+                (rowType.equals("C") || rowType.equals("N")) &&
+                        (colType.equals("C") || colType.equals("N")))) {
+            throw new IllegalArgumentException("Invalid type code");
+        }
         for (int i = 1; i <= rows; i++) {
             for (int j = 1; j <= cols; j++) {
                 String slotName = genSlotName(i, j, rowType, colType);
-
                 if (!isSlotNameExist(slotName, storageId)) {
-                    slotResp.insert(slotName, slotStatusMgr.emptySlotStatus(), storageId);
-                    cnt++;
+                    try {
+                        slotResp.insert(slotName, slotStatusMgr.emptySlotStatus(), storageId);
+                        cnt++;
+                    } catch (Exception e) {
+                        LOGGER.info("Skipped slot {} creation because name exists.", slotName);
+                    }
                 }
             }
         }
@@ -63,7 +73,7 @@ public class StorageSlotManager {
 
     /**
      * Calculates the number of confirmed packages in a slot.
-     * 
+     *
      * @param slotId UUID of the slot.
      * @return the number.
      */
@@ -78,7 +88,7 @@ public class StorageSlotManager {
 
     /**
      * Calculates the total number of packages in a slot.
-     * 
+     *
      * @param slotId UUID of the slot.
      * @return the number.
      */
@@ -112,7 +122,7 @@ public class StorageSlotManager {
 
     /**
      * Check if the slot name exists in a storage.
-     * 
+     *
      * @param name      name of slot
      * @param storageId UUID
      * @return true if exist
@@ -125,7 +135,7 @@ public class StorageSlotManager {
 
     /**
      * Generate slot's name.
-     * 
+     *
      * @param rowCode ordinal number for row
      * @param colCode ordinal number for column
      * @param rowType C for character, N for number

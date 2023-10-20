@@ -76,4 +76,18 @@ public class StorageSlotRepository {
         slot.setStatus(status);
         return slot;
     }
+
+    /**
+     * SELECT * FROM storageslot where id = $id;
+     *
+     * @param id String
+     * @return Result rows.
+     */
+    public Result selectById(String id) {
+        CqnSelect select = Select
+                .from(StorageSlot_.class)
+                .columns(StorageSlot_::name)
+                .byId(id);
+        return db.run(select);
+    }
 }
