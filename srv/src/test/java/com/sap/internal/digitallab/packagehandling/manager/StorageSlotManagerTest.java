@@ -20,7 +20,7 @@ class StorageSlotManagerTest {
     private final String storageWithoutSlots = "2F33D046-13A8-442C-AEBC-5A687891BE7E";
     private final String storageWithSlots = "92A5F984-7C3B-4A36-9883-4F7EDBA1D9F3";
     private final String slotInUse = "187EAB04-8339-4936-8300-F0BF83104216";
-    private final String slotEmpty = "16855732-136F-4C24-9DCE-47650F7D51B0";
+    private final String slotEmpty = "8bcf0524-ce22-4f48-b8c2-4de29f9fe52d";
 
 
     @Autowired
@@ -43,15 +43,9 @@ class StorageSlotManagerTest {
 
     @Test
     void testMassCreateInvalidParameters() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            slotMgr.massCreate("N", 3, "N", 4, storageWithSlots);
-        });
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            slotMgr.massCreate("F", 3, "N", 4, storageWithSlots);
-        });
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            slotMgr.massCreate("N", 3, "F", 4, storageWithSlots);
-        });
+        Assertions.assertThrows(IllegalArgumentException.class, () -> slotMgr.massCreate("N", 3, "N", 4, storageWithSlots));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> slotMgr.massCreate("F", 3, "N", 4, storageWithSlots));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> slotMgr.massCreate("N", 3, "F", 4, storageWithSlots));
     }
 
     @Test
