@@ -34,3 +34,24 @@ cds:
           - Receptionist
 server:
   port: 8084
+
+
+---
+spring:
+  config.activate.on-profile: test
+  sql.init.schema-locations: classpath:schema-h2.sql
+  web.resources.static-locations: "file:./app/"
+cds:
+  dataSource:
+    autoConfig:
+      enabled: false
+    csv:
+      paths:
+        - test/data
+        - test/data/**
+        - ../test/data/**
+  odata-v4.endpoint.path: "/api"
+  odata-v4.serializer.enabled: true
+  multi-tenancy:
+    compatibility.enabled: false
+    mtxs.enabled: true

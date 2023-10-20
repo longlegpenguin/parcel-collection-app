@@ -3,48 +3,16 @@ package com.sap.internal.digitallab.packagehandling.manager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+@SpringBootTest
 class PackageManagerTest {
 
-    @BeforeEach
-    void setUp() {
-    }
+    private final PackageManager packMgr;
 
-    @AfterEach
-    void tearDown() {
-    }
-
-    @Test
-    void evalDeleteAc() {
-    }
-
-    @Test
-    void evalConfirmAc() {
-    }
-
-    @Test
-    void evalPickupAc() {
-    }
-
-    @Test
-    void confirmPackage() {
-    }
-
-    @Test
-    void pickupPackage() {
-    }
-
-    @Test
-    void getPackageWithId() {
-    }
-
-    @Test
-    void updateDeletedDeliveryCompany() {
-    }
-
-    @Test
-    void getFilterUserAndConfirmedStatusCqn() {
+    @Autowired
+    PackageManagerTest(PackageManager packMgr) {
+        this.packMgr = packMgr;
     }
 }
