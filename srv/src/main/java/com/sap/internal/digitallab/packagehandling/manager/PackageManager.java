@@ -112,7 +112,8 @@ public class PackageManager {
     public void updateDeletedDeliveryCompany() {
         Result rowsOfPackages = packRepo.selectAllPackages();
         rowsOfPackages.stream().forEach(p -> {
-            if (!checkCompanyExistById(
+            if (p.get(Package.DELIVERY_COMPANY_ID) != null &&
+                !checkCompanyExistById(
                     p.get(Package.DELIVERY_COMPANY_ID).toString())) {
                 LOGGER.info("Updated Package {} 's company to null", p);
                 packRepo.removeDeliveryCompanyById(
@@ -146,7 +147,7 @@ public class PackageManager {
     /**
      * Get the select cqn for given user and status is confirmed of the package
      * 
-     * @param uname user name
+     * @param uname username
      * @return CqnSelect
      */
     public CqnSelect getFilterUserAndConfirmedStatusCqn(String uname) {
