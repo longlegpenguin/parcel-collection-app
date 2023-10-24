@@ -7,6 +7,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static io.restassured.RestAssured.defaultParser;
 import static io.restassured.RestAssured.given;
 
@@ -19,6 +22,22 @@ public class BaseServiceTest {
     protected String host = "http://localhost:";
     @LocalServerPort
     protected Integer port;
+
+    protected Map<String, String> mockUsers;
+    protected final String ADMIN_KEY = "admin";
+    protected final String MGR_KEY = "manager";
+    protected final String RECEPTIONIST_KEY = "recep";
+    protected final String USER_KEY = "I111111";
+    protected final String USER_KEY2 = "I333333";
+
+    public BaseServiceTest() {
+        mockUsers = new HashMap<>();
+        mockUsers.put("admin", "admin");
+        mockUsers.put("manager", "manager");
+        mockUsers.put("I111111", "user");
+        mockUsers.put("recep", "recep");
+        mockUsers.put("I333333", "user");
+    }
 
     int getResponseCnt(Response response) {
         return response.getBody().jsonPath().getList("value").size();
@@ -34,6 +53,17 @@ public class BaseServiceTest {
                         .get(url)
                         .then()
                         .contentType(ContentType.JSON).extract().response();
+    }
+
+    Response post(String uname, String pwd, String url, String body) {
+        return given()
+                .auth().preemptive().basic(uname, pwd)
+                .contentType("application/json")
+                .body(body)
+                .when()
+                .post(url)
+                .then()
+                .extract().response();
     }
 
     void readAndCheck200(String uname, String pwd, String url) {

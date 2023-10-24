@@ -80,3 +80,7 @@ cds:
         password: recep
         roles:
           - Receptionist
+      I333333:
+        password: user
+        roles:
+          - User
