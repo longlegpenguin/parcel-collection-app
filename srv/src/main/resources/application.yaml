@@ -41,6 +41,12 @@ spring:
   config.activate.on-profile: test
   sql.init.schema-locations: classpath:schema-h2.sql
   web.resources.static-locations: "file:./app/"
+  security:
+    user:
+      name: admin
+      password: admin
+      roles:
+        - Administrator
 cds:
   dataSource:
     autoConfig:
@@ -55,3 +61,22 @@ cds:
   multi-tenancy:
     compatibility.enabled: false
     mtxs.enabled: true
+  security:
+    authentication.normalize-provider-tenant: true
+    mock.users:
+      admin:
+        password: admin
+        roles:
+          - Administrator
+      I111111:
+        password: user
+        roles:
+          - User
+      manager:
+        password: manager
+        roles:
+          - FacilityManager
+      recep:
+        password: recep
+        roles:
+          - Receptionist
