@@ -5,6 +5,7 @@ DROP VIEW IF EXISTS localized_DummyService_Storage;
 DROP VIEW IF EXISTS localized_DummyService_DeliveryCompany;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_RegistrationService_StorageSlot;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_HistoryService_StorageSlot;
+DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_PickService_Package;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_PackageService_Package;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_RegistrationService_Package;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_HistoryService_Package;
@@ -15,6 +16,8 @@ DROP VIEW IF EXISTS localized_DummyService_StorageSlot;
 DROP VIEW IF EXISTS localized_DummyService_Package;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_RegistrationService_SlotStatus;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_HistoryService_SlotStatus;
+DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_PickService_PackageStatus;
+DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_PickService_PackageType;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_PackageService_PackageStatus;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_PackageService_PackageType;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_RegistrationService_PackageStatus;
@@ -43,6 +46,8 @@ DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_Registra
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_HistoryService_SlotStatus_texts;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_RegistrationService_SlotStatus;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_HistoryService_SlotStatus;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PickService_PackageStatus_texts;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PickService_PackageType_texts;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PackageService_PackageStatus_texts;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PackageService_PackageType_texts;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_RegistrationService_PackageStatus_texts;
@@ -57,6 +62,12 @@ DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_StorageS
 DROP VIEW IF EXISTS DummyService_SlotStatus_texts;
 DROP VIEW IF EXISTS DummyService_PackageStatus_texts;
 DROP VIEW IF EXISTS DummyService_PackageType_texts;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PickService_DeliveryCompany;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PickService_Storage;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PickService_StorageSlot;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PickService_PackageStatus;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PickService_PackageType;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PickService_Package;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PackageService_BuildingFloor;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PackageService_Building;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PackageService_DeliveryCompany;
@@ -624,6 +635,52 @@ CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_B
   BuildingFloor_0.building_ID
 FROM com_sap_internal_digitallab_packagehandling_common_BuildingFloor AS BuildingFloor_0; 
 
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PickService_Package AS SELECT
+  Package_0.ID,
+  Package_0.createdAt,
+  Package_0.createdBy,
+  Package_0.modifiedAt,
+  Package_0.modifiedBy,
+  Package_0.recipient,
+  Package_0.comfirmationTime,
+  Package_0.pickupTime,
+  Package_0.slot_ID,
+  Package_0.deliveryCompany_ID,
+  Package_0.type_code,
+  Package_0.status_code,
+  Package_0.receptionist,
+  Package_0.comment
+FROM com_sap_internal_digitallab_packagehandling_core_Package AS Package_0
+WHERE Package_0.recipient = @applicationuser; 
+
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PickService_PackageType AS SELECT
+  PackageType_0.name,
+  PackageType_0.descr,
+  PackageType_0.code
+FROM com_sap_internal_digitallab_packagehandling_core_PackageType AS PackageType_0; 
+
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PickService_PackageStatus AS SELECT
+  PackageStatus_0.name,
+  PackageStatus_0.descr,
+  PackageStatus_0.code
+FROM com_sap_internal_digitallab_packagehandling_core_PackageStatus AS PackageStatus_0; 
+
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PickService_StorageSlot AS SELECT
+  StorageSlot_0.ID,
+  StorageSlot_0.name
+FROM com_sap_internal_digitallab_packagehandling_core_StorageSlot AS StorageSlot_0; 
+
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PickService_Storage AS SELECT
+  Storage_0.ID,
+  Storage_0.name,
+  Storage_0.locationInstructions
+FROM com_sap_internal_digitallab_packagehandling_core_Storage AS Storage_0; 
+
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PickService_DeliveryCompany AS SELECT
+  DeliveryCompany_0.ID,
+  DeliveryCompany_0.name
+FROM com_sap_internal_digitallab_packagehandling_core_DeliveryCompany AS DeliveryCompany_0; 
+
 CREATE VIEW DummyService_PackageType_texts AS SELECT
   texts_0.locale,
   texts_0.name,
@@ -724,6 +781,20 @@ CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_P
 FROM com_sap_internal_digitallab_packagehandling_core_PackageType_texts AS texts_0; 
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_PackageStatus_texts AS SELECT
+  texts_0.locale,
+  texts_0.name,
+  texts_0.descr,
+  texts_0.code
+FROM com_sap_internal_digitallab_packagehandling_core_PackageStatus_texts AS texts_0; 
+
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PickService_PackageType_texts AS SELECT
+  texts_0.locale,
+  texts_0.name,
+  texts_0.descr,
+  texts_0.code
+FROM com_sap_internal_digitallab_packagehandling_core_PackageType_texts AS texts_0; 
+
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PickService_PackageStatus_texts AS SELECT
   texts_0.locale,
   texts_0.name,
   texts_0.descr,
@@ -958,6 +1029,18 @@ CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_Packag
   PackageStatus_0.code
 FROM localized_com_sap_internal_digitallab_packagehandling_core_PackageStatus AS PackageStatus_0; 
 
+CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_PickService_PackageType AS SELECT
+  PackageType_0.name,
+  PackageType_0.descr,
+  PackageType_0.code
+FROM localized_com_sap_internal_digitallab_packagehandling_core_PackageType AS PackageType_0; 
+
+CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_PickService_PackageStatus AS SELECT
+  PackageStatus_0.name,
+  PackageStatus_0.descr,
+  PackageStatus_0.code
+FROM localized_com_sap_internal_digitallab_packagehandling_core_PackageStatus AS PackageStatus_0; 
+
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_HistoryService_SlotStatus AS SELECT
   SlotStatus_0.name,
   SlotStatus_0.descr,
@@ -1088,6 +1171,24 @@ CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_Packag
   Package_0.receptionist,
   Package_0.comment
 FROM localized_com_sap_internal_digitallab_packagehandling_core_Package AS Package_0; 
+
+CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_PickService_Package AS SELECT
+  Package_0.ID,
+  Package_0.createdAt,
+  Package_0.createdBy,
+  Package_0.modifiedAt,
+  Package_0.modifiedBy,
+  Package_0.recipient,
+  Package_0.comfirmationTime,
+  Package_0.pickupTime,
+  Package_0.slot_ID,
+  Package_0.deliveryCompany_ID,
+  Package_0.type_code,
+  Package_0.status_code,
+  Package_0.receptionist,
+  Package_0.comment
+FROM localized_com_sap_internal_digitallab_packagehandling_core_Package AS Package_0
+WHERE Package_0.recipient = @applicationuser; 
 
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_HistoryService_StorageSlot AS SELECT
   StorageSlot_0.ID,
