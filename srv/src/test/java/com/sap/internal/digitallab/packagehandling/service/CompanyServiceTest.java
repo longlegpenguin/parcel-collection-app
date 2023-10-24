@@ -14,9 +14,11 @@ import static io.restassured.RestAssured.given;
 )
 @ActiveProfiles("test")
 public class CompanyServiceTest extends BaseServiceTest {
+    private final String prefix = "/api/CompanyService/";
+
     @Test
     void testReadAllCompany() {
-        String url = host + port + "/api/CompanyService/DeliveryCompany";
+        String url = host + port + prefix + "DeliveryCompany";
 
         given()
                 .auth().preemptive().basic("admin", "admin")
@@ -49,7 +51,7 @@ public class CompanyServiceTest extends BaseServiceTest {
 
     @Test
     void testReadSingleCompany() {
-        String url = host + port + "/api/CompanyService/DeliveryCompany(69bc3a65-e4e2-4235-864a-96ef2096b5c7)";
+        String url = host + port + prefix + "DeliveryCompany(69bc3a65-e4e2-4235-864a-96ef2096b5c7)";
 
         given()
                 .auth().preemptive().basic("admin", "admin")
@@ -91,7 +93,7 @@ public class CompanyServiceTest extends BaseServiceTest {
                                 "      \"logo\": \"https://images.app.goo.gl/bzEzvAdv1wb6Socf6\"" +
                                 "}")
                         .when()
-                        .post(host + port + "/api/CompanyService/DeliveryCompany")
+                        .post(host + port + prefix + "DeliveryCompany")
                         .then()
                         .statusCode(201)
                         .extract();
@@ -118,7 +120,7 @@ public class CompanyServiceTest extends BaseServiceTest {
                                 "      \"logo\": \"https://images.app.goo.gl/bzEzvAdv1wb6Socf6\"" +
                                 "}")
                         .when()
-                        .post(host + port + "/api/CompanyService/DeliveryCompany")
+                        .post(host + port + prefix + "DeliveryCompany")
                         .then()
                         .statusCode(201)
                         .extract();
@@ -144,7 +146,7 @@ public class CompanyServiceTest extends BaseServiceTest {
                         "      \"logo\": \"https://images.app.goo.gl/bzEzvAdv1wb6Socf6\"" +
                         "}")
                 .when()
-                .put(host + port + "/api/CompanyService/DeliveryCompany(6480a902-007c-4cdd-a6a3-0f3a88d24fe0)")
+                .put(host + port + prefix + "DeliveryCompany(6480a902-007c-4cdd-a6a3-0f3a88d24fe0)")
                 .then()
                 .statusCode(200)
                 .extract();
@@ -152,7 +154,7 @@ public class CompanyServiceTest extends BaseServiceTest {
         given()
                 .auth().preemptive().basic("manager", "manager")
                 .when()
-                .get(host + port + "/api/CompanyService/DeliveryCompany(6480a902-007c-4cdd-a6a3-0f3a88d24fe0)")
+                .get(host + port + prefix + "DeliveryCompany(6480a902-007c-4cdd-a6a3-0f3a88d24fe0)")
                 .then()
                 .statusCode(200)
                 .body("name", Matchers.equalTo("FedEx5"));
@@ -169,14 +171,14 @@ public class CompanyServiceTest extends BaseServiceTest {
                         "      \"logo\": \"https://images.app.goo.gl/bzEzvAdv1wb6Socf6\"" +
                         "}")
                 .when()
-                .put(host + port + "/api/CompanyService/DeliveryCompany(6480a902-007c-4cdd-a6a3-0f3a88d24fe0)")
+                .put(host + port + prefix + "DeliveryCompany(6480a902-007c-4cdd-a6a3-0f3a88d24fe0)")
                 .then()
                 .statusCode(200)
                 .extract();
         given()
                 .auth().preemptive().basic("admin", "admin")
                 .when()
-                .get(host + port + "/api/CompanyService/DeliveryCompany(6480a902-007c-4cdd-a6a3-0f3a88d24fe0)")
+                .get(host + port + prefix + "DeliveryCompany(6480a902-007c-4cdd-a6a3-0f3a88d24fe0)")
                 .then()
                 .statusCode(200)
                 .body("name", Matchers.equalTo("FedEx6"));
@@ -192,7 +194,7 @@ public class CompanyServiceTest extends BaseServiceTest {
                         "      \"logo\": \"https://images.app.goo.gl/bzEzvAdv1wb6Socf6\"" +
                         "}")
                 .when()
-                .put(host + port + "/api/CompanyService/DeliveryCompany(6480a902-007c-4cdd-a6a3-0f3a88d24fe0)")
+                .put(host + port + prefix + "DeliveryCompany(6480a902-007c-4cdd-a6a3-0f3a88d24fe0)")
                 .then()
                 .statusCode(403);
 
@@ -204,7 +206,7 @@ public class CompanyServiceTest extends BaseServiceTest {
                         "      \"logo\": \"https://images.app.goo.gl/bzEzvAdv1wb6Socf6\"" +
                         "}")
                 .when()
-                .put(host + port + "/api/CompanyService/DeliveryCompany(6480a902-007c-4cdd-a6a3-0f3a88d24fe0)")
+                .put(host + port + prefix + "DeliveryCompany(6480a902-007c-4cdd-a6a3-0f3a88d24fe0)")
                 .then()
                 .statusCode(403);
     }
@@ -219,7 +221,7 @@ public class CompanyServiceTest extends BaseServiceTest {
                         "      \"logo\": \"https://images.app.goo.gl/bzEzvAdv1wb6Socf6\"" +
                         "}")
                 .when()
-                .post(host + port + "/api/CompanyService/DeliveryCompany")
+                .post(host + port + prefix + "DeliveryCompany")
                 .then()
                 .statusCode(403);
 
@@ -231,7 +233,7 @@ public class CompanyServiceTest extends BaseServiceTest {
                         "      \"logo\": \"https://images.app.goo.gl/bzEzvAdv1wb6Socf6\"" +
                         "}")
                 .when()
-                .post(host + port + "/api/CompanyService/DeliveryCompany")
+                .post(host + port + prefix + "DeliveryCompany")
                 .then()
                 .statusCode(403);
     }
@@ -246,7 +248,7 @@ public class CompanyServiceTest extends BaseServiceTest {
                         "      \"logo\": \"https://images.app.goo.gl/bzEzvAdv1wb6Socf6\"" +
                         "}")
                 .when()
-                .post(host + port + "/api/CompanyService/DeliveryCompany")
+                .post(host + port + prefix + "DeliveryCompany")
                 .then()
                 .statusCode(409);
 
@@ -259,14 +261,14 @@ public class CompanyServiceTest extends BaseServiceTest {
                         "      \"logo\": \"https://images.app.goo.gl/bzEzvAdv1wb6Socf6\"" +
                         "}")
                 .when()
-                .put(host + port + "/api/CompanyService/DeliveryCompany")
+                .put(host + port + prefix + "DeliveryCompany")
                 .then()
                 .statusCode(405);
     }
 
     @Test
     void testDeleteCompanyByAdmin() {
-        String url = host + port + "/api/CompanyService/DeliveryCompany(6480a902-007c-4cdd-a6a3-0f3a88d24fe0)";
+        String url = host + port + prefix + "DeliveryCompany(6480a902-007c-4cdd-a6a3-0f3a88d24fe0)";
         given()
                 .auth().preemptive().basic("admin", "admin")
                 .when()
@@ -284,7 +286,7 @@ public class CompanyServiceTest extends BaseServiceTest {
 
     @Test
     void testDeleteCompanyByFacilityManager() {
-        String url = host + port + "/api/CompanyService/DeliveryCompany(724a082e-8f05-4d5e-bbc3-b8acaa30b8fb)";
+        String url = host + port + prefix + "DeliveryCompany(724a082e-8f05-4d5e-bbc3-b8acaa30b8fb)";
         given()
                 .auth().preemptive().basic("manager", "manager")
                 .when()
@@ -302,7 +304,7 @@ public class CompanyServiceTest extends BaseServiceTest {
 
     @Test
     void testDeleteCompanyByOthers() {
-        String url = host + port + "/api/CompanyService/DeliveryCompany(6480a902-007c-4cdd-a6a3-0f3a88d24fe0)";
+        String url = host + port + prefix + "DeliveryCompany(6480a902-007c-4cdd-a6a3-0f3a88d24fe0)";
         given()
                 .auth().preemptive().basic("I111111", "user")
                 .when()
