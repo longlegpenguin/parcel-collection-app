@@ -3,6 +3,8 @@ package com.sap.internal.digitallab.packagehandling.service;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.Map;
+
 
 public class HistoryServiceTest extends BaseServiceTest {
     final String prefix = "/api/HistoryService/";
@@ -10,10 +12,7 @@ public class HistoryServiceTest extends BaseServiceTest {
     @Test
     void testReadPackages() {
         String url = host + port + prefix + "Package";
-        readAndCheck200("admin", "admin", url);
-        readAndCheck200("manager", "manager", url);
-        readAndCheck200("I111111", "user", url);
-        readAndCheck200("recep", "recep", url);
+        testSupportReadForAllRoles(url);
     }
 
     @Test
@@ -26,59 +25,56 @@ public class HistoryServiceTest extends BaseServiceTest {
     @Test
     void testReadPackageType() {
         String url = host + port + prefix + "PackageType";
-        readAndCheck200("admin", "admin", url);
-        readAndCheck200("manager", "manager", url);
-        readAndCheck200("I111111", "user", url);
-        readAndCheck200("recep", "recep", url);
+        testSupportReadForAllRoles(url);
     }
 
     @Test
     void testReadPackageStatus() {
         String url = host + port + prefix + "PackageStatus";
-        readAndCheck200("admin", "admin", url);
-        readAndCheck200("manager", "manager", url);
-        readAndCheck200("I111111", "user", url);
-        readAndCheck200("recep", "recep", url);
+        testSupportReadForAllRoles(url);
     }
 
     @Test
     void testReadDeliveryCompany() {
         String url = host + port + prefix + "DeliveryCompany";
-        readAndCheck200("admin", "admin", url);
-        readAndCheck200("manager", "manager", url);
-        readAndCheck200("I111111", "user", url);
-        readAndCheck200("recep", "recep", url);
+        testSupportReadForAllRoles(url);
     }
 
     @Test
     void testNotSupportedOperationsPackage() {
         String url = host + port + prefix + "Package";
-        deleteAndCheck405("admin", "admin", url);
-        createAndCheck405("admin", "admin", url);
-        updateAndCheck405("admin", "admin", url);
+        testNotSupportedOpForAllRoles(url);
     }
 
     @Test
     void testNotSupportedOperationsPackageStatus() {
         String url = host + port + prefix + "PackageStatus";
-        deleteAndCheck405("admin", "admin", url);
-        createAndCheck405("admin", "admin", url);
-        updateAndCheck405("admin", "admin", url);
+        testNotSupportedOpForAllRoles(url);
     }
 
     @Test
     void testNotSupportedOperationsPackageType() {
         String url = host + port + prefix + "PackageType";
-        deleteAndCheck405("admin", "admin", url);
-        createAndCheck405("admin", "admin", url);
-        updateAndCheck405("admin", "admin", url);
+        testNotSupportedOpForAllRoles(url);
     }
 
     @Test
     void testNotSupportedOperationsDeliveryCompany() {
         String url = host + port + prefix + "DeliveryCompany";
-        deleteAndCheck405("admin", "admin", url);
-        createAndCheck405("admin", "admin", url);
-        updateAndCheck405("admin", "admin", url);
+        testNotSupportedOpForAllRoles(url);
+    }
+
+    private void testSupportReadForAllRoles(String url) {
+        for (Map.Entry<String, String> entry : mockUsers.entrySet()) {
+            readAndCheck200(entry.getKey(), entry.getValue(), url);
+        }
+    }
+
+    private void testNotSupportedOpForAllRoles(String url) {
+        for (Map.Entry<String, String> entry : mockUsers.entrySet()) {
+            deleteAndCheck405(entry.getKey(), entry.getValue(), url);
+            createAndCheck405(entry.getKey(), entry.getValue(), url);
+            updateAndCheck405(entry.getKey(), entry.getValue(), url);
+        }
     }
 }
