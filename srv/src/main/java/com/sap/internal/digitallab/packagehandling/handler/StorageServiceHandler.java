@@ -4,6 +4,7 @@ import cds.gen.com.sap.internal.digitallab.packagehandling.service.storageservic
 import com.sap.cds.services.cds.CqnService;
 import com.sap.cds.services.handler.EventHandler;
 import com.sap.cds.services.handler.annotations.After;
+import com.sap.cds.services.handler.annotations.HandlerOrder;
 import com.sap.cds.services.handler.annotations.On;
 import com.sap.cds.services.handler.annotations.ServiceName;
 import com.sap.internal.digitallab.packagehandling.manager.StorageManager;
@@ -80,10 +81,25 @@ public class StorageServiceHandler implements EventHandler {
      */
     @After(event = {CqnService.EVENT_READ}, entity = Storage_.CDS_NAME)
     public void afterReadStorages(List<Storage> storages) {
+        if (storages.size() > 0 && storages.get(0).get("ID").toString().length() < 2) {
+            return;
+        }
         storages.forEach(s -> {
             storageManager.updateConfirmedPackageVf(s);
             storageManager.updateDeleteAc(s);
             storageManager.updateTotalPackageVf(s);
         });
+    }
+
+    /**
+     * At CREATE event, autofill the status.
+     *
+     * @param slot slot to be created
+     */
+    @On(event = {CqnService.EVENT_CREATE}, entity = StorageSlot_.CDS_NAME)
+    @HandlerOrder(HandlerOrder.EARLY)
+    public void onCreateStorageSlot(StorageSlot slot) {
+        slot.setStatusCode("empty");
+        LOGGER.info("Creating: {}", slot);
     }
 }
