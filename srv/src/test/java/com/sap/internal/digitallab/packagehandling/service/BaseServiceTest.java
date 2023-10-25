@@ -85,23 +85,23 @@ public class BaseServiceTest {
                         .when()
                         .delete(url)
                         .then()
-                        .contentType(ContentType.JSON).extract().response();
+                        .extract().response();
     }
 
-    void readAndCheck200(String uname, String pwd, String url) {
-        read(uname, pwd, url).then().statusCode(200);
+    void readAndCheckStatus(String uname, String pwd, String url, int statusCode) {
+        read(uname, pwd, url).then().statusCode(statusCode);
     }
 
-    void createAndCheck405(String uname, String pwd, String url) {
-        create(uname, pwd, url, "{}").then().statusCode(405);
+    void createAndCheckStatus(String uname, String pwd, String url, int statusCode) {
+        create(uname, pwd, url, "{}").then().statusCode(statusCode);
     }
 
-    void updateAndCheck405(String uname, String pwd, String url) {
-        update(uname, pwd, url, "{}").then().statusCode(405);
+    void updateAndCheckStatus(String uname, String pwd, String url, int statusCode) {
+        update(uname, pwd, url, "{}").then().statusCode(statusCode);
     }
 
-    void deleteAndCheck405(String uname, String pwd, String url) {
-        delete(uname, pwd, url).then().statusCode(405);
+    void deleteAndCheckStatus(String uname, String pwd, String url, int statusCode) {
+        delete(uname, pwd, url).then().statusCode(statusCode);
     }
 
 }

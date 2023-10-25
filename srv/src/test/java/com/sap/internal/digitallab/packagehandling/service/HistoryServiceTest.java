@@ -66,15 +66,15 @@ public class HistoryServiceTest extends BaseServiceTest {
 
     private void testSupportReadForAllRoles(String url) {
         for (Map.Entry<String, String> entry : mockUsers.entrySet()) {
-            readAndCheck200(entry.getKey(), entry.getValue(), url);
+            readAndCheckStatus(entry.getKey(), entry.getValue(), url, 200);
         }
     }
 
     private void testNotSupportedOpForAllRoles(String url) {
         for (Map.Entry<String, String> entry : mockUsers.entrySet()) {
-            deleteAndCheck405(entry.getKey(), entry.getValue(), url);
-            createAndCheck405(entry.getKey(), entry.getValue(), url);
-            updateAndCheck405(entry.getKey(), entry.getValue(), url);
+            deleteAndCheckStatus(entry.getKey(), entry.getValue(), url, 405);
+            createAndCheckStatus(entry.getKey(), entry.getValue(), url, 405);
+            updateAndCheckStatus(entry.getKey(), entry.getValue(), url, 405);
         }
     }
 }

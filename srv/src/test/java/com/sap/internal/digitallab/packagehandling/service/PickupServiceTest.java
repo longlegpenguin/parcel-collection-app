@@ -30,7 +30,7 @@ public class PickupServiceTest extends BaseServiceTest {
     void testReadDeliveryCompany() {
         String url = host + port + prefix + "DeliveryCompany";
         System.out.println(url);
-        readAndCheck200("admin", "admin", url);
+        readAndCheckStatus("admin", "admin", url, 200);
     }
 
     @Test
@@ -108,15 +108,15 @@ public class PickupServiceTest extends BaseServiceTest {
 
     private void testUnsupportedOpForAllRoles(String url) {
         for (Map.Entry<String, String> entry : mockUsers.entrySet()) {
-            deleteAndCheck405(entry.getKey(), entry.getValue(), url);
-            createAndCheck405(entry.getKey(), entry.getValue(), url);
-            updateAndCheck405(entry.getKey(), entry.getValue(), url);
+            deleteAndCheckStatus(entry.getKey(), entry.getValue(), url, 405);
+            createAndCheckStatus(entry.getKey(), entry.getValue(), url, 405);
+            updateAndCheckStatus(entry.getKey(), entry.getValue(), url, 405);
         }
     }
 
     private void testSupportReadForAllRoles(String url) {
         for (Map.Entry<String, String> entry : mockUsers.entrySet()) {
-            readAndCheck200(entry.getKey(), entry.getValue(), url);
+            readAndCheckStatus(entry.getKey(), entry.getValue(), url, 200);
         }
     }
 
