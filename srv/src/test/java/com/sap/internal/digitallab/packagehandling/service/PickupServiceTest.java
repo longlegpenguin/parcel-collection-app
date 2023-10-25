@@ -96,7 +96,7 @@ public class PickupServiceTest extends BaseServiceTest {
     @Test
     void testPickAction() {
         String url = host + port + prefix + "pickup";
-        Response response = post(USER_KEY2, mockUsers.get(USER_KEY2), url,
+        Response response = create(USER_KEY2, mockUsers.get(USER_KEY2), url,
                 "{" +
                         "  \"packageId\": \"1F81A0C3-84CE-4EC8-864B-5B2283832538\"" +
                         "}");
@@ -109,8 +109,8 @@ public class PickupServiceTest extends BaseServiceTest {
     private void testUnsupportedOpForAllRoles(String url) {
         for (Map.Entry<String, String> entry : mockUsers.entrySet()) {
             deleteAndCheck405(entry.getKey(), entry.getValue(), url);
-            postAndCheck405(entry.getKey(), entry.getValue(), url, "{}");
-            putAndCheck405(entry.getKey(), entry.getValue(), url, "{}");
+            createAndCheck405(entry.getKey(), entry.getValue(), url);
+            updateAndCheck405(entry.getKey(), entry.getValue(), url);
         }
     }
 

@@ -55,7 +55,7 @@ public class BaseServiceTest {
                         .contentType(ContentType.JSON).extract().response();
     }
 
-    Response post(String uname, String pwd, String url, String body) {
+    Response create(String uname, String pwd, String url, String body) {
         return given()
                 .auth().preemptive().basic(uname, pwd)
                 .contentType("application/json")
@@ -66,44 +66,42 @@ public class BaseServiceTest {
                 .extract().response();
     }
 
+    Response update(String uname, String pwd, String url, String body) {
+        return given()
+                .auth().preemptive().basic(uname, pwd)
+                .contentType("application/json")
+                .body(body)
+                .when()
+                .put(url)
+                .then()
+                .extract().response();
+    }
+
+    Response delete(String uname, String pwd, String url) {
+        defaultParser = Parser.JSON;
+        return
+                given()
+                        .auth().preemptive().basic(uname, pwd)
+                        .when()
+                        .delete(url)
+                        .then()
+                        .contentType(ContentType.JSON).extract().response();
+    }
+
     void readAndCheck200(String uname, String pwd, String url) {
-        given()
-                .auth().preemptive().basic(uname, pwd)
-                .when()
-                .get(url)
-                .then()
-                .statusCode(200);
+        read(uname, pwd, url).then().statusCode(200);
     }
 
-    void postAndCheck405(String uname, String pwd, String url, String body) {
-        given()
-                .auth().preemptive().basic(uname, pwd)
-                .contentType("application/json")
-                .body(body)
-                .when()
-                .post(url)
-                .then()
-                .statusCode(405);
+    void createAndCheck405(String uname, String pwd, String url) {
+        create(uname, pwd, url, "{}").then().statusCode(405);
     }
 
-    void putAndCheck405(String uname, String pwd, String url, String body) {
-        given()
-                .auth().preemptive().basic(uname, pwd)
-                .contentType("application/json")
-                .body(body)
-                .when()
-                .post(url)
-                .then()
-                .statusCode(405);
+    void updateAndCheck405(String uname, String pwd, String url) {
+        update(uname, pwd, url, "{}").then().statusCode(405);
     }
 
     void deleteAndCheck405(String uname, String pwd, String url) {
-        given()
-                .auth().preemptive().basic(uname, pwd)
-                .when()
-                .delete(url)
-                .then()
-                .statusCode(405);
+        delete(uname, pwd, url).then().statusCode(405);
     }
 
 }

@@ -54,31 +54,31 @@ public class HistoryServiceTest extends BaseServiceTest {
     void testNotSupportedOperationsPackage() {
         String url = host + port + prefix + "Package";
         deleteAndCheck405("admin", "admin", url);
-        postAndCheck405("admin", "admin", url, "{}");
-        putAndCheck405("admin", "admin", url, "{}");
+        createAndCheck405("admin", "admin", url);
+        updateAndCheck405("admin", "admin", url);
     }
 
     @Test
     void testNotSupportedOperationsPackageStatus() {
         String url = host + port + prefix + "PackageStatus";
         deleteAndCheck405("admin", "admin", url);
-        postAndCheck405("admin", "admin", url, "{}");
-        putAndCheck405("admin", "admin", url, "{}");
+        createAndCheck405("admin", "admin", url);
+        updateAndCheck405("admin", "admin", url);
     }
 
     @Test
     void testNotSupportedOperationsPackageType() {
         String url = host + port + prefix + "PackageType";
         deleteAndCheck405("admin", "admin", url);
-        postAndCheck405("admin", "admin", url, "{}");
-        putAndCheck405("admin", "admin", url, "{}");
+        createAndCheck405("admin", "admin", url);
+        updateAndCheck405("admin", "admin", url);
     }
 
     @Test
     void testNotSupportedOperationsDeliveryCompany() {
         String url = host + port + prefix + "DeliveryCompany";
         deleteAndCheck405("admin", "admin", url);
-        postAndCheck405("admin", "admin", url, "{}");
-        putAndCheck405("admin", "admin", url, "{}");
+        createAndCheck405("admin", "admin", url);
+        updateAndCheck405("admin", "admin", url);
     }
 }
