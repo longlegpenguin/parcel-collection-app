@@ -21,7 +21,7 @@ class PackageManagerTest {
     private final PersistenceService db;
     private final String pickedUpPack = "4424b2ca-8a1f-4566-ab6f-90fc32b1aee4";
     private final String confirmedPack = "7572a7a1-0f81-449d-a044-d5c4deffadfa";
-    private final String newPack = "8FB3403B-1E14-43F5-9BB9-8B20113BB70A".toLowerCase();
+    private final String newPack = "05CB57BF-1D2F-48F8-AF7A-F57B0E0BA6CD".toLowerCase();
 
     @Autowired
     PackageManagerTest(PackageManager packMgr, PersistenceService db) {
