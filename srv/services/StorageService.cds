@@ -13,6 +13,8 @@ service StorageService {
     annotate core.StorageSlot with @(Capabilities.DeleteRestrictions: {Deletable: delete_ac, }, );
     entity Storage       as projection on core.Storage;
     entity StorageSlot   as projection on core.StorageSlot;
+
+    @readonly
     entity SlotStatus    as projection on core.SlotStatus;
 
     @readonly

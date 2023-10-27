@@ -2,6 +2,7 @@ package com.sap.internal.digitallab.packagehandling.handler;
 
 import java.util.stream.Stream;
 
+import cds.gen.com.sap.internal.digitallab.packagehandling.service.pickupservice.Package_;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,6 @@ import com.sap.cds.services.cds.CdsReadEventContext;
 import com.sap.cds.services.cds.CqnService;
 import com.sap.cds.services.handler.EventHandler;
 import com.sap.cds.services.handler.annotations.After;
-import com.sap.cds.services.handler.annotations.Before;
 import com.sap.cds.services.handler.annotations.HandlerOrder;
 import com.sap.cds.services.handler.annotations.On;
 import com.sap.cds.services.handler.annotations.ServiceName;
@@ -56,13 +56,14 @@ public class PickupServiceHandler implements EventHandler {
      * 
      * @param context read event context for getting the user.
      */
-    @Before
+    @On(entity = Package_.CDS_NAME)
     @HandlerOrder(HandlerOrder.EARLY)
-    public void beforeRead(CdsReadEventContext context) {
+    public void onRead(CdsReadEventContext context) {
         UserInfo uInfo = context.getUserInfo();
         String uname = uInfo.getName();
         context.setCqn(
                 packMgr.getFilterUserAndConfirmedStatusCqn(uname));
+        LOGGER.info("{} was there", uname);
     }
 
     /**
