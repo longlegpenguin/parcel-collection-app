@@ -25,8 +25,8 @@
                                     "id": "manage-companies",
                                     "tileType": "sap.ushell.ui.tile.StaticTile",
                                     "properties": {
-                                        "targetURL": "#Storages-manage",
-                                        "title": "Manage Storages",
+                                        "targetURL": "#manage-companies",
+                                        "title": "Manage Companies",
                                         "description": "Add/edit/delete storages and slots"
                                     }
                                 },
@@ -90,19 +90,6 @@
             "adapter": {
                 "config": {
                     "inbounds": {
-                        "browse-books": {
-                            "semanticObject": "Books",
-                            "action": "display",
-                            "signature": {
-                                "parameters": {},
-                                "additionalParameters": "allowed"
-                            },
-                            "resolutionResult": {
-                                "applicationType": "SAPUI5",
-                                "additionalInformation": "SAPUI5.Component=bookshop",
-                                "url": "/browse/webapp"
-                            }
-                        },
                         "manage-storages": {
                             "semanticObject": "Storages",
                             "action": "manage",
@@ -112,21 +99,8 @@
                             },
                             "resolutionResult": {
                                 "applicationType": "SAPUI5",
-                                "additionalInformation": "SAPUI5.Component=storageui",
-                                "url": "/storage-ui/webapp"
-                            }
-                        },
-                        "manage-notes": {
-                            "semanticObject": "Notes",
-                            "action": "manage",
-                            "signature": {
-                                "parameters": {},
-                                "additionalParameters": "allowed"
-                            },
-                            "resolutionResult": {
-                                "applicationType": "SAPUI5",
-                                "additionalInformation": "SAPUI5.Component=notes",
-                                "url": "/notes/webapp"
+                                "additionalInformation": "SAPUI5.Component=packagehandling.app.storage",
+                                "url": "/storage/webapp"
                             }
                         }
                     }

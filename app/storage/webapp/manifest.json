@@ -26,7 +26,21 @@
         }
       }
     },
-    "ach": "app"
+    "ach": "app",
+    "crossNavigation": {
+      "inbounds": {
+        "Launchpad-lauch": {
+          "semanticObject": "Launchpad",
+          "action": "lauch",
+          "title": "{{flpTitle}}",
+          "subTitle": "{{flpSubtitle}}",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
+      }
+    }
   },
   "sap.ui": {
     "technology": "UI5",
@@ -126,6 +140,7 @@
                   }
                 }
               },
+              "initialLoad": true,
               "controlConfiguration": {
                 "@com.sap.vocabularies.UI.v1.LineItem": {
                   "tableSettings": {
@@ -144,7 +159,10 @@
           "options": {
             "settings": {
               "editableHeaderContent": false,
-              "contextPath": "/Storage",
+              "entitySet": "Storage",
+              "sectionLayout": "Tabs",
+              "variantManagement": "Control",
+              "showRelatedApps": true,
               "navigation": {
                 "storageSlot": {
                   "detail": {
@@ -162,7 +180,9 @@
           "options": {
             "settings": {
               "editableHeaderContent": false,
-              "contextPath": "/Storage/storageSlot"
+              "contextPath": "/Storage/storageSlot",
+              "entitySet": "StorageSlot",
+              "sectionLayout": "Page"
             }
           }
         }
