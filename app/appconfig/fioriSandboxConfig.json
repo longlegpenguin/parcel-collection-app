@@ -1,0 +1,137 @@
+{
+    "services": {
+        "LaunchPage": {
+            "adapter": {
+                "config": {
+                    "catalogs": [],
+                    "groups": [
+                        {
+                            "id": "Administration",
+                            "title": "Administration",
+                            "isPreset": true,
+                            "isVisible": true,
+                            "isGroupLocked": false,
+                            "tiles": [
+                                {
+                                    "id": "manage-storages",
+                                    "tileType": "sap.ushell.ui.tile.StaticTile",
+                                    "properties": {
+                                        "targetURL": "#Storages-manage",
+                                        "title": "Manage Storages",
+                                        "description": "Add/edit/delete storages and slots"
+                                    }
+                                },
+                                {
+                                    "id": "manage-companies",
+                                    "tileType": "sap.ushell.ui.tile.StaticTile",
+                                    "properties": {
+                                        "targetURL": "#Storages-manage",
+                                        "title": "Manage Storages",
+                                        "description": "Add/edit/delete storages and slots"
+                                    }
+                                },
+                                {
+                                    "id": "manage-packages",
+                                    "tileType": "sap.ushell.ui.tile.StaticTile",
+                                    "properties": {
+                                        "targetURL": "#Storages-manage",
+                                        "title": "Manage Storages",
+                                        "description": "Add/edit/delete storages and slots"
+                                    }
+                                },
+                                {
+                                    "id": "register-packages",
+                                    "tileType": "sap.ushell.ui.tile.StaticTile",
+                                    "properties": {
+                                        "targetURL": "#Storages-manage",
+                                        "title": "Register Packages",
+                                        "description": "Add/edit/delete storages and slots"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "id": "End-Application",
+                            "title": "End Application",
+                            "isPreset": true,
+                            "isVisible": true,
+                            "isGroupLocked": false,
+                            "tiles": [
+                                {
+                                    "id": "my-packages",
+                                    "tileType": "sap.ushell.ui.tile.StaticTile",
+                                    "properties": {
+                                        "targetURL": "#my-packages",
+                                        "title": "My Packages",
+                                        "description": "Add/edit/delete storages and slots"
+                                    }
+                                },
+                                {
+                                    "id": "package-pickup",
+                                    "tileType": "sap.ushell.ui.tile.StaticTile",
+                                    "properties": {
+                                        "targetURL": "#package-pickup",
+                                        "title": "Package Pickup",
+                                        "description": "Add/edit/delete reviews"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "NavTargetResolution": {
+            "config": {
+                "enableClientSideTargetResolution": true
+            }
+        },
+        "ClientSideTargetResolution": {
+            "adapter": {
+                "config": {
+                    "inbounds": {
+                        "browse-books": {
+                            "semanticObject": "Books",
+                            "action": "display",
+                            "signature": {
+                                "parameters": {},
+                                "additionalParameters": "allowed"
+                            },
+                            "resolutionResult": {
+                                "applicationType": "SAPUI5",
+                                "additionalInformation": "SAPUI5.Component=bookshop",
+                                "url": "/browse/webapp"
+                            }
+                        },
+                        "manage-storages": {
+                            "semanticObject": "Storages",
+                            "action": "manage",
+                            "signature": {
+                                "parameters": {},
+                                "additionalParameters": "allowed"
+                            },
+                            "resolutionResult": {
+                                "applicationType": "SAPUI5",
+                                "additionalInformation": "SAPUI5.Component=storageui",
+                                "url": "/storage-ui/webapp"
+                            }
+                        },
+                        "manage-notes": {
+                            "semanticObject": "Notes",
+                            "action": "manage",
+                            "signature": {
+                                "parameters": {},
+                                "additionalParameters": "allowed"
+                            },
+                            "resolutionResult": {
+                                "applicationType": "SAPUI5",
+                                "additionalInformation": "SAPUI5.Component=notes",
+                                "url": "/notes/webapp"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
