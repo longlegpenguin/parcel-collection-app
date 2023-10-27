@@ -146,6 +146,27 @@
                   "tableSettings": {
                     "type": "ResponsiveTable",
                     "selectionMode": "Auto"
+                  },
+                  "actions": {
+                    "MenuActions": {
+                        "text": "{i18n>MenuButton}",
+                        "menu": [
+                            "DataFieldForAction::service1.changeCriticality",
+                            "DataFieldForAction::service1.EntityContainer::unboundAction"
+                        ]
+                    },
+                    "CustomActionLR": {
+                        "press": "packagehandling.app.storage.ext.controller.CustomActions.messageBox",
+                        "enabled": "packagehandling.app.storage.ext.controller.CustomActions.enabledForSingleSelect",
+                        "visible": true,
+                        "text": "{i18n>CustomActionLR}"
+                    },
+                    "CustomActionSection" : {
+                      "press": "packagehandling.app.storage.ext.controller.CustomActions.messageBox",
+                      "enabled": "{= ${ui>/editMode} !== 'Editable'}",
+                      "visible" : true,
+                      "text": "{i18n>CustomActionSection}"
+                    }
                   }
                 }
               }
