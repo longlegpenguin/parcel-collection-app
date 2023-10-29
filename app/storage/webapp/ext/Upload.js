@@ -106,6 +106,7 @@ sap.ui.define(
 
         return {
             showUploadDialog: function (oBindingContext, aSelectedContexts) {
+                console.log(this);
                 this.loadFragment({
                     id: "uploadDialog",
                     name: "packagehandling.app.storage.ext.UploadDialog",

@@ -146,6 +146,18 @@
                                       "upload": {
                                           "press": "packagehandling.app.storage.ext.Upload.showUploadDialog",
                                           "text": "Import Books"
+                                      },
+                                      "upload2": {
+                                          "press": "packagehandling.app.storage.ext.UploadController.showUploadDialog",
+                                          "text": "Import Books2"
+                                      },
+                                      "upload3": {
+                                          "press": "packagehandling.app.storage.ext.Upload2.controller.showUploadDialog",
+                                          "text": "Import Books3"
+                                      },
+                                      "upload4": {
+                                          "press": "packagehandling.app.storage.ext.Upload2.showUploadDialog",
+                                          "text": "Import Books4"
                                       }
                                   }
                               }
