@@ -8,7 +8,7 @@ cds:
     csv:
       paths: test/data
   sql.supportedLocales: "*" ## cut
-  odata-v4.endpoint.path: "/api"
+  # odata-v4.endpoint.path: "/api"
   odata-v4.serializer.enabled: true
   multi-tenancy:
     compatibility.enabled: false
