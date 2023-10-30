@@ -144,20 +144,8 @@
                 "header": {
                   "actions": {
                     "upload": {
-                      "press": "packagehandling.app.storage.ext.Upload.showUploadDialog",
-                      "text": "Import Books"
-                    },
-                    "upload2": {
                       "press": "packagehandling.app.storage.ext.controller.UploadController.showUploadDialog",
-                      "text": "Import Books2"
-                    },
-                    "upload3": {
-                      "press": "packagehandling.app.storage.ext.UploadController.showUploadDialog",
-                      "text": "Import Books3"
-                    },
-                    "CStorage": {
-                      "press": "packagehandling.app.storage.ext.controller.CStorageCt.showCStorageDlg",
-                      "text": "Create"
+                      "text": "Import Books"
                     }
                   }
                 }
@@ -189,9 +177,10 @@
             "settings": {
               "editableHeaderContent": false,
               "entitySet": "Storage",
-              "sectionLayout": "Tabs",
+              "sectionLayout": "Page",
               "variantManagement": "Control",
               "showRelatedApps": true,
+              "simpleHeaderFacets":true,
               "navigation": {
                 "storageSlot": {
                   "detail": {
