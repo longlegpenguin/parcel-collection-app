@@ -1,10 +1,9 @@
 sap.ui.define(
   [
-    "packagehandling/app/storage/ext/handler/CreateStorageDialog",
     "sap/ui/core/mvc/Controller",
     "packagehandling/app/storage/ext/UploadDialog",
   ],
-  function (CreateStorageDialog, Controller, UploadDialog) {
+  function (Controller, UploadDialog) {
     "use strict";
 
     function _createUploadController(oExtensionAPI) {

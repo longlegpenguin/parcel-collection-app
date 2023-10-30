@@ -1,40 +1,17 @@
 sap.ui.define(
   [
-    "packagehandling/app/storage/ext/handler/CreateStorageDialog",
     "sap/ui/core/mvc/Controller",
     "sap/m/MessageBox",
     "sap/m/MessageToast",
     "sap/ui/base/ManagedObject",
   ],
   function (
-    CreateStorageDialog,
     Controller,
     MessageBox,
     MessageToast,
     ManagedObject
   ) {
     "use strict";
-
-    function setOkButtonEnabled(bOk) {
-        this.oUploadDialog && this.oUploadDialog.getBeginButton().setEnabled(bOk);
-    }
-
-    function setDialogBusy(bBusy) {
-        this.oUploadDialog.setBusy(bBusy);
-    }
-
-    function closeDialog() {
-        this.oUploadDialog && this.oUploadDialog.close();
-    }
-
-    function showError(sMessage) {
-      MessageBox.error(sMessage || "Upload failed");
-    }
-
-    // TODO: Better option for this?
-    function byId(sId) {
-      return sap.ui.core.Fragment.byId("uploadDialog", sId);
-    }
 
     return ManagedObject.extend(
       "packagehandling.app.storage.ext.UploadDialog",
@@ -48,13 +25,13 @@ sap.ui.define(
         },
 
         onAfterClose: function (oEvent) {
-            this._oExtensionAPI.removeDependent(this.oUploadDialog);
+          this._oExtensionAPI.removeDependent(this.oUploadDialog);
           this.oUploadDialog.destroy();
           this.oUploadDialog = undefined;
         },
 
         onOk: function (oEvent) {
-          setDialogBusy(true);
+          this._setDialogBusy(true);
 
           var oFileUploader = byId("uploader");
 
@@ -70,7 +47,7 @@ sap.ui.define(
         },
 
         onCancel: function (oEvent) {
-          closeDialog();
+          this._closeDialog();
         },
 
         onTypeMismatch: function (oEvent) {
@@ -91,11 +68,11 @@ sap.ui.define(
         },
 
         onFileAllowed: function (oEvent) {
-          setOkButtonEnabled(true);
+          this._setOkButtonEnabled(true);
         },
 
         onFileEmpty: function (oEvent) {
-          setOkButtonEnabled(false);
+          this._setOkButtonEnabled(false);
         },
 
         onUploadComplete: function (oEvent) {
@@ -103,8 +80,8 @@ sap.ui.define(
           var oFileUploader = oEvent.getSource();
 
           oFileUploader.clear();
-          setOkButtonEnabled(false);
-          setDialogBusy(false);
+          this._setOkButtonEnabled(false);
+          this._setDialogBusy(false);
 
           if (iStatus >= 400) {
             var oRawResponse = JSON.parse(oEvent.getParameter("responseRaw"));
@@ -114,8 +91,29 @@ sap.ui.define(
           } else {
             MessageToast.show("Uploaded successfully");
             this._oExtensionAPI.refresh();
-            closeDialog();
+            this._closeDialog();
           }
+        },
+        _setOkButtonEnabled: function (bOk) {
+          this.oUploadDialog &&
+            this.oUploadDialog.getBeginButton().setEnabled(bOk);
+        },
+
+        _setDialogBusy: function (bBusy) {
+          this.oUploadDialog.setBusy(bBusy);
+        },
+
+        _closeDialog: function () {
+          this.oUploadDialog && this.oUploadDialog.close();
+        },
+
+        _showError: function (sMessage) {
+          MessageBox.error(sMessage || "Upload failed");
+        },
+
+        // TODO: Better option for this?
+        _byId: function (sId) {
+          return sap.ui.core.Fragment.byId("uploadDialog", sId);
         },
       }
     );

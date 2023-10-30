@@ -5,7 +5,6 @@
     "requires": {
         "[production]": {
             "db": "hana"
-        },
-        "auth": "xsuaa"
+        }
     }
 }
