@@ -14,6 +14,12 @@ sap.ui.define(
       showCStorageDlg: function (oBindingContext, aSelectedContexts) {
         let ctl = _createCStorageDlgController(this)
         console.log(ctl);
+        this.byId("name")
+        this.byId("StorageList")
+        console.log(this.byId("name"));
+        console.log("List: "+this.byId("StorageList"));
+        console.log("List: "+this.byId("storageList"));
+        console.log("List: "+this.byId("storagelist"));
         this.loadFragment({
           id: "csdlg",
           name: "packagehandling.app.storage.ext.view.CStorageDlg",
