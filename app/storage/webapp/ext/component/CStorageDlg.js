@@ -18,6 +18,7 @@ sap.ui.define(
           console.log("oh huhuhu");
           this._oCStorageDlg = oEvent.getSource();
           console.log(this._oCStorageDlg);
+          console.log(this._oCStorageDlg);
           this._oExtensionAPI.addDependent(this._oCStorageDlg);
         },
 

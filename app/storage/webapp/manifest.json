@@ -45,8 +45,8 @@
   "sap.ui": {
     "technology": "UI5",
     "icons": {
-      "icon": "",
-      "favIcon": "",
+      "icon": "sap-icon://product",
+      "favIcon": "sap-icon://product",
       "phone": "",
       "phone@2": "",
       "tablet": "",
@@ -102,6 +102,7 @@
         "uri": "i18n/i18n.properties"
       }
     },
+    "handleValidation": true,
     "resources": {
       "css": []
     },
@@ -147,6 +148,15 @@
                       "press": "packagehandling.app.storage.ext.controller.UploadController.showUploadDialog",
                       "text": "Import Books"
                     }
+                    ,
+                    "tableSettings": {
+                      "entitySet": "Storage",
+                      "createWithParameterDialog": {
+                        "fields": {
+                          "name": { "path": "name" }
+                        }
+                      }
+                    }
                   }
                 }
               },
@@ -154,7 +164,13 @@
                 "@com.sap.vocabularies.UI.v1.LineItem": {
                   "tableSettings": {
                     "type": "ResponsiveTable",
-                    "selectionMode": "Auto"
+                    "selectionMode": "Auto",
+                    "entitySet": "Storage",
+                      "createWithParameterDialog": {
+                        "fields": {
+                          "name": { "path": "name" }
+                        }
+                      }
                   },
                   "actions": {
                     "CStorage": {
@@ -180,7 +196,6 @@
               "sectionLayout": "Page",
               "variantManagement": "Control",
               "showRelatedApps": true,
-              "simpleHeaderFacets":true,
               "navigation": {
                 "storageSlot": {
                   "detail": {
