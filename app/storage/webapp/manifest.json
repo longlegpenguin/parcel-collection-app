@@ -26,12 +26,12 @@
         }
       },
       "myService": {
-        "uri": "/odata/v4/StorageService/",
+        "uri": "/odata/v2/StorageService/",
         "type": "OData",
         "settings": {
           "annotations": [],
-          "localUri": "localService/metadata.xml",
-          "odataVersion": "4.0"
+          "localUri": "localService/metadataII.xml",
+          "odataVersion": "2.0"
         }
       }
     },

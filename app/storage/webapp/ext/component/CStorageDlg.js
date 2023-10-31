@@ -54,7 +54,7 @@ sap.ui.define(
             locationInstruction: locIns,
           };
           console.log("post data:" + postData);
-
+/*
           var oForm = this._byId("storageForm"),
             oBinding = oForm.bindElement({
               path: "/Storage",
@@ -82,7 +82,7 @@ sap.ui.define(
 
           this._setBusy(true); // Lock UI until submitBatch is resolved.
           oModel.submitBatch("storageGroup").then(fnSuccess, fnError);
-
+*/
           // Assuming you have an ODataModel already created
           // Create a JSONModel and set data
           // var oModel = new JSONModel(postData);
@@ -102,25 +102,25 @@ sap.ui.define(
           // sap.ui.getCore().setModel(oModel);
           // sap.ui.getCore().setModel(oModel, "CStroageJModel");
 
-          // var oModel = sap.ui.getCore().getModel("MyModel");
-          // oModel = this._oExtensionAPI.getModel();
+          var oModel = sap.ui.getCore().getModel("MyModel");
+          oModel = this._oExtensionAPI.getModel("MyModel");
           // // oModel.refreshMetadata();
 
-          // console.log("oModel" + oModel);
-          // var oContext;
+          console.log("oModel" + oModel);
+          var oContext;
 
           // // oModel.attachMetadataLoaded(function () {
-          // oContext = oModel.createEntry("/Storage", {
-          //   properties: postData,
-          //   success: function () {
-          //     // Handle the successful response here
-          //     console.log("submit successed " + data);
-          //   },
-          //   error: function () {
-          //     // Handle errors here
-          //     console.error("error");
-          //   },
-          // });
+          oContext = oModel.createEntry("/Storage", {
+            properties: postData,
+            success: function () {
+              // Handle the successful response here
+              console.log("submit successed " + data);
+            },
+            error: function () {
+              // Handle errors here
+              console.error("error");
+            },
+          });
 
           // console.log(oContext);
           // console.log("Was here");
@@ -128,26 +128,26 @@ sap.ui.define(
           console.log("Was here2");
 
           // submit the changes: creates entity in the back end
-          // oModel.submitChanges({
-          //   success: function (data) {
-          //     // Handle the successful response here
-          //     console.log("submit successed " + data);
-          //   },
-          //   error: function (error) {
-          //     // Handle errors here
-          //     console.error(error);
-          //   },
-          // });
+          oModel.submitChanges({
+            success: function (data) {
+              // Handle the successful response here
+              console.log("submit successed " + data);
+            },
+            error: function (error) {
+              // Handle errors here
+              console.error(error);
+            },
+          });
           // // handle successful creation or reset
-          // oContext.created().then(
-          //   function () {
-          //     /* successful creation */
-          //     console.log("successed");
-          //   },
-          //   function () {
-          //     /* deletion of the created entity before it is persisted */
-          //   }
-          // );
+          oContext.created().then(
+            function () {
+              /* successful creation */
+              console.log("successed");
+            },
+            function () {
+              /* deletion of the created entity before it is persisted */
+            }
+          );
 
           // delete the created entity
           // oContext.delete();

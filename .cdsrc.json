@@ -1,10 +1,13 @@
 {
-    "build": {
-        "target": "."
-    },
-    "requires": {
-        "[production]": {
-            "db": "hana"
-        }
+  "build": {
+    "target": "."
+  },
+  "requires": {
+    "[production]": {
+      "db": "hana"
     }
+  },
+  "cov2ap": {
+    "plugin": true
+  }
 }
