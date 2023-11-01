@@ -222,6 +222,17 @@
                     "route": "StorageSlotObjectPage"
                   }
                 }
+              },
+              "content": {
+                "header": {
+                  "actions": {
+                    "upload": {
+                      "press": "packagehandling.app.storage.ext.controller.AppCt.showUStorageDlg",
+                      "text": "Edit",
+                      "Emphasized": true
+                    }
+                  }
+                }
               }
             }
           }
