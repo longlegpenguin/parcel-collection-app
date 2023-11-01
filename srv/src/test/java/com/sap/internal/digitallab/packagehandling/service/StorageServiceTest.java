@@ -25,7 +25,7 @@ public class StorageServiceTest extends BaseServiceTest {
                         "    \"name\" : \"S200\"," +
                         "    \"locationInstructions\": \"Ghost place\"," +
                         "    \"map\": \"https://longlegpenguin.githu.io\"," +
-                        "    \"buildingFloor\" : \"7D5A658D-D9C1-44E6-9DA0-1D29069C4617\"" +
+                        "    \"buildingFloor_ID\" : \"7D5A658D-D9C1-44E6-9DA0-1D29069C4617\"" +
                         "}");
         response.then().statusCode(201);
         read(ADMIN_KEY, mockUsers.get(ADMIN_KEY), response.header("Location"))
@@ -41,7 +41,7 @@ public class StorageServiceTest extends BaseServiceTest {
         update(ADMIN_KEY, mockUsers.get(ADMIN_KEY), url,
                 "{" +
                         "    \"name\" : \"StorageOld9\"," +
-                        "    \"buildingFloor\" : \"7D5A658D-D9C1-44E6-9DA0-1D29069C4617\"" +
+                        "    \"buildingFloor_ID\" : \"7D5A658D-D9C1-44E6-9DA0-1D29069C4617\"" +
                         "}")
                 .then()
                 .statusCode(200)
@@ -71,7 +71,7 @@ public class StorageServiceTest extends BaseServiceTest {
         Response response = create(ADMIN_KEY, mockUsers.get(ADMIN_KEY), url,
                 "{" +
                         "    \"name\" : \"K - 2\"," +
-                        "    \"storage\" : { \"ID\": \"2F33D046-13A8-442C-AEBC-5A687891BE7E\", \"name\": \"Storage2\", \"buildingFloor\": \"00c31aa7-a362-45d1-82e7-cb3ed0192da6\" }" +
+                        "    \"storage\" : { \"ID\": \"2F33D046-13A8-442C-AEBC-5A687891BE7E\", \"name\": \"Storage2\", \"buildingFloor_ID\": \"00c31aa7-a362-45d1-82e7-cb3ed0192da6\" }" +
                         "}");
         response.then().statusCode(201);
         read(ADMIN_KEY, mockUsers.get(ADMIN_KEY), response.header("Location"))
@@ -87,7 +87,7 @@ public class StorageServiceTest extends BaseServiceTest {
         update(ADMIN_KEY, mockUsers.get(ADMIN_KEY), url,
                 "{" +
                         "    \"name\" : \"H - 10\"," +
-                        "    \"storage\" : { \"ID\": \"2F33D046-13A8-442C-AEBC-5A687891BE7E\", \"name\": \"Storage2\", \"buildingFloor\": \"00c31aa7-a362-45d1-82e7-cb3ed0192da6\" }" +
+                        "    \"storage\" : { \"ID\": \"2F33D046-13A8-442C-AEBC-5A687891BE7E\", \"name\": \"Storage2\", \"buildingFloor_ID\": \"00c31aa7-a362-45d1-82e7-cb3ed0192da6\" }" +
                         "}")
                 .then()
                 .statusCode(200)

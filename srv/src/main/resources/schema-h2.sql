@@ -22,8 +22,8 @@ DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_servic
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_StorageService_SlotStatus;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_common_Receptionist;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_common_Reception;
-DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_core_Storage;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_core_DeliveryCompany;
+DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_core_Storage;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_common_Building;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_core_StorageSlot;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_core_Package;
@@ -246,11 +246,11 @@ CREATE TABLE com_sap_internal_digitallab_packagehandling_core_Storage (
   modifiedAt TIMESTAMP(7),
   modifiedBy NVARCHAR(255),
   name NVARCHAR(255) NOT NULL,
-  buildingFloor NVARCHAR(36) NOT NULL,
+  buildingFloor_ID NVARCHAR(36) NOT NULL,
   locationInstructions NVARCHAR(1000),
   map NVARCHAR(255),
   PRIMARY KEY(ID),
-  CONSTRAINT com_sap_internal_digitallab_packagehandling_core_Storage_nbunique UNIQUE (name, buildingFloor)
+  CONSTRAINT com_sap_internal_digitallab_packagehandling_core_Storage_nbunique UNIQUE (name, buildingFloor_ID)
 ); 
 
 CREATE TABLE com_sap_internal_digitallab_packagehandling_core_StorageSlot (
@@ -314,7 +314,7 @@ CREATE VIEW com_sap_internal_digitallab_packagehandling_service_StorageService_S
   Storage_0.modifiedAt,
   Storage_0.modifiedBy,
   Storage_0.name,
-  Storage_0.buildingFloor,
+  Storage_0.buildingFloor_ID,
   Storage_0.locationInstructions,
   Storage_0.map
 FROM com_sap_internal_digitallab_packagehandling_core_Storage AS Storage_0; 
@@ -520,7 +520,7 @@ FROM com_sap_internal_digitallab_packagehandling_core_StorageSlot AS StorageSlot
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_Storage AS SELECT
   Storage_0.ID,
   Storage_0.name,
-  Storage_0.buildingFloor
+  Storage_0.buildingFloor_ID
 FROM com_sap_internal_digitallab_packagehandling_core_Storage AS Storage_0; 
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_DeliveryCompany AS SELECT
@@ -727,6 +727,18 @@ CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_common_Buildin
   L.map
 FROM com_sap_internal_digitallab_packagehandling_common_Building AS L; 
 
+CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_core_Storage AS SELECT
+  L.ID,
+  L.createdAt,
+  L.createdBy,
+  L.modifiedAt,
+  L.modifiedBy,
+  L.name,
+  L.buildingFloor_ID,
+  L.locationInstructions,
+  L.map
+FROM com_sap_internal_digitallab_packagehandling_core_Storage AS L; 
+
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_core_DeliveryCompany AS SELECT
   L.ID,
   L.createdAt,
@@ -736,18 +748,6 @@ CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_core_DeliveryC
   L.name,
   L.logo
 FROM com_sap_internal_digitallab_packagehandling_core_DeliveryCompany AS L; 
-
-CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_core_Storage AS SELECT
-  L.ID,
-  L.createdAt,
-  L.createdBy,
-  L.modifiedAt,
-  L.modifiedBy,
-  L.name,
-  L.buildingFloor,
-  L.locationInstructions,
-  L.map
-FROM com_sap_internal_digitallab_packagehandling_core_Storage AS L; 
 
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_common_Reception AS SELECT
   L.ID,
@@ -966,7 +966,7 @@ CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_Storag
   Storage_0.modifiedAt,
   Storage_0.modifiedBy,
   Storage_0.name,
-  Storage_0.buildingFloor,
+  Storage_0.buildingFloor_ID,
   Storage_0.locationInstructions,
   Storage_0.map
 FROM localized_com_sap_internal_digitallab_packagehandling_core_Storage AS Storage_0; 

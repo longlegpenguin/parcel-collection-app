@@ -3,7 +3,7 @@ sap.ui.define(
   function (Controller, MessageBox, MessageToast) {
     "use strict";
     return Controller.extend(
-      "packagehandling.app.storage.ext.component.CStorageDlg",
+      "packagehandling.app.storage.ext.component.UStorageDlg",
       {
         constructor: function (oExtensionAPI, aSelectedContexts) {
           this._oExtensionAPI = oExtensionAPI;
@@ -34,13 +34,13 @@ sap.ui.define(
             var byId = (sId) => sap.ui.core.Fragment.byId("usdlg", sId);
             var setInput = (sId, sValue) => byId(sId).setValue(sValue);
             setInput("idNameInput", oData.name);
-            setInput("idBfInput", oData.buildingFloor);
+            setInput("idBfInput", oData.buildingFloor_ID);
             setInput("idMapInput", oData.map);
             setInput("idTextLocInsInput", oData.locationInstructions);
           };
 
           var oModel = this._oExtensionAPI.getModel("MyModel");
-          oModel.read(this._oSelectedContext.sPath, {
+          oModel.read(this._getSelected(), {
             success: fnSuccess,
             error: function () {},
           });
@@ -82,7 +82,12 @@ sap.ui.define(
         },
 
         _getSelected: function () {
-          return this._oSelectedContext.sPath;
+          var sV4 = this._oSelectedContext.sPath
+          sV4 = sV4.replace('(', "(guid'")
+          sV4 = sV4.replace(')', "')")
+          console.log(sV4);
+          ///Storage(2f33d046-13a8-442c-aebc-5a687891be7e)
+          return sV4;
         },
 
         _getInputs: function () {

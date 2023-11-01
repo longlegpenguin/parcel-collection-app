@@ -44,7 +44,7 @@ annotate service.Storage with @(UI.FieldGroup #ObjHeaderInfo: {Data: [
     {
         $Type: 'UI.DataField',
         Label: 'Location',
-        Value: buildingFloor,
+        Value: buildingFloor.name,
     },
     {
         $Type: 'UI.DataFieldWithUrl',

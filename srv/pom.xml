@@ -19,11 +19,21 @@
 			<groupId>com.sap.cds</groupId>
 			<artifactId>cds-starter-spring-boot</artifactId>
 		</dependency>
-
+<!-- 
+		<dependency>
+			<groupId>com.sap.cds</groupId>
+			<artifactId>cds-starter-spring-boot-odata</artifactId>
+		</dependency> -->
 		<!-- ODATA PROTOCOL ADAPTER -->
 		<dependency>
 			<groupId>com.sap.cds</groupId>
 			<artifactId>cds-adapter-odata-v4</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sap.cds</groupId>
+			<artifactId>cds-adapter-odata-v2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 
@@ -141,6 +151,7 @@
 						<configuration>
 							<commands>
 								<command>build --for java</command>
+								<command>compile ${project.basedir}/services -s all -l all -2 edmx-v2 -o ${project.basedir}/src/main/resources/edmx/v2</command>
 								<command>deploy --to h2 --dry &gt; "${project.basedir}/src/main/resources/schema-h2.sql"</command>
 							</commands>
 						</configuration>

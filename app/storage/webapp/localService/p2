@@ -27,10 +27,6 @@
 <Parameter Name="colType" Type="Edm.String" MaxLength="1" Mode="In" Nullable="true"/>
 <Parameter Name="storage" Type="Edm.Guid" Mode="In" Nullable="true"/>
 </FunctionImport>
-<AssociationSet Name="Storage_buildingFloor" Association="com.sap.internal.digitallab.packagehandling.service.StorageService.Storage_buildingFloor">
-<End Role="Storage" EntitySet="Storage"/>
-<End Role="BuildingFloor" EntitySet="BuildingFloor"/>
-</AssociationSet>
 <AssociationSet Name="StorageSlot_storage" Association="com.sap.internal.digitallab.packagehandling.service.StorageService.StorageSlot_storage">
 <End Role="StorageSlot" EntitySet="StorageSlot"/>
 <End Role="Storage" EntitySet="Storage"/>
@@ -62,8 +58,7 @@
 <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
 <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
 <Property Name="name" Type="Edm.String" MaxLength="255" Nullable="false"/>
-<NavigationProperty Name="buildingFloor" Relationship="com.sap.internal.digitallab.packagehandling.service.StorageService.Storage_buildingFloor" FromRole="Storage" ToRole="BuildingFloor"/>
-<Property Name="buildingFloor_ID" Type="Edm.Guid" Nullable="false"/>
+<Property Name="buildingFloor" Type="Edm.Guid" Nullable="false"/>
 <Property Name="locationInstructions" Type="Edm.String" MaxLength="1000"/>
 <Property Name="map" Type="Edm.String" MaxLength="255"/>
 <NavigationProperty Name="storageSlot" Relationship="com.sap.internal.digitallab.packagehandling.service.StorageService.StorageSlot_storage" FromRole="Storage" ToRole="StorageSlot"/>
@@ -131,18 +126,6 @@
 <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
 <Property Name="code" Type="Edm.String" MaxLength="255" Nullable="false"/>
 </EntityType>
-<Association Name="Storage_buildingFloor">
-<End Role="Storage" Type="com.sap.internal.digitallab.packagehandling.service.StorageService.Storage" Multiplicity="*"/>
-<End Role="BuildingFloor" Type="com.sap.internal.digitallab.packagehandling.service.StorageService.BuildingFloor" Multiplicity="1"/>
-<ReferentialConstraint>
-<Principal Role="BuildingFloor">
-<PropertyRef Name="ID"/>
-</Principal>
-<Dependent Role="Storage">
-<PropertyRef Name="buildingFloor_ID"/>
-</Dependent>
-</ReferentialConstraint>
-</Association>
 <Association Name="StorageSlot_storage">
 <End Role="StorageSlot" Type="com.sap.internal.digitallab.packagehandling.service.StorageService.StorageSlot" Multiplicity="*"/>
 <End Role="Storage" Type="com.sap.internal.digitallab.packagehandling.service.StorageService.Storage" Multiplicity="1">
@@ -170,10 +153,6 @@
 </ReferentialConstraint>
 </Association>
 <Association Name="SlotStatus_texts_1">
-<End Role="SlotStatus" Type="com.sap.internal.digitallab.packagehandling.service.StorageService.SlotStatus" Multiplicity="1">
-<OnDelete Action="Cascade"/>
-</End>
-<End Role="SlotStatus_texts" Type="com.sap.internal.digitallab.packagehandling.service.StorageService.SlotStatus_texts" Multiplicity="*"/>
 </Association>
 <Association Name="SlotStatus_localized">
 <End Role="SlotStatus" Type="com.sap.internal.digitallab.packagehandling.service.StorageService.SlotStatus" Multiplicity="*"/>
@@ -192,7 +171,166 @@
 </ReferentialConstraint>
 </Association>
 <Annotations Target="com.sap.internal.digitallab.packagehandling.service.StorageService.Storage">
-<Annotation Term="Core.Description" String="Aspect to capture changes by user and name See https://cap.cloud.sap/docs/cds/common#aspect-managed"/>
+<Annotation Term="UI.SelectionFields">
+<Collection>
+<PropertyPath>buildingFloor</PropertyPath>
+</Collection>
+</Annotation>
+<Annotation Term="UI.LineItem">
+<Collection>
+<Record Type="UI.DataField">
+<PropertyValue Property="Label" String="Name"/>
+<PropertyValue Property="Value" Path="name"/>
+</Record>
+<Record Type="UI.DataField">
+<PropertyValue Property="Label" String="Location"/>
+<PropertyValue Property="Value" Path="buildingFloor"/>
+</Record>
+<Record Type="UI.DataField">
+<PropertyValue Property="Label" String="Location Instructions"/>
+<PropertyValue Property="Value" Path="locationInstructions"/>
+</Record>
+<Record Type="UI.DataField">
+<PropertyValue Property="Label" String="Total Number of Packages"/>
+<PropertyValue Property="Value" Path="totalPackages"/>
+</Record>
+<Record Type="UI.DataField">
+<PropertyValue Property="Label" String="Current Utilization"/>
+<PropertyValue Property="Value" Path="currentPackages"/>
+</Record>
+</Collection>
+</Annotation>
+<Annotation Term="UI.FieldGroup" Qualifier="Basic">
+<Record Type="UI.FieldGroupType">
+<PropertyValue Property="Data">
+<Collection>
+<Record Type="UI.DataField">
+<PropertyValue Property="Label" String="Building Floor"/>
+<PropertyValue Property="Value" Path="buildingFloor"/>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="UI.FieldGroup" Qualifier="StorageShowFields">
+<Record Type="UI.FieldGroupType">
+<PropertyValue Property="Data">
+<Collection>
+<Record Type="UI.DataField">
+<PropertyValue Property="Label" String="name"/>
+<PropertyValue Property="Value" Path="name"/>
+</Record>
+<Record Type="UI.DataField">
+<PropertyValue Property="Label" String="locationInstructions"/>
+<PropertyValue Property="Value" Path="locationInstructions"/>
+</Record>
+<Record Type="UI.DataField">
+<PropertyValue Property="Label" String="Map"/>
+<PropertyValue Property="Value" String="Open"/>
+</Record>
+<Record Type="UI.DataField">
+<PropertyValue Property="Label" String="Building Floor"/>
+<PropertyValue Property="Value" Path="buildingFloor"/>
+</Record>
+<Record Type="UI.DataField">
+<PropertyValue Property="Label" String="totalPackages"/>
+<PropertyValue Property="Value" Path="totalPackages"/>
+</Record>
+<Record Type="UI.DataField">
+<PropertyValue Property="Label" String="currentPackages"/>
+<PropertyValue Property="Value" Path="currentPackages"/>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="UI.Facets">
+<Collection>
+<Record Type="UI.ReferenceFacet">
+<PropertyValue Property="ID" String="GeneratedFacet1"/>
+<PropertyValue Property="Label" String="General Information"/>
+<PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#StorageShowFields"/>
+</Record>
+<Record Type="UI.ReferenceFacet">
+<PropertyValue Property="Label" String="Slots"/>
+<PropertyValue Property="Target" AnnotationPath="storageSlot/@UI.LineItem"/>
+</Record>
+</Collection>
+</Annotation>
+<Annotation Term="UI.HeaderInfo">
+<Record Type="UI.HeaderInfoType">
+<PropertyValue Property="TypeName" String="Storage"/>
+<PropertyValue Property="TypeNamePlural" String="Storages"/>
+<PropertyValue Property="ImageUrl" String=""/>
+<PropertyValue Property="Title">
+<Record Type="UI.DataField">
+<PropertyValue Property="Value" Path="name"/>
+</Record>
+</PropertyValue>
+<PropertyValue Property="Description">
+<Record Type="UI.DataField">
+<PropertyValue Property="Value" Path="locationInstructions"/>
+</Record>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="UI.HeaderFacets">
+<Collection>
+<Record Type="UI.ReferenceFacet">
+<PropertyValue Property="Label" String=""/>
+<PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ObjHeaderInfo"/>
+</Record>
+<Record Type="UI.ReferenceFacet">
+<PropertyValue Property="Label" String=""/>
+<PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ObjHeaderCalculated"/>
+</Record>
+<Record Type="UI.ReferenceFacet">
+<PropertyValue Property="Label" String=""/>
+<PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ObjHeaderCalculated2"/>
+</Record>
+</Collection>
+</Annotation>
+<Annotation Term="UI.FieldGroup" Qualifier="ObjHeaderInfo">
+<Record Type="UI.FieldGroupType">
+<PropertyValue Property="Data">
+<Collection>
+<Record Type="UI.DataField">
+<PropertyValue Property="Label" String="Location"/>
+<PropertyValue Property="Value" Path="buildingFloor"/>
+</Record>
+<Record Type="UI.DataFieldWithUrl">
+<PropertyValue Property="Label" String="Map"/>
+<PropertyValue Property="Value" String="Open"/>
+<PropertyValue Property="Url" Path="map"/>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="UI.FieldGroup" Qualifier="ObjHeaderCalculated">
+<Record Type="UI.FieldGroupType">
+<PropertyValue Property="Data">
+<Collection>
+<Record Type="UI.DataField">
+<PropertyValue Property="Label" String="Total Utilization"/>
+<PropertyValue Property="Value" Path="totalPackages"/>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="UI.FieldGroup" Qualifier="ObjHeaderCalculated2">
+<Record Type="UI.FieldGroupType">
+<PropertyValue Property="Data">
+<Collection>
+<Record Type="UI.DataField">
+<PropertyValue Property="Label" String="Current Utilization"/>
+<PropertyValue Property="Value" Path="currentPackages"/>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
 </Annotations>
 <Annotations Target="com.sap.internal.digitallab.packagehandling.service.StorageService.EntityContainer/Storage">
 <Annotation Term="Capabilities.DeleteRestrictions">
@@ -228,7 +366,7 @@
 <Annotations Target="com.sap.internal.digitallab.packagehandling.service.StorageService.Storage/name">
 <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
 </Annotations>
-<Annotations Target="com.sap.internal.digitallab.packagehandling.service.StorageService.Storage/buildingFloor_ID">
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.StorageService.Storage/buildingFloor">
 <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
 </Annotations>
 <Annotations Target="com.sap.internal.digitallab.packagehandling.service.StorageService.Storage/totalPackages">
@@ -244,7 +382,55 @@
 <Annotation Term="Core.Computed" Bool="true"/>
 </Annotations>
 <Annotations Target="com.sap.internal.digitallab.packagehandling.service.StorageService.StorageSlot">
-<Annotation Term="Core.Description" String="Aspect to capture changes by user and name See https://cap.cloud.sap/docs/cds/common#aspect-managed"/>
+<Annotation Term="UI.LineItem">
+<Collection>
+<Record Type="UI.DataFieldForAction">
+<PropertyValue Property="Action" String="com.sap.internal.digitallab.packagehandling.service.StorageService.EntityContainer/massCreate"/>
+<PropertyValue Property="Label" String="MassCreate"/>
+</Record>
+<Record Type="UI.DataField">
+<PropertyValue Property="Label" String="Name"/>
+<PropertyValue Property="Value" Path="name"/>
+</Record>
+<Record Type="UI.DataField">
+<PropertyValue Property="Label" String="Total Number of Packages"/>
+<PropertyValue Property="Value" Path="totalPackages"/>
+</Record>
+<Record Type="UI.DataField">
+<PropertyValue Property="Label" String="Status"/>
+<PropertyValue Property="Value" Path="status_code"/>
+</Record>
+</Collection>
+</Annotation>
+<Annotation Term="UI.FieldGroup" Qualifier="SlotInputFields">
+<Record Type="UI.FieldGroupType">
+<PropertyValue Property="Data">
+<Collection>
+<Record Type="UI.DataField">
+<PropertyValue Property="Label" String="Name"/>
+<PropertyValue Property="Value" Path="name"/>
+</Record>
+<Record Type="UI.DataField">
+<PropertyValue Property="Label" String="Storage"/>
+<PropertyValue Property="Value" Path="storage_ID"/>
+</Record>
+<Record Type="UI.DataField">
+<PropertyValue Property="Label" String="Status"/>
+<PropertyValue Property="Value" Path="status_code"/>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="UI.Facets">
+<Collection>
+<Record Type="UI.ReferenceFacet">
+<PropertyValue Property="ID" String="GeneratedFacet1"/>
+<PropertyValue Property="Label" String="General Information"/>
+<PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#SlotInputFields"/>
+</Record>
+</Collection>
+</Annotation>
 </Annotations>
 <Annotations Target="com.sap.internal.digitallab.packagehandling.service.StorageService.EntityContainer/StorageSlot">
 <Annotation Term="Capabilities.DeleteRestrictions">
@@ -320,7 +506,6 @@
 </Record>
 </Collection>
 </Annotation>
-<Annotation Term="Core.Description" String="Aspect for a code list with name and description See https://cap.cloud.sap/docs/cds/common#aspect-codelist"/>
 </Annotations>
 <Annotations Target="com.sap.internal.digitallab.packagehandling.service.StorageService.EntityContainer/SlotStatus">
 <Annotation Term="Capabilities.DeleteRestrictions">
@@ -345,9 +530,6 @@
 <Annotations Target="com.sap.internal.digitallab.packagehandling.service.StorageService.SlotStatus/descr">
 <Annotation Term="Common.Label" String="Description"/>
 </Annotations>
-<Annotations Target="com.sap.internal.digitallab.packagehandling.service.StorageService.Building">
-<Annotation Term="Core.Description" String="Aspect to capture changes by user and name See https://cap.cloud.sap/docs/cds/common#aspect-managed"/>
-</Annotations>
 <Annotations Target="com.sap.internal.digitallab.packagehandling.service.StorageService.EntityContainer/Building">
 <Annotation Term="Capabilities.DeleteRestrictions">
 <Record Type="Capabilities.DeleteRestrictionsType">
@@ -364,9 +546,6 @@
 <PropertyValue Property="Updatable" Bool="false"/>
 </Record>
 </Annotation>
-</Annotations>
-<Annotations Target="com.sap.internal.digitallab.packagehandling.service.StorageService.BuildingFloor">
-<Annotation Term="Core.Description" String="Aspect to capture changes by user and name See https://cap.cloud.sap/docs/cds/common#aspect-managed"/>
 </Annotations>
 <Annotations Target="com.sap.internal.digitallab.packagehandling.service.StorageService.EntityContainer/BuildingFloor">
 <Annotation Term="Capabilities.DeleteRestrictions">
@@ -387,7 +566,6 @@
 </Annotations>
 <Annotations Target="com.sap.internal.digitallab.packagehandling.service.StorageService.SlotStatus_texts/locale">
 <Annotation Term="Common.Label" String="Language Code"/>
-<Annotation Term="Core.Description" String="Type for a language code"/>
 </Annotations>
 <Annotations Target="com.sap.internal.digitallab.packagehandling.service.StorageService.SlotStatus_texts/name">
 <Annotation Term="Common.Label" String="Name"/>

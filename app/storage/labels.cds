@@ -1,10 +1,20 @@
 using com.sap.internal.digitallab.packagehandling.service.StorageService as service from '../../srv/services/StorageService';
 
+
 /*
  * Storage list page
  */
 annotate service.Storage with @(
-    UI.SelectionFields: [buildingFloor],
+    UI.SelectionFields: [
+        buildingFloor.name,
+        buildingFloor.building.name
+    ],
+    UI.FilterFacets   : [{
+        $Type : 'UI.ReferenceFacet',
+        ID    : 'GeneratedFacet1',
+        Label : 'General Information',
+        Target: '@UI.FieldGroup#StorageShowFields',
+    }],
     UI.LineItem       : [
         {
             $Type: 'UI.DataField',
@@ -14,7 +24,7 @@ annotate service.Storage with @(
         {
             $Type: 'UI.DataField',
             Label: 'Location',
-            Value: buildingFloor,
+            Value: buildingFloor.name,
         },
         {
             $Type: 'UI.DataField',
@@ -34,13 +44,49 @@ annotate service.Storage with @(
     ]
 );
 
-annotate service.Storage with @(UI.FieldGroup #Basic: {
+annotate service with @Consumption.valueHelpDefinition: [{entity: {
+    name   : 'BuildingFloor',
+    element: 'name'
+}}];
+
+annotate service.Storage with {
+    buildingFloor @ValueListMapping: {
+        Label         : 'Building floor help',
+        CollectionPath: 'BuildingFloor',
+        Parameters    : [
+            {
+                $Type            : 'Common.ValueListParameterInOut',
+                ValueListProperty: 'name',
+                LocalDataProperty: buildingFloor.name
+            },
+            {
+                $Type            : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty: 'ID'
+            }
+        ]
+    }
+};
+
+annotate service.BuildingFloor with {
+    name @Common.Label: 'Building Floor';
+};
+
+annotate service.Building with {
+    name @Common.Label: 'Building';
+};
+
+annotate service.Storage with @(UI.FieldGroup #Basics: {
     $Type: 'UI.FieldGroupType',
     Data : [
         {
             $Type: 'UI.DataField',
             Label: 'Building Floor',
-            Value: buildingFloor,
+            Value: buildingFloor.name,
+        },
+        {
+            $Type: 'UI.DataField',
+            Label: 'Building',
+            Value: buildingFloor.building.name,
         },
     ],
 });
@@ -70,7 +116,7 @@ annotate service.Storage with @(
             {
                 $Type: 'UI.DataField',
                 Label: 'Building Floor',
-                Value: buildingFloor,
+                Value: buildingFloor.name,
             },
             {
                 $Type: 'UI.DataField',
@@ -84,19 +130,11 @@ annotate service.Storage with @(
             },
         ],
     },
-    UI.Facets                       : [
-        {
-            $Type : 'UI.ReferenceFacet',
-            ID    : 'GeneratedFacet1',
-            Label : 'General Information',
-            Target: '@UI.FieldGroup#StorageShowFields',
-        },
-        {
-            $Type : 'UI.ReferenceFacet',
-            Label : '{i18n>Slots}',
-            Target: 'storageSlot/@UI.LineItem'
-        }
-    ]
+    UI.Facets                       : [{
+        $Type : 'UI.ReferenceFacet',
+        Label : '{i18n>Slots}',
+        Target: 'storageSlot/@UI.LineItem'
+    }]
 );
 
 
@@ -141,7 +179,7 @@ annotate service.StorageSlot with @(
             {
                 $Type: 'UI.DataField',
                 Label: 'Storage',
-                Value: storage_ID,
+                Value: storage.name,
             },
             {
                 $Type: 'UI.DataField',
