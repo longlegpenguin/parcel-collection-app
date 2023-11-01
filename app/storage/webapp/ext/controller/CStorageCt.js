@@ -10,6 +10,10 @@ sap.ui.define(
       return new CStorageDlg(oExtensionAPI);
     }
 
+    function _loadCStorageDlg(oExtensionAPI) {
+      new CStorageDlg(oExtensionAPI).load()
+    }
+
     return {
       showCStorageDlg: function (oBindingContext, aSelectedContexts) {
         let ctl = _createCStorageDlgController(this)
@@ -20,13 +24,15 @@ sap.ui.define(
         console.log("List: "+this.byId("StorageList"));
         console.log("List: "+this.byId("storageList"));
         console.log("List: "+this.byId("storagelist"));
-        this.loadFragment({
-          id: "csdlg",
-          name: "packagehandling.app.storage.ext.view.CStorageDlg",
-          controller: _createCStorageDlgController(this),
-        }).then(function (oDialog) {
-          oDialog.open();
-        });
+        // this.loadFragment({
+        //   id: "csdlg",
+        //   name: "packagehandling.app.storage.ext.view.CStorageDlg",
+        //   controller: _createCStorageDlgController(this),
+        // }).then(function (oDialog) {
+        //   oDialog.open();
+        // });
+        _loadCStorageDlg(this);
+        console.log("shabi");
       },
     };
   }

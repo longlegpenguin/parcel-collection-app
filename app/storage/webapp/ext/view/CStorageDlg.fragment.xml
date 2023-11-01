@@ -12,7 +12,7 @@
     >
         <content>
             <f:Form
-                id="storageForm"
+                id="idstorageForm"
                 editable="true"
                 binding="/Storage"
             >
@@ -40,7 +40,7 @@
                                 <f:fields>
                                     <Input
                                         value=""
-                                        id="name"
+                                        id="idNameInput"
                                         required="true"
                                         tooltip="required"
                                     />
@@ -50,7 +50,7 @@
                                 <f:fields>
                                     <Input
                                         value=""
-                                        id="bf"
+                                        id="idBfInput"
                                         required="true"
                                         tooltip="required"
                                     />
@@ -61,7 +61,7 @@
                                     <Input
                                         value=""
                                         placeholder="http://"
-                                        id="map"
+                                        id="idMapInput"
                                     />
                                 </f:fields>
                             </f:FormElement>
@@ -69,7 +69,7 @@
                                 <f:fields>
                                     <Input
                                         value="Text"
-                                        id="locIns"
+                                        id="idTextLocInsInput"
                                     />
                                 </f:fields>
                             </f:FormElement>
@@ -80,9 +80,9 @@
         </content>
         <beginButton>
             <Button
-                id="create"
+                id="idCreateButton"
                 text="Create"
-                press=".onOk"
+                press=".onCreateButtonPress"
                 type="Emphasized"
                 enabled="true"
             />
