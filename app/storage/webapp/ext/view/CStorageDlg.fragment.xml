@@ -1,14 +1,13 @@
 <core:FragmentDefinition
     xmlns="sap.m"
-    xmlns:l="sap.ui.layout"
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core"
 >
     <Dialog
         title="Create Storage"
         class="sapUiResponsiveContentPadding"
-        beforeOpen=".onBeforeOpen"
-        afterClose=".onAfterClose"
+        beforeOpen=".onDialogBeforeOpen"
+        afterClose=".onDialogAfterClose"
     >
         <content>
             <f:Form
@@ -84,14 +83,13 @@
                 text="Create"
                 press=".onCreateButtonPress"
                 type="Emphasized"
-                enabled="true"
             />
         </beginButton>
         <endButton>
             <Button
-                id="cancel"
+                id="idCloseButton"
                 text="Close"
-                press=".onCancel"
+                press=".onCloseButtonPress"
             />
         </endButton>
     </Dialog>

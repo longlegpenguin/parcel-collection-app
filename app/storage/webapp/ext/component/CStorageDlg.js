@@ -1,34 +1,12 @@
 sap.ui.define(
-  [
-    "sap/ui/core/mvc/Controller",
-    "sap/m/MessageBox",
-    "sap/m/MessageToast",
-    "sap/ui/base/ManagedObject",
-    "sap/ui/model/json/JSONModel",
-    "sap/ui/model/odata/v2/ODataModel",
-  ],
-  function (
-    Controller,
-    MessageBox,
-    MessageToast,
-    ManagedObject,
-    JSONModel,
-    ODataModel
-  ) {
+  ["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "sap/m/MessageToast"],
+  function (Controller, MessageBox, MessageToast) {
     "use strict";
-    console.log("fff");
     return Controller.extend(
       "packagehandling.app.storage.ext.component.CStorageDlg",
       {
         constructor: function (oExtensionAPI) {
           this._oExtensionAPI = oExtensionAPI;
-          // var oViewModel = new JSONModel({
-          //   name: "name",
-          //   buildingFloor: "bf",
-          //   map: "map",
-          //   locationInstructions: "locIns",
-          // });
-          // sap.ui.getCore().setModel(oViewModel, "storageEntry");
         },
 
         load: function () {
@@ -43,13 +21,13 @@ sap.ui.define(
             });
         },
 
-        onBeforeOpen: function (oEvent) {
+        onDialogBeforeOpen: function (oEvent) {
           console.log("onBeforeOpen");
           this._oCStorageDlg = oEvent.getSource();
           this._oExtensionAPI.addDependent(this._oCStorageDlg);
         },
 
-        onAfterClose: function (oEvent) {
+        onDialogAfterClose: function (oEvent) {
           console.log("onAfterClose");
           this._oExtensionAPI.removeDependent(this._oCStorageDlg);
           this._oCStorageDlg.destroy();
@@ -57,40 +35,8 @@ sap.ui.define(
         },
 
         onCreateButtonPress: function (oEvent) {
-          var name = this._byId("idNameInput").getValue();
-          var bf = this._byId("idBfInput").getValue();
-          var map = this._byId("idMapInput").getValue();
-          var locIns = this._byId("idTextLocInsInput").getValue();
-
-          var postData = {
-            name: name,
-            buildingFloor: bf,
-            map: map,
-            locationInstructions: locIns,
-          };
-          console.log("post data:" + postData);
-
-          // Set the model to the core or a specific control
-          // sap.ui.getCore().setModel(oModel, "CStroageJModel");
-          var localServiceUrl = "/odata/v4/StorageService/";
-
+          var postData = this._getInputs();
           var oModel = this._oExtensionAPI.getModel("MyModel");
-
-          console.log("oModel" + oModel);
-
-          // // oModel.attachMetadataLoaded(function () {
-          var oContext = oModel.createEntry("/Storage", {
-            properties: postData,
-            success: function () {
-              console.log("Created storage entry");
-            },
-            error: function () {
-              console.error("Faile to create storage entry");
-            },
-          });
-          // });
-
-          console.log("Was here2");
 
           var fnSuccess = function () {
             this._setBusy(false);
@@ -100,34 +46,44 @@ sap.ui.define(
 
           var fnError = function (oError) {
             this._setBusy(false);
-            MessageBox.error(oError.message);
+            var msg = this._getErrorMsg(oError);
+            MessageBox.error(msg);
           }.bind(this);
 
-          // submit the changes: creates entity in the back end
-          oModel.submitChanges({
+          var oContext = oModel.createEntry("/Storage", {
+            properties: postData,
             success: fnSuccess,
             error: fnError,
           });
 
-          // // handle successful creation or reset
-          // oContext.created().then(
-          //   function () {
-          //     /* successful creation */
-          //     console.log("successed");
-          //   },
-          //   function () {
-          //     /* deletion of the created entity before it is persisted */
-          //     console.log("front-end bad");
-          //   }
-          // );
-
-          // delete the created entity
+          oModel.submitChanges({
+            success: function () {},
+            error: function () {},
+          });
           oContext.delete();
         },
 
-        onCancel: function (oEvent) {
+        onCloseButtonPress: function (oEvent) {
           console.log("close cliacked");
           this._closeDialog();
+        },
+
+        _getInputs: function () {
+          var name = this._byId("idNameInput").getValue();
+          var bf = this._byId("idBfInput").getValue();
+          var map = this._byId("idMapInput").getValue();
+          var locIns = this._byId("idTextLocInsInput").getValue();
+
+          return {
+            name: name,
+            buildingFloor: bf,
+            map: map,
+            locationInstructions: locIns,
+          };
+        },
+
+        _getErrorMsg(oError) {
+          return JSON.parse(oError.responseText).error.message.value;
         },
 
         _setOkButtonEnabled: function (bOk) {

@@ -194,7 +194,7 @@
                   },
                   "actions": {
                     "CStorage": {
-                      "press": "packagehandling.app.storage.ext.controller.CStorageCt.showCStorageDlg",
+                      "press": "packagehandling.app.storage.ext.controller.AppCt.showCStorageDlg",
                       "enabled": true,
                       "visible": true,
                       "text": "{i18n>CreateStorageAction}"
