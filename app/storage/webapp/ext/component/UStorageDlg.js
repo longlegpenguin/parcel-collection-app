@@ -34,7 +34,7 @@ sap.ui.define(
             var byId = (sId) => sap.ui.core.Fragment.byId("usdlg", sId);
             var setInput = (sId, sValue) => byId(sId).setValue(sValue);
             setInput("idNameInput", oData.name);
-            setInput("idBfInput", oData.buildingFloor_ID);
+            byId("idBuildingFloorSelect").setSelectedKey(oData.buildingFloor_ID);
             setInput("idMapInput", oData.map);
             setInput("idTextLocInsInput", oData.locationInstructions);
           };
@@ -92,13 +92,13 @@ sap.ui.define(
 
         _getInputs: function () {
           var name = this._byId("idNameInput").getValue();
-          var bf = this._byId("idBfInput").getValue();
+          var bf = this._byId("idBuildingFloorSelect").getSelectedKey();
           var map = this._byId("idMapInput").getValue();
           var locIns = this._byId("idTextLocInsInput").getValue();
 
           return {
             name: name,
-            buildingFloor: bf,
+            buildingFloor_ID: bf,
             map: map,
             locationInstructions: locIns,
           };

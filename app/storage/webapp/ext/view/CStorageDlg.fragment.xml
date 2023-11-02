@@ -48,7 +48,7 @@
                             <f:FormElement label="Building Floor" binding="/BuildingFloor">
                                 <f:fields>
                                     <Select
-                                        id="idBfSelect"
+                                        id="idBuildingFloorSelect"
                                         items="{/BuildingFloor}"
                                         tooltip="required"
                                     >

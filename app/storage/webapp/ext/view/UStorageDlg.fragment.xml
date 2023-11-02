@@ -45,14 +45,21 @@
                                     />
                                 </f:fields>
                             </f:FormElement>
-                            <f:FormElement label="Building Floor">
+                            <f:FormElement
+                                label="Building Floor"
+                                binding="/BuildingFloor"
+                            >
                                 <f:fields>
-                                    <Input
-                                        value=""
-                                        id="idBfInput"
-                                        required="true"
+                                    <Select
+                                        id="idBuildingFloorSelect"
+                                        items="{/BuildingFloor}"
                                         tooltip="required"
-                                    />
+                                    >
+                                        <core:Item
+                                            key="{ID}"
+                                            text="{name}"
+                                        />
+                                    </Select>
                                 </f:fields>
                             </f:FormElement>
                             <f:FormElement label="Map">

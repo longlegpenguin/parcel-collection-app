@@ -2,7 +2,6 @@ sap.ui.define(
   [
     "sap/ui/core/mvc/Controller",
     "packagehandling/app/storage/ext/UploadDialog",
-    "packagehandling/app/storage/ext/rubbish/CStorageCtNONONO",
   ],
   function (Controller, UploadDialog) {
     "use strict";

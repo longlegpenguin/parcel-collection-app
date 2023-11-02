@@ -70,9 +70,7 @@ sap.ui.define(
 
         _getInputs: function () {
           var name = this._byId("idNameInput").getValue();
-          // var bf = this._byId("idBfInput").getValue();
-          var bf = this._byId("idBfSelect").getSelectedKey();
-          // var bf = sap.ui.getCore().byId("idBfSelect").getSelectedKey();
+          var bf = this._byId("idBuildingFloorSelect").getSelectedKey();
           console.log(bf);
           var map = this._byId("idMapInput").getValue();
           var locIns = this._byId("idTextLocInsInput").getValue();
