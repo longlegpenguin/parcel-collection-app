@@ -33,7 +33,7 @@ sap.ui.define(
             // console.log(d);
             var byId = (sId) => sap.ui.core.Fragment.byId("usldlg", sId);
             var setInput = (sId, sValue) => byId(sId).setValue(sValue);
-            setInput("idIdInput", oData.ID);
+            setInput("idIdInput", oData.storage_ID);
             setInput("idNameInput", oData.name);
             setInput("idStatisInput", oData.status_code);
             byId("idAvailableCheckBox").setSelected(
@@ -71,6 +71,7 @@ sap.ui.define(
             MessageBox.error(msg);
           }.bind(this);
 
+          console.log("Update data:" + JSON.stringify(oData, null, 4));
           oModel.update(this._getSelected(), oData, {
             success: fnSuccess,
             error: fnError,
@@ -83,11 +84,12 @@ sap.ui.define(
         },
 
         _getSelected: function () {
-          var sV4 = this._oSelectedContext.sPath;
-          sV4 = sV4.replace("(", "(guid'");
-          sV4 = sV4.replace(")", "')");
-          console.log(sV4);
-          return sV4;
+          console.log(this._oSelectedContext.sPath.split("/"));
+          var sV4 = this._oSelectedContext.sPath.split("/")[2];
+          sV4 = sV4.replaceAll("(", "(guid'");
+          sV4 = sV4.replaceAll(")", "')").replaceAll("storageSlot", "StorageSlot");
+          console.log("selected slot: " + sV4);
+          return "/" + sV4;
         },
 
         _getInputs: function () {

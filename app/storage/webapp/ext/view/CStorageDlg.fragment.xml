@@ -11,7 +11,7 @@
     >
         <content>
             <f:Form
-                id="idstorageForm"
+                id="idCstorageForm"
                 editable="true"
                 binding="/BuildingFloor"
             >

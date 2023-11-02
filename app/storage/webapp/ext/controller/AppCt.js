@@ -5,8 +5,16 @@ sap.ui.define(
     "packagehandling/app/storage/ext/component/UStorageDlg",
     "packagehandling/app/storage/ext/component/CSlotDlg",
     "packagehandling/app/storage/ext/component/USlotDlg",
+    "packagehandling/app/storage/ext/component/MassCreateDlg",
   ],
-  function (ManagedObject, CStorageDlg, UStorageDlg, CSlotDlg, USlotDlg) {
+  function (
+    ManagedObject,
+    CStorageDlg,
+    UStorageDlg,
+    CSlotDlg,
+    USlotDlg,
+    MassCreateDlg
+  ) {
     "use strict";
 
     function _loadCStorageDlg(oExtensionAPI) {
@@ -23,6 +31,10 @@ sap.ui.define(
 
     function _loadUSlotDlg(oExtensionAPI, aSelectedContexts) {
       new USlotDlg(oExtensionAPI, aSelectedContexts).load();
+    }
+
+    function _loadMassCreateDlg(oExtensionAPI, aSelectedContexts) {
+      new MassCreateDlg(oExtensionAPI, aSelectedContexts).load();
     }
 
     return {
@@ -42,6 +54,11 @@ sap.ui.define(
       showUSlotDlg: function (oBindingContext, aSelectedContexts) {
         console.log(oBindingContext);
         _loadUSlotDlg(this, oBindingContext);
+      },
+
+      showMassCreateDlg: function (oBindingContext, aSelectedContexts) {
+        console.log(oBindingContext);
+        _loadMassCreateDlg(this, oBindingContext);
       },
     };
   }

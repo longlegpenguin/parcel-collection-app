@@ -241,6 +241,12 @@
                       "enabled": true,
                       "visible": true,
                       "text": "{i18n>CreateSlotAction}"
+                    },
+                    "massCreateSlot": {
+                      "press": "packagehandling.app.storage.ext.controller.AppCt.showMassCreateDlg",
+                      "enabled": true,
+                      "visible": true,
+                      "text": "Mass Create"
                     }
                   },
                   "tableSettings":{

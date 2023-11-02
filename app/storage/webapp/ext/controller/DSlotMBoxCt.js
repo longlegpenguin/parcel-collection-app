@@ -14,22 +14,22 @@ sap.ui.define(
           emphasizedAction: MessageBox.Action.OK,
           onClose: (sAction) => {
             var oModel = this._view.getModel("MyModel");
-            var sV2 = aSelectedContexts[0].sPath
-              .replace("(", "(guid'")
-              .replace(")", "')");
+            var sV2 = aSelectedContexts[0].sPath //.split("/")[1]
+              .replaceAll("(", "(guid'")
+              .replaceAll(")", "')");
             var rt = "";
             var taht = this;
             oModel.read(sV2, {
               success: function (oData) {
                 rt = oData.storage_ID;
                 if (sAction === "OK") {
-                  oModel.remove(sV2, {
+                  oModel.remove("/" + sV2.split("/")[2].replaceAll("storageSlot", "StorageSlot"), {
                     success: () => MessageToast.show("Deleted"),
                     error: () => MessageToast.show("Error!"),
                   });
-                  rt = "/Storage(" + rt + ")";
                   console.log("rt " + rt);
-                  taht.routing.navigateToRoute(rt);
+                  taht.refresh()
+                  taht.routing.navigateToRoute("StorageObjectPage", {key: rt});
                 }
               },
               error: function () {},

@@ -4,14 +4,14 @@
     xmlns:core="sap.ui.core"
 >
     <Dialog
-        title="Edit Slot"
+        title="Mass Create Slot"
         class="sapUiResponsiveContentPadding"
         beforeOpen=".onDialogBeforeOpen"
         afterClose=".onDialogAfterClose"
     >
         <content>
             <f:Form
-                id="idUslotForm"
+                id="massCreateForm"
                 editable="true"
             >
                 <f:layout>
@@ -43,35 +43,58 @@
                                     />
                                 </f:fields>
                             </f:FormElement>
-                            <f:FormElement
-                                visible="false"
-                                label="Status"
-                            >
+                            <f:FormElement label="Number of Rows">
                                 <f:fields>
                                     <Input
-                                        value=""
-                                        id="idStatisInput"
-                                        visible="false"
-                                    />
-                                </f:fields>
-                            </f:FormElement>
-                            <f:FormElement label="Name">
-                                <f:fields>
-                                    <Input
-                                        value=""
-                                        id="idNameInput"
-                                        required="true"
+                                        id="idRowNumInput"
+                                        type="Number"
+                                        placeholder="Enter a number"
                                         tooltip="required"
                                     />
                                 </f:fields>
                             </f:FormElement>
-                            <f:FormElement>
+                            <f:FormElement label="Type of Row Identifiers">
                                 <f:fields>
-                                    <CheckBox
-                                        text="Available"
-                                        selected="true"
-                                        id="idAvailableCheckBox"
+                                    <Select
+                                        id="idRowTypeSelect"
+                                        tooltip="required"
+                                    >
+                                        <core:Item
+                                            key="C"
+                                            text="Letter"
+                                        />
+                                        <core:Item
+                                            key="N"
+                                            text="Number"
+                                        />
+                                    </Select>
+                                </f:fields>
+                            </f:FormElement>
+                            <f:FormElement label="Number of Columns">
+                                <f:fields>
+                                    <Input
+                                        id="idColNumInput"
+                                        type="Number"
+                                        placeholder="Enter a number"
+                                        tooltip="required"
                                     />
+                                </f:fields>
+                            </f:FormElement>
+                            <f:FormElement label="Type of Column Identifiers">
+                                <f:fields>
+                                    <Select
+                                        id="idColTypeSelect"
+                                        tooltip="required"
+                                    >
+                                        <core:Item
+                                            key="N"
+                                            text="Number"
+                                        />
+                                        <core:Item
+                                            key="C"
+                                            text="Letter"
+                                        />
+                                    </Select>
                                 </f:fields>
                             </f:FormElement>
                         </f:formElements>
@@ -81,9 +104,9 @@
         </content>
         <beginButton>
             <Button
-                id="idSaveButton"
-                text="Save"
-                press=".onSaveButtonPress"
+                id="idCreateButton"
+                text="Create"
+                press=".onCreateButtonPress"
                 type="Emphasized"
             />
         </beginButton>

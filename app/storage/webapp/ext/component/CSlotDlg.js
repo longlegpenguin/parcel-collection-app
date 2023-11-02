@@ -84,8 +84,8 @@ sap.ui.define(
 
         _getSelected: function () {
           var sV4 = this._oSelectedContext.sPath
-          sV4 = sV4.replace('(', "(guid'")
-          sV4 = sV4.replace(')', "')")
+          sV4 = sV4.replaceAll('(', "(guid'")
+          sV4 = sV4.replaceAll(')', "')")
           console.log(sV4);
           return sV4;
         },

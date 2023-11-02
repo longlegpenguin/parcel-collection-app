@@ -143,11 +143,6 @@ annotate service.Storage with @(
  */
 annotate service.StorageSlot with @UI: {LineItem: [
     {
-        $Type : 'UI.DataFieldForAction',
-        Action: 'com.sap.internal.digitallab.packagehandling.service.StorageService.EntityContainer/massCreate',
-        Label : '{i18n>MassCreate}'
-    },
-    {
         $Type: 'UI.DataField',
         Label: 'Name',
         Value: name,
