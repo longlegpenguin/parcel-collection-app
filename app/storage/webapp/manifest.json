@@ -167,8 +167,7 @@
                     "upload": {
                       "press": "packagehandling.app.storage.ext.controller.UploadController.showUploadDialog",
                       "text": "Import Books"
-                    }
-                    ,
+                    },
                     "tableSettings": {
                       "entitySet": "Storage",
                       "createWithParameterDialog": {
@@ -186,11 +185,11 @@
                     "type": "ResponsiveTable",
                     "selectionMode": "Auto",
                     "entitySet": "Storage",
-                      "createWithParameterDialog": {
-                        "fields": {
-                          "name": { "path": "name" }
-                        }
+                    "createWithParameterDialog": {
+                      "fields": {
+                        "name": { "path": "name" }
                       }
+                    }
                   },
                   "actions": {
                     "CStorage": {
@@ -226,12 +225,28 @@
               "content": {
                 "header": {
                   "actions": {
-                    "upload": {
+                    "edit": {
                       "press": "packagehandling.app.storage.ext.controller.AppCt.showUStorageDlg",
                       "text": "Edit",
-                      "Emphasized": true
+                      "type": "Emphasized"
                     }
                   }
+                }
+              },
+              "controlConfiguration": {
+                "storageSlot/@com.sap.vocabularies.UI.v1.LineItem": {
+                  "actions": {
+                    "CSlot": {
+                      "press": "packagehandling.app.storage.ext.controller.AppCt.showCSlotDlg",
+                      "enabled": true,
+                      "visible": true,
+                      "text": "{i18n>CreateSlotAction}"
+                    }
+                  },
+                  "tableSettings":{
+                    "type":"GridTable",
+                    "selectionMode":"Multi"
+                 }
                 }
               }
             }
@@ -246,7 +261,21 @@
               "editableHeaderContent": false,
               "contextPath": "/Storage/storageSlot",
               "entitySet": "StorageSlot",
-              "sectionLayout": "Page"
+              "sectionLayout": "Page",
+              "content": {
+                "header": {
+                  "actions": {
+                    "editSlot": {
+                      "press": "packagehandling.app.storage.ext.controller.AppCt.showUSlotDlg",
+                      "text": "Edit"
+                    },
+                    "deleteSlot": {
+                      "press": "packagehandling.app.storage.ext.controller.DSlotMBoxCt.onWarning2MessageBoxPress",
+                      "text": "Delete"
+                    }
+                  }
+                }
+              }
             }
           }
         }
