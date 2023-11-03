@@ -17,6 +17,7 @@
     "dependencies": {
         "@cap-js-community/odata-v2-adapter": "^1.11.8",
         "@sap/xssec": "^3.3.5",
+        "cloc": "^1.98.0-cloc",
         "passport": "^0.6.0"
     },
     "scripts": {
