@@ -77,9 +77,23 @@ modules:
       - packagehandlingappstorage.zip
       name: packagehandlingappstorage
       target-path: resources/
+    - artifacts:
+      - phappcompanycompany.zip
+      name: phappcompanycompany
+      target-path: resources/
 - name: packagehandlingappstorage
   type: html5
   path: app/storage
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: phappcompanycompany
+  type: html5
+  path: app/company
   build-parameters:
     build-result: dist
     builder: custom
@@ -121,11 +135,20 @@ resources:
             ProxyType: Internet
             Type: HTTP
             URL: https://ui5.sap.com
+          - Authentication: NoAuthentication
+            HTML5.DynamicDestination: true
+            HTML5.ForwardAuthToken: true
+            Name: packagehandling-srv-api
+            ProxyType: Internet
+            Type: HTTP
+            URL: ~{srv-api/srv-url}
           existing_destinations_policy: update
       version: 1.0.0
     service: destination
     service-name: packagehandling-destination-service
     service-plan: lite
+  requires:
+  - name: srv-api
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true
