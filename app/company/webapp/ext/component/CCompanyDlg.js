@@ -76,18 +76,13 @@ sap.ui.define(
         };
       },
 
-      _getErrorMsg(oError) {
-        return JSON.parse(oError.responseText).error.message.value;
-      },
-
       _showErrorMsg(oError) {
         var msg = this._getErrorMsg(oError);
         MessageBox.error(msg);
       },
 
-      _setOkButtonEnabled: function (bOk) {
-        this._oCCompanyDlg &&
-          this._oCCompanyDlg.getBeginButton().setEnabled(bOk);
+      _getErrorMsg(oError) {
+        return JSON.parse(oError.responseText).error.message.value;
       },
 
       _setBusy: function (bBusy) {

@@ -4,14 +4,14 @@
     xmlns:core="sap.ui.core"
 >
     <Dialog
-        title="Create Company"
+        title="Edit Company"
         class="sapUiResponsiveContentPadding"
         beforeOpen=".onDialogBeforeOpen"
         afterClose=".onDialogAfterClose"
     >
         <content>
             <f:Form
-                id="idCcompanyForm"
+                id="idEcompanyForm"
                 editable="true"
                 binding="/DeliveryCompany"
             >
@@ -46,7 +46,7 @@
                                 <f:fields>
                                     <Input
                                         value=""
-                                        placeholder="http://"
+                                        placeholder="http://link.to.logo.jpg"
                                         id="idLogoInput"
                                     />
                                 </f:fields>
@@ -58,9 +58,9 @@
         </content>
         <beginButton>
             <Button
-                id="idCreateButton"
-                text="Create"
-                press=".onCreateButtonPress"
+                id="idSaveButton"
+                text="Save"
+                press=".onSaveButtonPress"
                 type="Emphasized"
             />
         </beginButton>

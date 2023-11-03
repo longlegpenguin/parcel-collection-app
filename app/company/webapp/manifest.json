@@ -156,13 +156,6 @@
                       "enabled": true,
                       "visible": true,
                       "text": "Create"
-                    },
-                    "UCompany": {
-                      "press": "ph.app.company.ext.controller.AppCt.showUCompanyDlg",
-                      "enabled": true,
-                      "visible": true,
-                      "text": "Edit",
-                      "inline": true
                     }
                   }
                 }
@@ -182,7 +175,7 @@
                 "header": {
                   "actions": {
                     "ECompany": {
-                      "press": "ph.app.company.ext.controller.AppCt.showUCompanyDlg",
+                      "press": "ph.app.company.ext.controller.AppCt.showECompanyDlg",
                       "text": "Edit",
                       "type": "Emphasized"
                     },
