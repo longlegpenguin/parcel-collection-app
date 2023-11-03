@@ -24,12 +24,12 @@ annotate service.DeliveryCompany with @(UI.LineItem: [
 ]);
 
 annotate service.DeliveryCompany with {
-    logo //@odata.mediaContentType: 'image/jpg'
-    @Common.Text: name  @Core.MediaType: 'image/jpg';
+    logo @odata.mediaContentType: 'image/jpeg' 
+    @Common.Text: name  @Core.MediaType: 'image/jpeg';
 };
 
 annotate service.DeliveryCompany with @(
-    UI.FieldGroup #GeneratedGroup1: {
+    UI.FieldGroup #Company: {
         $Type: 'UI.FieldGroupType',
         Data : [
             {
@@ -44,10 +44,45 @@ annotate service.DeliveryCompany with @(
             }
         ]
     },
-    UI.Facets                     : [{
-        $Type : 'UI.ReferenceFacet',
-        ID    : 'GeneratedFacet1',
-        Label : 'General Information',
-        Target: '@UI.FieldGroup#GeneratedGroup1',
-    }, ]
+    UI.Facets                     : [
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID    : 'Company',
+            Label : 'General Information',
+            Target: '@UI.FieldGroup#Company',
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID    : 'AdministrativeData',
+            Label : 'Administrative Data',
+            Target: '@UI.FieldGroup#AdministrativeData',
+        },
+    ]
 );
+
+
+annotate service.DeliveryCompany with @(UI.FieldGroup #AdministrativeData: {
+    $Type: 'UI.FieldGroupType',
+    Data : [
+        {
+            $Type: 'UI.DataField',
+            Label: 'Created On',
+            Value: createdAt,
+        },
+        {
+            $Type: 'UI.DataField',
+            Label: 'Created By',
+            Value: createdBy,
+        },
+        {
+            $Type: 'UI.DataField',
+            Label: 'Last Update On',
+            Value: modifiedAt,
+        },
+        {
+            $Type: 'UI.DataField',
+            Label: 'Last Update By',
+            Value: modifiedBy,
+        },
+    ]
+});
