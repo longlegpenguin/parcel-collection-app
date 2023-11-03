@@ -1,7 +1,7 @@
 {
   "_version": "1.58.0",
   "sap.app": {
-    "id": "ph.app.company.company",
+    "id": "ph.app.company",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
@@ -23,6 +23,15 @@
           "annotations": [],
           "localUri": "localService/metadata.xml",
           "odataVersion": "4.0"
+        }
+      },
+      "myService": {
+        "uri": "/odata/v2/CompanyService/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "localUri": "localService/metadataII.xml",
+          "odataVersion": "2.0"
         }
       }
     },
@@ -70,11 +79,22 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "ph.app.company.company.i18n.i18n"
+          "bundleName": "ph.app.company.i18n.i18n"
         }
       },
       "": {
         "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "MyModel": {
+        "dataSource": "myService",
+        "type": "sap.ui.model.odata.v2.ODataModel",
         "preload": true,
         "settings": {
           "synchronizationMode": "None",
@@ -92,7 +112,6 @@
       "css": []
     },
     "routing": {
-      "config": {},
       "routes": [
         {
           "pattern": ":?query:",
@@ -121,11 +140,30 @@
                   }
                 }
               },
+              "initialLoad": true,
               "controlConfiguration": {
                 "@com.sap.vocabularies.UI.v1.LineItem": {
                   "tableSettings": {
-                    "type": "ResponsiveTable",
-                    "selectionMode": "Auto"
+                    "type": "GridTable",
+                    "selectionMode": "Auto",
+                    "creationMode": {
+                      "name": "InlineCreationRows"
+                    }
+                  },
+                  "actions": {
+                    "CCompany": {
+                      "press": "ph.app.company.ext.controller.AppCt.showCCompanyDlg",
+                      "enabled": true,
+                      "visible": true,
+                      "text": "Create"
+                    },
+                    "UCompany": {
+                      "press": "ph.app.company.ext.controller.AppCt.showUCompanyDlg",
+                      "enabled": true,
+                      "visible": true,
+                      "text": "Edit",
+                      "inline": true
+                    }
                   }
                 }
               }
@@ -139,17 +177,34 @@
           "options": {
             "settings": {
               "editableHeaderContent": false,
-              "contextPath": "/DeliveryCompany"
+              "contextPath": "/DeliveryCompany",
+              "content": {
+                "header": {
+                  "actions": {
+                    "ECompany": {
+                      "press": "ph.app.company.ext.controller.AppCt.showUCompanyDlg",
+                      "text": "Edit",
+                      "type": "Emphasized"
+                    },
+                    "tableSettings": {
+                      "entitySet": "Company"
+                    }
+                  }
+                }
+              }
             }
           }
         }
       }
+    },
+    "extends": {
+      "extensions": {
+        "sap.ui.controllerExtensions": {}
+      }
     }
   },
   "sap.fiori": {
-    "registrationIds": [
-      "companyui"
-    ],
+    "registrationIds": ["companyui"],
     "archeType": "transactional"
   }
 }

@@ -78,8 +78,8 @@ modules:
       name: packagehandlingappstorage
       target-path: resources/
     - artifacts:
-      - phappcompanycompany.zip
-      name: phappcompanycompany
+      - phappcompany.zip
+      name: phappcompany
       target-path: resources/
 - name: packagehandlingappstorage
   type: html5
@@ -91,7 +91,7 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
-- name: phappcompanycompany
+- name: phappcompany
   type: html5
   path: app/company
   build-parameters:

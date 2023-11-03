@@ -25,16 +25,16 @@
                                     "id": "manage-companies",
                                     "tileType": "sap.ushell.ui.tile.StaticTile",
                                     "properties": {
-                                        "targetURL": "#manage-companies",
+                                        "targetURL": "#Companies-manage",
                                         "title": "Manage Companies",
-                                        "description": "Add/edit/delete storages and slots"
+                                        "description": "Add/edit/delete companies"
                                     }
                                 },
                                 {
                                     "id": "manage-packages",
                                     "tileType": "sap.ushell.ui.tile.StaticTile",
                                     "properties": {
-                                        "targetURL": "#Storages-manage",
+                                        "targetURL": "#Packages-manage",
                                         "title": "Manage Storages",
                                         "description": "Add/edit/delete storages and slots"
                                     }
@@ -43,7 +43,7 @@
                                     "id": "register-packages",
                                     "tileType": "sap.ushell.ui.tile.StaticTile",
                                     "properties": {
-                                        "targetURL": "#Storages-manage",
+                                        "targetURL": "#Packages-register",
                                         "title": "Register Packages",
                                         "description": "Add/edit/delete storages and slots"
                                     }
@@ -70,7 +70,7 @@
                                     "id": "package-pickup",
                                     "tileType": "sap.ushell.ui.tile.StaticTile",
                                     "properties": {
-                                        "targetURL": "#package-pickup",
+                                        "targetURL": "#Packages-pickup",
                                         "title": "Package Pickup",
                                         "description": "Add/edit/delete reviews"
                                     }
@@ -101,6 +101,19 @@
                                 "applicationType": "SAPUI5",
                                 "additionalInformation": "SAPUI5.Component=packagehandling.app.storage",
                                 "url": "/storage/webapp"
+                            }
+                        },
+                        "manage-companies": {
+                            "semanticObject": "Companies",
+                            "action": "manage",
+                            "signature": {
+                                "parameters": {},
+                                "additionalParameters": "allowed"
+                            },
+                            "resolutionResult": {
+                                "applicationType": "SAPUI5",
+                                "additionalInformation": "SAPUI5.Component=ph.app.company",
+                                "url": "/company/webapp"
                             }
                         }
                     }
