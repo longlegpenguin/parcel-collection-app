@@ -116,17 +116,17 @@
                 "url": "/manage/webapp"
               }
             },
-            "register-companies": {
+            "register-packages": {
               "semanticObject": "Packages",
-              "action": "manage",
+              "action": "register",
               "signature": {
                 "parameters": {},
                 "additionalParameters": "allowed"
               },
               "resolutionResult": {
                 "applicationType": "SAPUI5",
-                "additionalInformation": "SAPUI5.Component=ph.app.register",
-                "url": "/register/webapp"
+                "additionalInformation": "SAPUI5.Component=ph.app.registration",
+                "url": "/registration/webapp"
               }
             },
             "packages-history": {
