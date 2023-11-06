@@ -69,7 +69,7 @@ sap.ui.define(
       _getInputs: function () {
         var name = this._byId("idNameInput").getValue();
         var logo = this._byId("idLogoInput").getValue();
-
+        
         return {
           name: name,
           logo: logo,

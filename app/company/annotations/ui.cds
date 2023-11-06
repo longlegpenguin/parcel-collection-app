@@ -37,9 +37,12 @@ annotate service.DeliveryCompany with @(
     ]
 );
 
+// annotate service.DeliveryCompany with {
+//     logo @odata.mediaContentType: 'image/jpeg'
+//          @Common.Text           : name  @Core.MediaType: 'image/jpeg';
+// };
 annotate service.DeliveryCompany with {
-    logo @odata.mediaContentType: 'image/jpeg'
-         @Common.Text           : name  @Core.MediaType: 'image/jpeg';
+    logo  @Core.MediaType: 'image/jpeg'  @IsImageUrl: true;
 };
 
 annotate service.DeliveryCompany with @(
