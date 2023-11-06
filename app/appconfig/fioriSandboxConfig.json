@@ -45,7 +45,7 @@
                   "properties": {
                     "targetURL": "#Packages-register",
                     "title": "Register Packages",
-                    "description": "Add/edit/delete storages and slots"
+                    "description": "register new packages"
                   }
                 }
               ]
@@ -58,10 +58,10 @@
               "isGroupLocked": false,
               "tiles": [
                 {
-                  "id": "packages-history",
+                  "id": "packages-list",
                   "tileType": "sap.ushell.ui.tile.StaticTile",
                   "properties": {
-                    "targetURL": "#Packages-history",
+                    "targetURL": "#Packages-list",
                     "title": "My Packages",
                     "description": "Review own package histories"
                   }
@@ -99,8 +99,21 @@
               },
               "resolutionResult": {
                 "applicationType": "SAPUI5",
-                "additionalInformation": "SAPUI5.Component=packagehandling.app.storage",
+                "additionalInformation": "SAPUI5.Component=com.sap.internal.digitallab.packagehandling.app.manage.storages",
                 "url": "/storage/webapp"
+              }
+            },
+            "manage-companies": {
+              "semanticObject": "Companies",
+              "action": "manage",
+              "signature": {
+                "parameters": {},
+                "additionalParameters": "allowed"
+              },
+              "resolutionResult": {
+                "applicationType": "SAPUI5",
+                "additionalInformation": "SAPUI5.Component=com.sap.internal.digitallab.packagehandling.app.manage.companies",
+                "url": "/company/webapp"
               }
             },
             "manage-packages": {
@@ -129,9 +142,9 @@
                 "url": "/registration/webapp"
               }
             },
-            "packages-history": {
+            "packages-list": {
               "semanticObject": "Packages",
-              "action": "history",
+              "action": "list",
               "signature": {
                 "parameters": {},
                 "additionalParameters": "allowed"

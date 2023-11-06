@@ -3,7 +3,7 @@ sap.ui.define(
     function (Controller, MessageBox, MessageToast) {
       "use strict";
       return Controller.extend(
-        "packagehandling.app.storage.ext.component.MassCreateDlg",
+        "com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.component.MassCreateDlg",
         {
           constructor: function (oExtensionAPI, oBindingContext) {
             this._oExtensionAPI = oExtensionAPI;
@@ -14,7 +14,7 @@ sap.ui.define(
             this._oExtensionAPI
               .loadFragment({
                 id: "mcdlg",
-                name: "packagehandling.app.storage.ext.view.MassCreateDlg",
+                name: "com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.view.MassCreateDlg",
                 controller: this,
               })
               .then(function (oDialog) {

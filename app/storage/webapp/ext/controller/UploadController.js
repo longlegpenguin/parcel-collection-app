@@ -1,7 +1,7 @@
 sap.ui.define(
   [
     "sap/ui/core/mvc/Controller",
-    "packagehandling/app/storage/ext/UploadDialog",
+    "com/sap/internal/digitallab/packagehandling/app/manage/storages/ext/UploadDialog",
   ],
   function (Controller, UploadDialog) {
     "use strict";
@@ -15,7 +15,7 @@ sap.ui.define(
       showUploadDialog: function (oBindingContext, aSelectedContexts) {
         this.loadFragment({
           id: "uploadDialog",
-          name: "packagehandling.app.storage.ext.UploadDialog",
+          name: " com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.UploadDialog",
           controller: _createUploadController(this),
         }).then(function (oDialog) {
           oDialog.open();
