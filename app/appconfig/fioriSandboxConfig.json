@@ -58,10 +58,10 @@
               "isGroupLocked": false,
               "tiles": [
                 {
-                  "id": "packages-history",
+                  "id": "packages-list",
                   "tileType": "sap.ushell.ui.tile.StaticTile",
                   "properties": {
-                    "targetURL": "#Packages-history",
+                    "targetURL": "#Packages-list",
                     "title": "My Packages",
                     "description": "Review own package histories"
                   }
@@ -129,9 +129,9 @@
                 "url": "/register/webapp"
               }
             },
-            "packages-history": {
+            "packages-list": {
               "semanticObject": "Packages",
-              "action": "history",
+              "action": "list",
               "signature": {
                 "parameters": {},
                 "additionalParameters": "allowed"
