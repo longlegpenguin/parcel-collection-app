@@ -2,20 +2,12 @@ using com.sap.internal.digitallab.packagehandling.service.CompanyService as serv
 
 
 annotate service.DeliveryCompany with @(
-    UI.FilterFacets: [
-        {
-            $Type : 'UI.ReferenceFacet',
-            ID    : 'Generatedinfo',
-            Label : 'General Information',
-            Target: '@UI.FieldGroup#Company',
-        },
-        {
-            $Type : 'UI.ReferenceFacet',
-            ID    : 'AdministrativeData',
-            Label : 'Administrative Data',
-            Target: '@UI.FieldGroup#AdministrativeData',
-        },
-    ],
+    UI.FilterFacets: [{
+        $Type : 'UI.ReferenceFacet',
+        ID    : 'AdministrativeData',
+        Label : 'Administrative Data',
+        Target: '@UI.FieldGroup#AdministrativeData',
+    }, ],
     UI.LineItem    : [
         {
             $Type             : 'UI.DataField',
@@ -44,6 +36,16 @@ annotate service.DeliveryCompany with @(
 annotate service.DeliveryCompany with {
     logo  @Core.MediaType: 'image/jpeg'  @IsImageUrl: true;
 };
+
+annotate service.DeliveryCompany with {
+    name        @UI.HiddenFilter: true;
+    createdAt   @UI.Hidden      : false  @UI.HiddenFilter: false;
+    createdBy   @UI.Hidden      : false  @UI.HiddenFilter: false;
+    modifiedAt  @UI.Hidden      : false  @UI.HiddenFilter: false;
+    modifiedBy  @UI.Hidden      : false  @UI.HiddenFilter: false;
+    ID          @UI.HiddenFilter: true;
+};
+
 
 annotate service.DeliveryCompany with @(
 
