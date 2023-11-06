@@ -18,6 +18,6 @@ class DeliveryCompanyRepositoryTest {
 
     @Test
     void testSelectById() {
-        Assertions.assertEquals(1, repo.selectById("6480a902-007c-4cdd-a6a3-0f3a88d24fe0").stream().count());
+        Assertions.assertEquals(1, repo.selectById("69bc3a65-e4e2-4235-864a-96ef2096b5c7").stream().count());
     }
 }
