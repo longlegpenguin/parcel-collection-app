@@ -2,7 +2,7 @@ sap.ui.define(
   ["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "sap/m/MessageToast"],
   function (Controller, MessageBox, MessageToast) {
     "use strict";
-    return Controller.extend("ph.app.company.ext.component.ECompanyDlg", {
+    return Controller.extend("com.sap.internal.digitallab.packagehandling.app.manage.companies.ext.component.ECompanyDlg", {
       constructor: function (oExtensionAPI, aSelectedContexts) {
         this._oExtensionAPI = oExtensionAPI;
         this._oSelectedContext = aSelectedContexts[0];
@@ -13,7 +13,7 @@ sap.ui.define(
         this._oExtensionAPI
           .loadFragment({
             id: "ecdlg",
-            name: "ph.app.company.ext.view.ECompanyDlg",
+            name: "com.sap.internal.digitallab.packagehandling.app.manage.companies.ext.view.ECompanyDlg",
             controller: this,
           })
           .then(function (oDialog) {

@@ -1,7 +1,7 @@
 sap.ui.define(
   ["sap/ui/base/ManagedObject", 
-  "ph/app/company/ext/component/CCompanyDlg",
-  "ph/app/company/ext/component/ECompanyDlg",
+  "com/sap/internal/digitallab/packagehandling/app/manage/companies/ext/component/CCompanyDlg",
+  "com/sap/internal/digitallab/packagehandling/app/manage/companies/ext/component/ECompanyDlg",
 ],
   function (ManagedObject, CCompanyDlg, ECompanyDlg) {
     "use strict";
