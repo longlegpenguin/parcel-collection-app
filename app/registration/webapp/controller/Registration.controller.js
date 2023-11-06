@@ -7,7 +7,7 @@ sap.ui.define(
     "use strict";
 
     return BaseController.extend(
-      "ph.app.registration.controller.Registration",
+      "com.sap.internal.digitallab.packagehandling.app.register.packages.controller.Registration",
       {
         onInit: function () {
           console.log("Registration Controller alive!");

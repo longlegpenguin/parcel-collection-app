@@ -1,7 +1,7 @@
 {
   "_version": "1.58.0",
   "sap.app": {
-    "id": "ph.app.registration",
+    "id": "com.sap.internal.digitallab.packagehandling.app.register.packages",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
@@ -82,7 +82,7 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "ph.app.registration.i18n.i18n"
+          "bundleName": "com.sap.internal.digitallab.packagehandling.app.register.packages.i18n.i18n"
         }
       },
       "": {
@@ -108,7 +108,7 @@
         "routerClass": "sap.m.routing.Router",
         "viewType": "XML",
         "async": true,
-        "viewPath": "ph.app.registration.view",
+        "viewPath": "com.sap.internal.digitallab.packagehandling.app.register.packages.view",
         "controlAggregation": "pages",
         "controlId": "app"
       },
@@ -130,7 +130,7 @@
       }
     },
     "rootView": {
-      "viewName": "ph.app.registration.view.App",
+      "viewName": "com.sap.internal.digitallab.packagehandling.app.register.packages.view.App",
       "type": "XML",
       "async": true,
       "id": "App"

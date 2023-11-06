@@ -6,13 +6,13 @@ sap.ui.define(
   [
     "sap/ui/core/UIComponent",
     "sap/ui/Device",
-    "ph/app/registration/model/models",
+    "com/sap/internal/digitallab/packagehandling/app/register/packages/model/models",
     "sap/ui/model/json/JSONModel",
   ],
   function (UIComponent, Device, models, JSONModel) {
     "use strict";
 
-    return UIComponent.extend("ph.app.registration.Component", {
+    return UIComponent.extend("com.sap.internal.digitallab.packagehandling.app.register.packages.Component", {
       metadata: {
         manifest: "json",
       },

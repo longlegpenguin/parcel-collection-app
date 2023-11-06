@@ -79,8 +79,8 @@ modules:
       target-path: resources/
 
     - artifacts:
-      - phappregistration.zip
-      name: phappregistration
+      - registerpackages.zip
+      name: registerpackages
       target-path: resources/
 - name: managestorages
   type: html5
@@ -92,7 +92,7 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
-- name: phappregistration
+- name: registerpackages
   type: html5
   path: app/registration
   build-parameters:

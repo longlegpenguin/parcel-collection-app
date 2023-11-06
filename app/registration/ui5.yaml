@@ -1,4 +1,4 @@
 specVersion: "2.5"
 metadata:
-  name: ph.app.registration
+  name: com.sap.internal.digitallab.packagehandlingapp.register.packages
 type: application

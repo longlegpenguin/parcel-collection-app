@@ -1,5 +1,5 @@
 <mvc:View
-	controllerName="ph.app.registration.controller.Registration"
+	controllerName="com.sap.internal.digitallab.packagehandling.app.register.packages.controller.Registration"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:f="sap.ui.layout.form"
 	xmlns:core="sap.ui.core"

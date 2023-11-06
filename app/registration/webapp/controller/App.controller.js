@@ -5,7 +5,7 @@ sap.ui.define(
     function(BaseController) {
       "use strict";
   
-      return BaseController.extend("ph.app.registration.controller.App", {
+      return BaseController.extend("com.sap.internal.digitallab.packagehandling.app.register.packages.controller.App", {
         onInit: function() {
           console.log("App COntroller");
           console.log(this.getView());
