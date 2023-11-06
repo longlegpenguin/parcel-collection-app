@@ -78,8 +78,8 @@ modules:
           name: managestorages
           target-path: resources/
         - artifacts:
-            - phappcompany.zip
-          name: phappcompany
+            - managecompanies.zip
+          name: managecompanies
           target-path: resources/
   - name: managestorages
     type: html5
@@ -91,7 +91,7 @@ modules:
         - npm install
         - npm run build:cf
       supported-platforms: []
-  - name: phappcompany
+  - name: managecompanies
     type: html5
     path: app/company
     build-parameters:

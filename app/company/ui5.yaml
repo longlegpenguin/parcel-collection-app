@@ -1,4 +1,4 @@
 specVersion: "2.5"
 metadata:
-  name: ph.app.company.company
+  name: com.sap.internal.digitallab.packagehandling.app.manage.companies
 type: application
