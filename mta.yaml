@@ -74,10 +74,10 @@ modules:
     build-result: resources
     requires:
     - artifacts:
-      - packagehandlingappstorage.zip
-      name: packagehandlingappstorage
+      - managestorages.zip
+      name: managestorages
       target-path: resources/
-- name: packagehandlingappstorage
+- name: managestorages
   type: html5
   path: app/storage
   build-parameters:
