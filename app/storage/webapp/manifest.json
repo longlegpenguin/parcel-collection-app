@@ -1,7 +1,7 @@
 {
   "_version": "1.58.0",
   "sap.app": {
-    "id": "packagehandling.app.storage",
+    "id": "com.sap.internal.digitallab.packagehandling.app.manage.storages",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
@@ -93,7 +93,7 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "packagehandling.app.storage.i18n.i18n"
+          "bundleName": "com.sap.internal.digitallab.packagehandling.app.manage.storages.i18n.i18n"
         }
       },
       "": {
@@ -165,7 +165,7 @@
                 "header": {
                   "actions": {
                     "upload": {
-                      "press": "packagehandling.app.storage.ext.controller.UploadController.showUploadDialog",
+                      "press": "com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.controller.UploadController.showUploadDialog",
                       "text": "Import Books"
                     },
                     "tableSettings": {
@@ -193,7 +193,7 @@
                   },
                   "actions": {
                     "CStorage": {
-                      "press": "packagehandling.app.storage.ext.controller.AppCt.showCStorageDlg",
+                      "press": "com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.controller.AppCt.showCStorageDlg",
                       "enabled": true,
                       "visible": true,
                       "text": "{i18n>CreateStorageAction}"
@@ -226,7 +226,7 @@
                 "header": {
                   "actions": {
                     "edit": {
-                      "press": "packagehandling.app.storage.ext.controller.AppCt.showUStorageDlg",
+                      "press": "com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.controller.AppCt.showUStorageDlg",
                       "text": "Edit",
                       "type": "Emphasized"
                     }
@@ -237,13 +237,13 @@
                 "storageSlot/@com.sap.vocabularies.UI.v1.LineItem": {
                   "actions": {
                     "CSlot": {
-                      "press": "packagehandling.app.storage.ext.controller.AppCt.showCSlotDlg",
+                      "press": "com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.controller.AppCt.showCSlotDlg",
                       "enabled": true,
                       "visible": true,
                       "text": "{i18n>CreateSlotAction}"
                     },
                     "massCreateSlot": {
-                      "press": "packagehandling.app.storage.ext.controller.AppCt.showMassCreateDlg",
+                      "press": "com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.controller.AppCt.showMassCreateDlg",
                       "enabled": true,
                       "visible": true,
                       "text": "Mass Create"
@@ -272,11 +272,11 @@
                 "header": {
                   "actions": {
                     "editSlot": {
-                      "press": "packagehandling.app.storage.ext.controller.AppCt.showUSlotDlg",
+                      "press": "com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.controller.AppCt.showUSlotDlg",
                       "text": "Edit"
                     },
                     "deleteSlot": {
-                      "press": "packagehandling.app.storage.ext.controller.DSlotMBoxCt.onWarning2MessageBoxPress",
+                      "press": "com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.controller.DSlotMBoxCt.onWarning2MessageBoxPress",
                       "text": "Delete"
                     }
                   }
@@ -291,7 +291,7 @@
       "extensions": {
         "sap.ui.controllerExtentions": {
           "sap.suite.ui.generic.template.ListReport.view.ListReport": {
-            "controllerName": "packagehandling.app.storage.ext.controller.StorageListExt",
+            "controllerName": "com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.controller.StorageListExt",
             "sap.ui.generic.app": {
               "Storage": {
                 "EntitySet": "Storage",

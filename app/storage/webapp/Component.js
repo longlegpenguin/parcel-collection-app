@@ -3,7 +3,7 @@ sap.ui.define(
     function (Component) {
         "use strict";
 
-        return Component.extend("packagehandling.app.storage.Component", {
+        return Component.extend("com.sap.internal.digitallab.packagehandling.app.manage.storages.Component", {
             metadata: {
                 manifest: "json"
             }
