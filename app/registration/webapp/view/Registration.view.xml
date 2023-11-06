@@ -107,18 +107,11 @@
 				</f:Form>
 			</content>
 		</Panel>
-		<footer>
-			<Bar
-				design="Auto"
-				titleAlignment="None"
-				class="sapUiResponsiveMargin"
-			>
-				<contentLeft>
-				</contentLeft>
-				<contentMiddle>
-				</contentMiddle>
-				<contentRight>
-					<Button
+		<footer
+		>
+		<OverflowToolbar>
+				<ToolbarSpacer/>
+				<Button
 						activeIcon=""
 						press=".onSaveButtonPress"
 						text="Save"
@@ -137,9 +130,9 @@
 						press=".onDiscardButtonPress"
 						text="Discard"
 						width=""
+						type="Reject"
 					/>
-				</contentRight>
-			</Bar>
+			</OverflowToolbar>
 		</footer>
 	</Page>
 </mvc:View>
