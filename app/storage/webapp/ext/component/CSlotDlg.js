@@ -3,7 +3,7 @@ sap.ui.define(
   function (Controller, MessageBox, MessageToast) {
     "use strict";
     return Controller.extend(
-      "packagehandling.app.storage.ext.component.CSlotDlg",
+      "com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.component.CSlotDlg",
       {
         constructor: function (oExtensionAPI, oBindingContext) {
           this._oExtensionAPI = oExtensionAPI;
@@ -16,7 +16,7 @@ sap.ui.define(
           this._oExtensionAPI
             .loadFragment({
               id: "csldlg",
-              name: "packagehandling.app.storage.ext.view.CSlotDlg",
+              name: "com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.view.CSlotDlg",
               controller: this,
             })
             .then(function (oDialog) {

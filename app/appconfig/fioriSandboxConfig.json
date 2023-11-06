@@ -99,7 +99,7 @@
               },
               "resolutionResult": {
                 "applicationType": "SAPUI5",
-                "additionalInformation": "SAPUI5.Component=packagehandling.app.storage",
+                "additionalInformation": "SAPUI5.Component=com.sap.internal.digitallab.packagehandling.app.manage.storages",
                 "url": "/storage/webapp"
               }
             },

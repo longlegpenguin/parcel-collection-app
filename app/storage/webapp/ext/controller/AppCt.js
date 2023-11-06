@@ -1,11 +1,11 @@
 sap.ui.define(
   [
     "sap/ui/base/ManagedObject",
-    "packagehandling/app/storage/ext/component/CStorageDlg",
-    "packagehandling/app/storage/ext/component/UStorageDlg",
-    "packagehandling/app/storage/ext/component/CSlotDlg",
-    "packagehandling/app/storage/ext/component/USlotDlg",
-    "packagehandling/app/storage/ext/component/MassCreateDlg",
+    "com/sap/internal/digitallab/packagehandling/app/manage/storages/ext/component/CStorageDlg",
+    "com/sap/internal/digitallab/packagehandling/app/manage/storages/ext/component/UStorageDlg",
+    "com/sap/internal/digitallab/packagehandling/app/manage/storages/ext/component/CSlotDlg",
+    "com/sap/internal/digitallab/packagehandling/app/manage/storages/ext/component/USlotDlg",
+    "com/sap/internal/digitallab/packagehandling/app/manage/storages/ext/component/MassCreateDlg",
   ],
   function (
     ManagedObject,
