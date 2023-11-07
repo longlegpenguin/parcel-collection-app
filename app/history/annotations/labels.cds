@@ -17,12 +17,12 @@ annotate service.StorageSlot with {
 
 annotate service.Package with {
     recipient        @title: 'Recipient';
-    comfirmationTime @title: 'Confirmation Time';
+    comfirmationTime @title: 'Delivery Time';
     pickupTime       @title: 'Pickup Time';
     slot             @title: 'Slot';
     deliveryCompany  @title: 'Delivery Company';
-    type             @title: 'Package Type';
-    status           @title: 'Package Status';
+    type             @title: 'Type';
+    status           @title: 'Status';
     receptionist     @title: 'Receptionist';
     comment          @title: 'Comment';
     delete_ac        @title: 'Can Delete';
@@ -36,17 +36,17 @@ annotate service.Package with {
 };
 
 annotate service.PackageType with {
-    name @title: 'Package Type';
+    name @title: 'Type';
     code @title: 'Type Code';
 };
 
 annotate service.PackageStatus with {
-    name @title: 'Package Status';
+    name @title: 'Status';
     code @title: 'Status Code';
 };
 
 annotate service.DeliveryCompany with {
-    name       @title: 'Company';
+    name       @title: 'Delivery Company';
     logo       @title: 'Logo';
     packages   @title: 'Packages';
     createdAt  @title: 'Created On';

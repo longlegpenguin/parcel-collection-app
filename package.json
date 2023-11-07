@@ -46,7 +46,7 @@
                 "auth": {
                     "kind": "mocked",
                     "users": {
-                        "user": {
+                        "I111111": {
                             "password": "user",
                             "roles": [
                                 "user"
