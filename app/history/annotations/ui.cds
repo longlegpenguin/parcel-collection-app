@@ -18,10 +18,6 @@ annotate service.Package with @(
         },
         {
             $Type: 'UI.DataField',
-            Value: deliveryCompany.name,
-        },
-        {
-            $Type: 'UI.DataField',
             Value: comfirmationTime,
         },
         {
@@ -33,19 +29,19 @@ annotate service.Package with @(
 
 
 annotate service.Package with {
-    recipient       @UI.HiddenFilter: true;
-    slot            @UI.HiddenFilter: true;
-    receptionist    @UI.HiddenFilter: true;
-    comment         @UI.HiddenFilter: true;
-    delete_ac       @UI.HiddenFilter: true;
-    confirm_ac      @UI.HiddenFilter: true;
-    pickup_ac       @UI.HiddenFilter: true;
-    ID              @UI.HiddenFilter: true;
-    createdAt       @UI.HiddenFilter: true;
-    createdBy       @UI.HiddenFilter: true;
-    modifiedAt      @UI.HiddenFilter: true;
-    modifiedBy      @UI.HiddenFilter: true;
-    deliveryCompany @UI.HiddenFilter: true;
-    type            @UI.HiddenFilter: true;
-    status          @UI.HiddenFilter: true;
+    recipient       @UI.HiddenFilter: true @UI.Hidden: true;
+    slot            @UI.HiddenFilter: true @UI.Hidden: true;
+    receptionist    @UI.HiddenFilter: true @UI.Hidden: true;
+    comment         @UI.HiddenFilter: true @UI.Hidden: true;
+    delete_ac       @UI.HiddenFilter: true @UI.Hidden: true;
+    confirm_ac      @UI.HiddenFilter: true @UI.Hidden: true;
+    pickup_ac       @UI.HiddenFilter: true @UI.Hidden: true;
+    ID              @UI.HiddenFilter: true @UI.Hidden: true;
+    createdAt       @UI.HiddenFilter: true @UI.Hidden: true;
+    createdBy       @UI.HiddenFilter: true @UI.Hidden: true;
+    modifiedAt      @UI.HiddenFilter: true @UI.Hidden: true;
+    modifiedBy      @UI.HiddenFilter: true @UI.Hidden: true;
+    deliveryCompany @UI.HiddenFilter: true @UI.Hidden: true;
+    type            @UI.HiddenFilter: true @UI.Hidden: true;
+    status          @UI.HiddenFilter: true @UI.Hidden: true;
 };
