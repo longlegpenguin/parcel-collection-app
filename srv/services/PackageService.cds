@@ -39,7 +39,8 @@ service PackageService {
     @readonly
     entity DeliveryCompany as projection on core.DeliveryCompany {
         ID,
-        name
+        name,
+        logo
     };
 
     @readonly
