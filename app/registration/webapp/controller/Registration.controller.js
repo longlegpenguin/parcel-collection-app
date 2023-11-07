@@ -1,9 +1,14 @@
 sap.ui.define(
-  ["sap/ui/core/mvc/Controller"],
+  [
+    "sap/ui/core/mvc/Controller",
+    "sap/m/MessageBox",
+    "sap/m/MessageToast",
+    "sap/ui/core/routing/History",
+  ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
    */
-  function (BaseController) {
+  function (BaseController, MessageBox, MessageToast, History) {
     "use strict";
 
     return BaseController.extend(
@@ -13,7 +18,7 @@ sap.ui.define(
           console.log("Registration Controller alive!");
 
           console.log("Me " + this.getView());
-          console.log("Ov=wner Component " + this.getOwnerComponent());
+          console.log("Owner Component " + this.getOwnerComponent());
           console.log("model: " + this.getView().getModel());
           console.log("device model: " + this.getView().getModel("device"));
         },
@@ -27,19 +32,75 @@ sap.ui.define(
 
         onSaveButtonPress: function (oEvent) {
           var oData = this._getInputs();
-          console.log(JSON.stringify(oData, null, 4));
-
-          // TODO: POST
-
-          // TODO: REDIRECT TO PACKAGE SERVICE
+          var fnSuccess = function () {
+            MessageToast.show("Created!");
+            this._resetInputs();
+            this._navBack();
+          }.bind(this);
+          this._postPack(oData, fnSuccess);
         },
 
         onSaveAndNewButtonPress: function (oEvent) {
-          this.onSaveButtonPress(oEvent)
+          var oData = this._getInputs();
+          var fnSuccess = function () {
+            MessageToast.show("Created!");
+            this._resetInputs();
+          }.bind(this);
+          this._postPack(oData, fnSuccess);
         },
 
         onDiscardButtonPress: function (oEvent) {
-          // TODO reset all fields
+          this._resetInputs();
+          this._navBack();
+        },
+
+        _postPack(oData, fnSuccess) {
+          var oModel = this.getView().getModel("MyModel");
+          console.log(JSON.stringify(oData, null, 4));
+
+          var fnError = function (oError) {
+            this._showErrorMsg(oError);
+          }.bind(this);
+
+          var oContext = oModel.createEntry("/Package", {
+            properties: oData,
+            success: fnSuccess,
+            error: fnError,
+          });
+
+          oModel.submitChanges({
+            success: function () {},
+            error: function () {},
+          });
+          oContext.delete();
+        },
+
+        _showErrorMsg(oError) {
+          var msg = this._getErrorMsg(oError);
+          MessageBox.error(msg);
+        },
+
+        _showErrorMsg(oError) {
+          var msg = this._getErrorMsg(oError);
+          MessageBox.error(msg);
+        },
+
+        _getErrorMsg(oError) {
+          return JSON.parse(oError.responseText).error.message.value;
+        },
+
+        _resetInputs() {
+          var oUser = sap.ushell.Container.getUser();
+          var sCurrentUser = oUser.getId();
+          var oLocalModel = this.getView().getModel("localData");
+          oLocalModel.setProperty("/data/recipient", "");
+          oLocalModel.setProperty("/data/type", "normal");
+          oLocalModel.setProperty("/data/company", "DHL");
+          oLocalModel.setProperty("/data/comment", "");
+        },
+
+        _navBack() {
+          window.history.go(-1);
         },
 
         _getInputs() {
@@ -63,6 +124,7 @@ sap.ui.define(
             deliveryCompany_ID: dc,
             receptionist: sCurrentUser,
             comment: cm,
+            status_code: "new",
           };
         },
       }

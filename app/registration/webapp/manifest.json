@@ -26,7 +26,7 @@
         }
       },
       "myService": {
-        "uri": "/odata/v2/StorageService/",
+        "uri": "/odata/v2/RegistrationService/",
         "type": "OData",
         "settings": {
           "annotations": [],
