@@ -1,0 +1,1 @@
+using com.sap.internal.digitallab.packagehandling.service.RegistrationService as service from '../../srv/services/RegistrationService';

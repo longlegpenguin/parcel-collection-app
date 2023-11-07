@@ -1,70 +1,66 @@
 {
-    "name": "packagehandling-java",
-    "version": "1.0.0",
-    "description": "Package handling application using CAP Java",
-    "license": "ISC",
-    "repository": "https://github.tools.sap/DigitalLabHungary/packagehandling.git",
-    "devDependencies": {
-        "@sap/cds": "^7.3.1",
-        "@sap/cds-dk": "^7",
-        "@sap/eslint-plugin-ui5-jsdocs": "^2.0.5",
-        "@sap/ux-specification": "^1.108.16",
-        "@sapui5/ts-types": "^1.92.2",
-        "eslint": "^7.32.0",
-        "rimraf": "^3.0.2"
+  "name": "packagehandling-java",
+  "version": "1.0.0",
+  "description": "Package handling application using CAP Java",
+  "license": "ISC",
+  "repository": "https://github.tools.sap/DigitalLabHungary/packagehandling.git",
+  "devDependencies": {
+    "@sap/cds": "^7.3.1",
+    "@sap/cds-dk": "^7",
+    "@sap/ux-specification": "^1.108.16",
+    "rimraf": "^3.0.2"
+  },
+  "sapux": [
+    "app/storage-ui",
+    "app/storage"
+  ],
+  "dependencies": {
+    "@cap-js-community/odata-v2-adapter": "^1.11.8",
+    "@sap/xssec": "^3.3.5",
+    "passport": "^0.6.0"
+  },
+  "scripts": {
+    "undeploy": "cf undeploy packagehandling --delete-services --delete-service-keys --delete-service-brokers",
+    "build": "rimraf resources mta_archives && mbt build --mtar archive",
+    "deploy": "cf deploy mta_archives/archive.mtar --retries 1"
+  },
+  "cds": {
+    "cov2ap": {
+      "plugin": true
     },
-    "sapux": [
-        "app/storage-ui",
-        "app/storage",
-        "app/company"
-    ],
-    "dependencies": {
-        "@cap-js-community/odata-v2-adapter": "^1.11.8",
-        "@sap/xssec": "^3.3.5",
-        "passport": "^0.6.0"
-    },
-    "scripts": {
-        "undeploy": "cf undeploy packagehandling --delete-services --delete-service-keys --delete-service-brokers",
-        "build": "rimraf resources mta_archives && mbt build --mtar archive",
-        "deploy": "cf deploy mta_archives/archive.mtar --retries 1"
-    },
-    "cds": {
-        "cov2ap": {
-            "plugin": true
+    "requires": {
+      "auth": {
+        "kind": "xsuaa"
+      },
+      "db": {
+        "kind": "hana-cloud"
+      },
+      "approuter": {
+        "kind": "cloudfoundry"
+      },
+      "[development]": {
+        "db": {
+          "kind": "sql"
         },
-        "requires": {
-            "auth": {
-                "kind": "xsuaa"
+        "auth": {
+          "kind": "mocked",
+          "users": {
+            "user": {
+              "password": "user",
+              "roles": [
+                "user"
+              ]
             },
-            "db": {
-                "kind": "hana-cloud"
-            },
-            "approuter": {
-                "kind": "cloudfoundry"
-            },
-            "[development]": {
-                "db": {
-                    "kind": "sql"
-                },
-                "auth": {
-                    "kind": "mocked",
-                    "users": {
-                        "user": {
-                            "password": "user",
-                            "roles": [
-                                "user"
-                            ]
-                        },
-                        "admin": {
-                            "password": "admin",
-                            "roles": [
-                                "user",
-                                "Administrator"
-                            ]
-                        }
-                    }
-                }
+            "admin": {
+              "password": "admin",
+              "roles": [
+                "user",
+                "Administrator"
+              ]
             }
+          }
         }
+      }
     }
+  }
 }

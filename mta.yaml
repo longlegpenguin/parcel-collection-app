@@ -81,6 +81,10 @@ modules:
             - managecompanies.zip
           name: managecompanies
           target-path: resources/
+        - artifacts:
+          - registerpackages.zip
+          name: registerpackages
+          target-path: resources/
   - name: managestorages
     type: html5
     path: app/storage
@@ -100,6 +104,16 @@ modules:
       commands:
         - npm install
         - npm run build:cf
+      supported-platforms: []
+  - name: registerpackages
+    type: html5
+    path: app/registration
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+      - npm install
+      - npm run build:cf
       supported-platforms: []
 resources:
   - name: packagehandling-db
