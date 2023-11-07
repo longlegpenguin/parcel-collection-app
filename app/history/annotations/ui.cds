@@ -1,82 +1,51 @@
-
 using com.sap.internal.digitallab.packagehandling.service.HistoryService as service from '../../../srv/services/HistoryService';
 
 annotate service.Package with @(
-    UI.LineItem : [
+    UI.SelectionFields: [
+        status.name,
+        type.name,
+        deliveryCompany.name,
+        pickupTime
+    ],
+    UI.LineItem       : [
         {
-            $Type : 'UI.DataField',
-            Value : recipient,
+            $Type: 'UI.DataField',
+            Value: type.name,
         },
         {
-            $Type : 'UI.DataField',
-            Value : comfirmationTime,
+            $Type: 'UI.DataField',
+            Value: status.name,
         },
         {
-            $Type : 'UI.DataField',
-            Value : pickupTime,
+            $Type: 'UI.DataField',
+            Value: deliveryCompany.name,
         },
         {
-            $Type : 'UI.DataField',
-            Value : type_code,
+            $Type: 'UI.DataField',
+            Value: comfirmationTime,
         },
         {
-            $Type : 'UI.DataField',
-            Value : status_code,
-        },
-    ]
-);
-annotate service.Package with @(
-    UI.FieldGroup #GeneratedGroup1 : {
-        $Type : 'UI.FieldGroupType',
-        Data : [
-            {
-                $Type : 'UI.DataField',
-                Value : recipient,
-            },
-            {
-                $Type : 'UI.DataField',
-                Value : comfirmationTime,
-            },
-            {
-                $Type : 'UI.DataField',
-                Value : pickupTime,
-            },
-            {
-                $Type : 'UI.DataField',
-                Value : type_code,
-            },
-            {
-                $Type : 'UI.DataField',
-                Value : status_code,
-            },
-            {
-                $Type : 'UI.DataField',
-                Value : receptionist,
-            },
-            {
-                $Type : 'UI.DataField',
-                Value : comment,
-            },
-            {
-                $Type : 'UI.DataField',
-                Value : delete_ac,
-            },
-            {
-                $Type : 'UI.DataField',
-                Value : confirm_ac,
-            },
-            {
-                $Type : 'UI.DataField',
-                Value : pickup_ac,
-            },
-        ],
-    },
-    UI.Facets : [
-        {
-            $Type : 'UI.ReferenceFacet',
-            ID : 'GeneratedFacet1',
-            Label : 'General Information',
-            Target : '@UI.FieldGroup#GeneratedGroup1',
+            $Type: 'UI.DataField',
+            Value: pickupTime,
         },
     ]
 );
+
+
+annotate service.Package with {
+    recipient       @UI.HiddenFilter: true;
+    slot            @UI.HiddenFilter: true;
+    receptionist    @UI.HiddenFilter: true;
+    comment         @UI.HiddenFilter: true;
+    delete_ac       @UI.HiddenFilter: true;
+    confirm_ac      @UI.HiddenFilter: true;
+    pickup_ac       @UI.HiddenFilter: true;
+    ID              @UI.HiddenFilter: true;
+    createdAt       @UI.HiddenFilter: true;
+    createdBy       @UI.HiddenFilter: true;
+    modifiedAt      @UI.HiddenFilter: true;
+    modifiedBy      @UI.HiddenFilter: true;
+    deliveryCompany @UI.HiddenFilter: true;
+    type            @UI.HiddenFilter: true;
+    status          @UI.HiddenFilter: true;
+};
