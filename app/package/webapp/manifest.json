@@ -24,6 +24,15 @@
           "localUri": "localService/metadata.xml",
           "odataVersion": "4.0"
         }
+      },
+      "myService": {
+        "uri": "/odata/v2/PackageService/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "localUri": "localService/metadataII.xml",
+          "odataVersion": "2.0"
+        }
       }
     },
     "ach": "app"
@@ -83,6 +92,17 @@
           "earlyRequests": true
         }
       },
+      "MyModel": {
+        "dataSource": "myService",
+        "type": "sap.ui.model.odata.v2.ODataModel",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
       "@i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "uri": "i18n/i18n.properties"
@@ -92,7 +112,6 @@
       "css": []
     },
     "routing": {
-      "config": {},
       "routes": [
         {
           "pattern": ":?query:",
@@ -114,6 +133,7 @@
             "settings": {
               "contextPath": "/Package",
               "variantManagement": "Page",
+              "initialLoad": true,
               "navigation": {
                 "Package": {
                   "detail": {
@@ -126,6 +146,21 @@
                   "tableSettings": {
                     "type": "ResponsiveTable",
                     "selectionMode": "Multi"
+                  },
+                  "columns": {
+                    "DCColumn": {
+                      "key": "DCColumn",
+                      "header": "Delivery Company",
+                      "template": "com.sap.internal.digitallab.packagehandling.app.manage.package.ext.view.CompanyCol",
+                      "availability": "Default",
+                      "horizontalAlign": "Left",
+                      "width": "auto",
+                      "properties": ["deliveryCompany"],
+                      "position": {
+                        "placement": "Before",
+                        "anchor": "DataField::comfirmationTime"
+                      }
+                    }
                   }
                 }
               }
@@ -147,9 +182,7 @@
     }
   },
   "sap.fiori": {
-    "registrationIds": [
-      "packageui"
-    ],
+    "registrationIds": ["packageui"],
     "archeType": "transactional"
   }
 }
