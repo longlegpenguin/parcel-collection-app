@@ -9,22 +9,18 @@ annotate service.Package with @(
         },
         {
             $Type : 'UI.DataField',
-            Label : 'comfirmationTime',
             Value : comfirmationTime,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'pickupTime',
             Value : pickupTime,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'type_code',
             Value : type_code,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'status_code',
             Value : status_code,
         },
     ]
@@ -39,22 +35,18 @@ annotate service.Package with @(
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'comfirmationTime',
                 Value : comfirmationTime,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'pickupTime',
                 Value : pickupTime,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'type_code',
                 Value : type_code,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'status_code',
                 Value : status_code,
             },
             {
@@ -63,22 +55,18 @@ annotate service.Package with @(
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'comment',
                 Value : comment,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'delete_ac',
                 Value : delete_ac,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'confirm_ac',
                 Value : confirm_ac,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'pickup_ac',
                 Value : pickup_ac,
             },
         ],
