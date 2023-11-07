@@ -2,12 +2,16 @@ using com.sap.internal.digitallab.packagehandling.service.PackageService as serv
 
 annotate service.Package with @(
     UI.SelectionFields: [
-        status.name,
+        recipient,
         type.name,
         deliveryCompany.name,
-        pickupTime
+        comfirmationTime
     ],
     UI.LineItem       : [
+        {
+            $Type: 'UI.DataField',
+            Value: recipient,
+        },
         {
             $Type: 'UI.DataField',
             Value: type.name,
@@ -29,7 +33,6 @@ annotate service.Package with @(
 
 
 annotate service.Package with {
-    recipient        @UI.HiddenFilter: true  @UI.Hidden: true;
     slot             @UI.HiddenFilter: true  @UI.Hidden: true;
     receptionist     @UI.HiddenFilter: true  @UI.Hidden: true;
     comment          @UI.HiddenFilter: true  @UI.Hidden: true;

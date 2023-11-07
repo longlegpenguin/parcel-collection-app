@@ -161,6 +161,20 @@
                         "anchor": "DataField::comfirmationTime"
                       }
                     }
+                  },
+                  "actions": {
+                    "Confirm": {
+                      "press": "com.sap.internal.digitallab.packagehandling.app.manage.package.ext.controller.AppCt.showConfirmDlg",
+                      "enabled": true,
+                      "visible": true,
+                      "text": "Confirm"
+                    },
+                    "PickUp": {
+                      "press": "com.sap.internal.digitallab.packagehandling.app.manage.package.ext.controller.AppCt.showPickUpDlg",
+                      "enabled": true,
+                      "visible": true,
+                      "text": "Pick Up"
+                    }
                   }
                 }
               }
@@ -174,7 +188,18 @@
           "options": {
             "settings": {
               "editableHeaderContent": false,
-              "contextPath": "/Package"
+              "contextPath": "/Package",
+              "content": {
+                "header": {
+                  "actions": {
+                    "edit": {
+                      "press": "com.sap.internal.digitallab.packagehandling.app.manage.package.ext.controller.AppCt.showEditDlg",
+                      "text": "Edit",
+                      "type": "Emphasized"
+                    }
+                  }
+                }
+              }
             }
           }
         }

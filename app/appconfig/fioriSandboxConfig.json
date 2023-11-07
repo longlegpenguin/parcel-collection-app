@@ -35,7 +35,7 @@
                   "tileType": "sap.ushell.ui.tile.StaticTile",
                   "properties": {
                     "targetURL": "#Packages-manage",
-                    "title": "Manage Storages",
+                    "title": "Manage Packages",
                     "description": "edit/delete/confirm packages"
                   }
                 },
