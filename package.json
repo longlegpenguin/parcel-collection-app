@@ -7,12 +7,13 @@
   "devDependencies": {
     "@sap/cds": "^7.3.1",
     "@sap/cds-dk": "^7",
-    "@sap/ux-specification": "^1.108.16",
+    "@sap/ux-specification": "^1.108.17",
     "rimraf": "^3.0.2"
   },
   "sapux": [
     "app/storage-ui",
-    "app/storage"
+    "app/storage",
+    "app/history"
   ],
   "dependencies": {
     "@cap-js-community/odata-v2-adapter": "^1.11.8",
