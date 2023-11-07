@@ -20,6 +20,6 @@ builder:
   - name: ui5-task-zipper
     afterTask: generateCachebusterInfo
     configuration:
-      archiveName: comsapinternaldigitallabpackagehandlingappmanagepackage
+      archiveName: managepackage
       additionalFiles:
       - xs-app.json
