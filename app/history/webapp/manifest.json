@@ -117,11 +117,6 @@
                     "pattern": ":?query:",
                     "name": "PackageList",
                     "target": "PackageList"
-                },
-                {
-                    "pattern": "Package({key}):?query:",
-                    "name": "PackageObjectPage",
-                    "target": "PackageObjectPage"
                 }
             ],
             "targets": {
@@ -133,13 +128,7 @@
                         "settings": {
                             "contextPath": "/Package",
                             "variantManagement": "Page",
-                            "navigation": {
-                                "Package": {
-                                    "detail": {
-                                        "route": "PackageObjectPage"
-                                    }
-                                }
-                            },
+                            "navigation": {},
                             "initialLoad": true,
                             "controlConfiguration": {
                                 "@com.sap.vocabularies.UI.v1.LineItem": {
@@ -166,17 +155,6 @@
                                     }
                                 }
                             }
-                        }
-                    }
-                },
-                "PackageObjectPage": {
-                    "type": "Component",
-                    "id": "PackageObjectPage",
-                    "name": "sap.fe.templates.ObjectPage",
-                    "options": {
-                        "settings": {
-                            "editableHeaderContent": false,
-                            "contextPath": "/Package"
                         }
                     }
                 }
