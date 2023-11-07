@@ -249,10 +249,10 @@
                       "text": "Mass Create"
                     }
                   },
-                  "tableSettings":{
-                    "type":"GridTable",
-                    "selectionMode":"Multi"
-                 }
+                  "tableSettings": {
+                    "type": "GridTable",
+                    "selectionMode": "Multi"
+                  }
                 }
               }
             }
