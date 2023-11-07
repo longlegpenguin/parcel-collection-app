@@ -89,6 +89,10 @@ modules:
       - listhistory.zip
       name: listhistory
       target-path: resources/
+    - artifacts:
+      - comsapinternaldigitallabpackagehandlingappmanagepackage.zip
+      name: comsapinternaldigitallabpackagehandlingappmanagepackage
+      target-path: resources/
 - name: managestorages
   type: html5
   path: app/storage
@@ -122,6 +126,16 @@ modules:
 - name: listhistory
   type: html5
   path: app/history
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comsapinternaldigitallabpackagehandlingappmanagepackage
+  type: html5
+  path: app/package
   build-parameters:
     build-result: dist
     builder: custom

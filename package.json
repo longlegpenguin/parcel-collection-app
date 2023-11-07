@@ -13,7 +13,8 @@
     "sapux": [
         "app/storage-ui",
         "app/storage",
-        "app/history"
+        "app/history",
+        "app/package"
     ],
     "dependencies": {
         "@cap-js-community/odata-v2-adapter": "^1.11.8",
