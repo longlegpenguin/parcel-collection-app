@@ -86,8 +86,8 @@ modules:
       name: registerpackages
       target-path: resources/
     - artifacts:
-      - comsapinternaldigitallabpackagehandlingapplisthistory.zip
-      name: comsapinternaldigitallabpackagehandlingapplisthistory
+      - listhistory.zip
+      name: listhistory
       target-path: resources/
 - name: managestorages
   type: html5
@@ -119,7 +119,7 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
-- name: comsapinternaldigitallabpackagehandlingapplisthistory
+- name: listhistory
   type: html5
   path: app/history
   build-parameters:

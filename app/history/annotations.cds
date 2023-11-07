@@ -1,1 +1,0 @@
-using com.sap.internal.digitallab.packagehandling.service.HistoryService as service from '../../srv/services/HistoryService';
