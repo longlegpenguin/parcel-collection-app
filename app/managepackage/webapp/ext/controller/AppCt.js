@@ -4,8 +4,9 @@ sap.ui.define(
     "sap/m/MessageBox",
     "sap/m/MessageToast",
     "com/sap/internal/digitallab/packagehandling/app/manage/package/ext/component/ConfirmDlg",
+    "com/sap/internal/digitallab/packagehandling/app/manage/package/ext/component/EditDlg",
   ],
-  function (ManagedObject, MessageBox, MessageToast, ConfirmDlg) {
+  function (ManagedObject, MessageBox, MessageToast, ConfirmDlg, EditDlg) {
     "use strict";
 
     function _loadConfirmDlg(oExtensionAPI, aSelectedContexts) {
@@ -18,8 +19,8 @@ sap.ui.define(
       console.log("Pickup");
     }
 
-    function _loadEditDlg(oExtensionAPI) {
-      // new CStorageDlg(oExtensionAPI).load();
+    function _loadEditDlg(oExtensionAPI, aSelectedContexts) {
+      new EditDlg(oExtensionAPI, aSelectedContexts).load();
       console.log("Edit");
     }
 
@@ -37,7 +38,7 @@ sap.ui.define(
       },
 
       showEditDlg: function (oBindingContext, aSelectedContexts) {
-        _loadEditDlg(this);
+        _loadEditDlg(this, aSelectedContexts);
       },
     };
   }
