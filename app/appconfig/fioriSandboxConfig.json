@@ -45,7 +45,7 @@
                   "properties": {
                     "targetURL": "#Packages-register",
                     "title": "Register Packages",
-                    "description": "Add/edit/delete storages and slots"
+                    "description": "register new packages"
                   }
                 }
               ]
@@ -103,6 +103,19 @@
                 "url": "/storage/webapp"
               }
             },
+            "manage-companies": {
+              "semanticObject": "Companies",
+              "action": "manage",
+              "signature": {
+                "parameters": {},
+                "additionalParameters": "allowed"
+              },
+              "resolutionResult": {
+                "applicationType": "SAPUI5",
+                "additionalInformation": "SAPUI5.Component=com.sap.internal.digitallab.packagehandling.app.manage.companies",
+                "url": "/company/webapp"
+              }
+            },
             "manage-packages": {
               "semanticObject": "Packages",
               "action": "manage",
@@ -116,7 +129,7 @@
                 "url": "/manage/webapp"
               }
             },
-            "register-companies": {
+            "register-packages": {
               "semanticObject": "Packages",
               "action": "manage",
               "signature": {
