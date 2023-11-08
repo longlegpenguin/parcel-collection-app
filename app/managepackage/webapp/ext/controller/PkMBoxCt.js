@@ -11,6 +11,10 @@ sap.ui.define(
       return elem.replaceAll("(", ")").split(")")[1];
     }
 
+    function _getErrorMsg(oError) {
+      return JSON.parse(oError.responseText).error.message.value;
+    }
+
     return {
       onPickUpPress: function (oBindingContext, aSelectedContexts) {
         MessageBox.warning(
@@ -24,22 +28,19 @@ sap.ui.define(
                 var oModel = this._view.getModel();
                 var ctx = _parseElem(aSelectedContexts[0].sPath);
                 console.log(ctx);
-                const oContext = oModel.bindContext(
-                  "/pickup(...)"
-                );
-                console.log("COntext: " + oContext);
+                const oContext = oModel.bindContext("/pickup(...)");
 
                 oContext
                   .setParameter("packageId", ctx)
                   .execute()
                   .then(
                     () => {
-                      MessageToast.show("Package(s) Confirmed!");
+                      MessageToast.show("Package Picked Up!");
                       this._closeDialog();
                     },
                     (oError) => {
                       if (!oError.canceled)
-                        MessageBox.alert(this._getErrorMsg(oError), {
+                        MessageBox.alert(_getErrorMsg(oError), {
                           icon: MessageBox.Icon.ERROR,
                           title: "Error",
                         });

@@ -170,7 +170,7 @@
                       "text": "Confirm"
                     },
                     "PickUp": {
-                      "press": "com.sap.internal.digitallab.packagehandling.app.manage.package.ext.controller.PkMBoxCt.onPickUpPress",
+                      "press": "com.sap.internal.digitallab.packagehandling.app.manage.package.ext.controller.AppCt.showPickUpMBox",
                       "enabled": true,
                       "visible": true,
                       "text": "Pick Up"
