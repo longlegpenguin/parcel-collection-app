@@ -67,23 +67,6 @@ sap.ui.define(
           );
         },
 
-        onStorageSelectChange: function (oEvent) {
-          var selectedStorageKey = oEvent.getSource().getSelectedKey();
-          var oSlotComboBox = this._byId("idStorageSlotSelect");
-          var oBinding = oSlotComboBox.getBinding("items");
-
-          oBinding.filter(
-            new sap.ui.model.Filter(
-              "storage_ID",
-              sap.ui.model.FilterOperator.EQ,
-              selectedStorageKey
-            )
-          );
-
-          console.log("selected storage ky: " + selectedStorageKey);
-          console.log("binding: " + oBinding);
-        },
-
         onCloseButtonPress: function (oEvent) {
           console.log("close cliacked");
           this._closeDialog();

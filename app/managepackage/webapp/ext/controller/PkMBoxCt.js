@@ -1,0 +1,56 @@
+sap.ui.define(
+  ["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "sap/m/MessageToast"],
+  function (Controller, MessageBox, MessageToast) {
+    "use strict";
+
+    function dumb(that) {
+      console.log(that);
+    }
+
+    function _parseElem(elem) {
+      return elem.replaceAll("(", ")").split(")")[1];
+    }
+
+    return {
+      onPickUpPress: function (oBindingContext, aSelectedContexts) {
+        MessageBox.warning(
+          "Pickup this package? \n\n A notification will be sent to the recipient and package process will be closed.",
+          {
+            title: "Pick Up",
+            actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+            emphasizedAction: MessageBox.Action.OK,
+            onClose: (sAction) => {
+              if (sAction === "OK") {
+                var oModel = this._view.getModel();
+                var ctx = _parseElem(aSelectedContexts[0].sPath);
+                console.log(ctx);
+                const oContext = oModel.bindContext(
+                  "/pickup(...)"
+                );
+                console.log("COntext: " + oContext);
+
+                oContext
+                  .setParameter("packageId", ctx)
+                  .execute()
+                  .then(
+                    () => {
+                      MessageToast.show("Package(s) Confirmed!");
+                      this._closeDialog();
+                    },
+                    (oError) => {
+                      if (!oError.canceled)
+                        MessageBox.alert(this._getErrorMsg(oError), {
+                          icon: MessageBox.Icon.ERROR,
+                          title: "Error",
+                        });
+                    }
+                  );
+              }
+            },
+            error: function () {},
+          }
+        );
+      },
+    };
+  }
+);
