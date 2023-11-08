@@ -7,7 +7,7 @@ annotate service.StorageSlot with {
 };
 
 annotate service.Storage with {
-    name          @title: 'Name';
+    name          @title: 'Storage';
     buildingFloor @title: 'Building Floor';
     ID            @title: 'UUID';
 };
@@ -34,13 +34,13 @@ annotate service.Package with {
 
 
 annotate service.Building with {
-    name   @title: 'Name';
+    name   @title: 'Building';
     floors @title: 'Floors';
     ID     @title: 'UUID';
 };
 
 annotate service.BuildingFloor with {
-    name     @title: 'Name';
+    name     @title: 'Floor';
     building @title: 'Building';
     ID       @title: 'UUID';
 };

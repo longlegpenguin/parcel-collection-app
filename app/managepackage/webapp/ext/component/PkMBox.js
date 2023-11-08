@@ -38,7 +38,7 @@ sap.ui.define(
                     .then(
                       () => {
                         MessageToast.show("Package Picked Up!");
-                        this._closeDialog();
+                        this._oExtensionAPI.refresh();
                       },
                       (oError) => {
                         if (!oError.canceled)
