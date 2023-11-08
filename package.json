@@ -7,16 +7,13 @@
     "devDependencies": {
         "@sap/cds": "^7.3.1",
         "@sap/cds-dk": "^7",
-        "@sap/eslint-plugin-ui5-jsdocs": "^2.0.5",
-        "@sap/ux-specification": "^1.108.16",
-        "@sapui5/ts-types": "^1.92.2",
-        "eslint": "^7.32.0",
+        "@sap/ux-specification": "^1.108.17",
         "rimraf": "^3.0.2"
     },
     "sapux": [
         "app/storage-ui",
         "app/storage",
-        "app/company"
+        "app/history"
     ],
     "dependencies": {
         "@cap-js-community/odata-v2-adapter": "^1.11.8",
@@ -49,7 +46,7 @@
                 "auth": {
                     "kind": "mocked",
                     "users": {
-                        "user": {
+                        "I111111": {
                             "password": "user",
                             "roles": [
                                 "user"

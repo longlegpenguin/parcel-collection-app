@@ -3,152 +3,180 @@ ID: packagehandling
 description: A simple CAP project.
 version: 0.0.1
 modules:
-  - name: packagehandling-srv
-    type: java
-    path: srv
-    properties:
-      JBP_CONFIG_COMPONENTS: "jres: ['com.sap.xs.java.buildpack.jre.SAPMachineJRE']"
-      JBP_CONFIG_SAP_MACHINE_JRE: "{ use_offline_repository: false, version: 17.+ }"
-      SPRING_PROFILES_ACTIVE: cloud,sandbox
-    requires:
-      - name: packagehandling-db
-      - name: packagehandling-auth
-      - name: app-api
-        properties:
-          CDS_MULTITENANCY_APPUI_URL: ~{url}
-    provides:
-      - name: srv-api
-        properties:
-          srv-url: ${default-url}
-    parameters:
-      buildpack: sap_java_buildpack
-    build-parameters:
-      build-result: target/*-exec.jar
-      builder: custom
-      commands:
-        - mvn clean package -DskipTests=true
-  - name: packagehandling-db-deployer
-    type: hdb
-    path: db
-    requires:
-      - name: packagehandling-db
-    parameters:
-      buildpack: nodejs_buildpack
-    build-parameters:
-      builder: custom
-      commands:
-        - npm run build
-  - name: packagehandling
-    type: approuter.nodejs
-    path: app/router
-    requires:
-      - name: srv-api
-        group: destinations
-        properties:
-          forwardAuthToken: true
-          name: srv-api
-          url: ~{srv-url}
-      - name: packagehandling-auth
-      - name: packagehandling-destination-service
-        group: destinations
-        properties:
-          forwardAuthToken: false
-          name: ui5
-          url: https://ui5.sap.com
-    provides:
-      - name: app-api
-        properties:
-          url: ${default-url}
-    parameters:
-      disk-quota: 256M
-      keep-existing-routes: true
-      memory: 256M
-  - name: packagehandling-app-content
-    type: com.sap.application.content
-    path: .
-    requires:
-      - name: packagehandling-repo-host
-        parameters:
-          content-target: true
-    build-parameters:
-      build-result: resources
-      requires:
-        - artifacts:
-            - managestorages.zip
-          name: managestorages
-          target-path: resources/
-        - artifacts:
-            - managecompanies.zip
-          name: managecompanies
-          target-path: resources/
-  - name: managestorages
-    type: html5
-    path: app/storage
-    build-parameters:
-      build-result: dist
-      builder: custom
-      commands:
-        - npm install
-        - npm run build:cf
-      supported-platforms: []
-  - name: managecompanies
-    type: html5
-    path: app/company
-    build-parameters:
-      build-result: dist
-      builder: custom
-      commands:
-        - npm install
-        - npm run build:cf
-      supported-platforms: []
-resources:
+- name: packagehandling-srv
+  type: java
+  path: srv
+  properties:
+    JBP_CONFIG_COMPONENTS: 'jres: [''com.sap.xs.java.buildpack.jre.SAPMachineJRE'']'
+    JBP_CONFIG_SAP_MACHINE_JRE: '{ use_offline_repository: false, version: 17.+ }'
+    SPRING_PROFILES_ACTIVE: cloud,sandbox
+  requires:
   - name: packagehandling-db
-    type: com.sap.xs.hdi-container
-    parameters:
-      service: hana
-      service-plan: hdi-shared
   - name: packagehandling-auth
-    type: org.cloudfoundry.managed-service
-    parameters:
-      config:
-        tenant-mode: dedicated
-        xsappname: packagehandling-${org}-${space}
-      path: ./xs-security.json
-      service: xsuaa
-      service-plan: application
-  - name: packagehandling-repo-host
-    type: org.cloudfoundry.managed-service
-    parameters:
-      service: html5-apps-repo
-      service-name: packagehandling-html5-srv
-      service-plan: app-host
+  - name: app-api
+    properties:
+      CDS_MULTITENANCY_APPUI_URL: ~{url}
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    buildpack: sap_java_buildpack
+  build-parameters:
+    build-result: target/*-exec.jar
+    builder: custom
+    commands:
+    - mvn clean package -DskipTests=true
+- name: packagehandling-db-deployer
+  type: hdb
+  path: db
+  requires:
+  - name: packagehandling-db
+  parameters:
+    buildpack: nodejs_buildpack
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+- name: packagehandling
+  type: approuter.nodejs
+  path: app/router
+  requires:
+  - name: srv-api
+    group: destinations
+    properties:
+      forwardAuthToken: true
+      name: srv-api
+      url: ~{srv-url}
+  - name: packagehandling-auth
   - name: packagehandling-destination-service
-    type: org.cloudfoundry.managed-service
+    group: destinations
+    properties:
+      forwardAuthToken: false
+      name: ui5
+      url: https://ui5.sap.com
+  provides:
+  - name: app-api
+    properties:
+      url: ${default-url}
+  parameters:
+    disk-quota: 256M
+    keep-existing-routes: true
+    memory: 256M
+- name: packagehandling-app-content
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: packagehandling-repo-host
     parameters:
-      config:
-        HTML5Runtime_enabled: false
-        init_data:
-          instance:
-            destinations:
-              - Authentication: NoAuthentication
-                Name: ui5
-                ProxyType: Internet
-                Type: HTTP
-                URL: https://ui5.sap.com
-              - Authentication: NoAuthentication
-                HTML5.DynamicDestination: true
-                HTML5.ForwardAuthToken: true
-                Name: packagehandling-srv-api
-                ProxyType: Internet
-                Type: HTTP
-                URL: ~{srv-api/srv-url}
-            existing_destinations_policy: update
-        version: 1.0.0
-      service: destination
-      service-name: packagehandling-destination-service
-      service-plan: lite
+      content-target: true
+  build-parameters:
+    build-result: resources
     requires:
-      - name: srv-api
+    - artifacts:
+      - managestorages.zip
+      name: managestorages
+      target-path: resources/
+    - artifacts:
+      - managecompanies.zip
+      name: managecompanies
+      target-path: resources/
+    - artifacts:
+      - registerpackages.zip
+      name: registerpackages
+      target-path: resources/
+    - artifacts:
+      - listhistory.zip
+      name: listhistory
+      target-path: resources/
+- name: managestorages
+  type: html5
+  path: app/storage
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: managecompanies
+  type: html5
+  path: app/company
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: registerpackages
+  type: html5
+  path: app/registration
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: listhistory
+  type: html5
+  path: app/history
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+resources:
+- name: packagehandling-db
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hana
+    service-plan: hdi-shared
+- name: packagehandling-auth
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      tenant-mode: dedicated
+      xsappname: packagehandling-${org}-${space}
+    path: ./xs-security.json
+    service: xsuaa
+    service-plan: application
+- name: packagehandling-repo-host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: packagehandling-html5-srv
+    service-plan: app-host
+- name: packagehandling-destination-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: false
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          - Authentication: NoAuthentication
+            HTML5.DynamicDestination: true
+            HTML5.ForwardAuthToken: true
+            Name: packagehandling-srv-api
+            ProxyType: Internet
+            Type: HTTP
+            URL: ~{srv-api/srv-url}
+          existing_destinations_policy: update
+      version: 1.0.0
+    service: destination
+    service-name: packagehandling-destination-service
+    service-plan: lite
+  requires:
+  - name: srv-api
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true
