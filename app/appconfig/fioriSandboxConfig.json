@@ -126,7 +126,7 @@
               "resolutionResult": {
                 "applicationType": "SAPUI5",
                 "additionalInformation": "SAPUI5.Component=com.sap.internal.digitallab.packagehandling.app.manage.package",
-                "url": "/package/webapp"
+                "url": "/managepackage/webapp"
               }
             },
             "register-packages": {
