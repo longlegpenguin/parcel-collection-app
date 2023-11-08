@@ -1,0 +1,203 @@
+{
+  "_version": "1.58.0",
+  "sap.app": {
+    "id": "com.sap.internal.digitallab.packagehandling.app.manage.companies",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "${project.version}"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:lrop",
+      "version": "1.11.3",
+      "toolsId": "d4d04ba0-c352-4719-a2ad-59b99b7a8aff"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/odata/v4/CompanyService/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "localUri": "localService/metadata.xml",
+          "odataVersion": "4.0"
+        }
+      },
+      "myService": {
+        "uri": "/odata/v2/CompanyService/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "localUri": "localService/metadataII.xml",
+          "odataVersion": "2.0"
+        }
+      }
+    },
+    "ach": "app"
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "dependencies": {
+      "minUI5Version": "${sap.ui5.dist.version}",
+      "libs": {
+        "sap.m": {
+          "lazy": false
+        },
+        "sap.ui.core": {
+          "lazy": false
+        },
+        "sap.ushell": {
+          "lazy": false
+        },
+        "sap.fe.templates": {
+          "lazy": false
+        }
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "com.sap.internal.digitallab.packagehandling.app.manage.companies.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "MyModel": {
+        "dataSource": "myService",
+        "type": "sap.ui.model.odata.v2.ODataModel",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "@i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "uri": "i18n/i18n.properties"
+      }
+    },
+    "resources": {
+      "css": []
+    },
+    "routing": {
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "DeliveryCompanyList",
+          "target": "DeliveryCompanyList"
+        },
+        {
+          "pattern": "DeliveryCompany({key}):?query:",
+          "name": "DeliveryCompanyObjectPage",
+          "target": "DeliveryCompanyObjectPage"
+        }
+      ],
+      "targets": {
+        "DeliveryCompanyList": {
+          "type": "Component",
+          "id": "DeliveryCompanyList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/DeliveryCompany",
+              "variantManagement": "Page",
+              "navigation": {
+                "DeliveryCompany": {
+                  "detail": {
+                    "route": "DeliveryCompanyObjectPage"
+                  }
+                }
+              },
+              "initialLoad": true,
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "GridTable",
+                    "selectionMode": "Auto",
+                    "creationMode": {
+                      "name": "InlineCreationRows"
+                    }
+                  },
+                  "actions": {
+                    "CCompany": {
+                      "press": "com.sap.internal.digitallab.packagehandling.app.manage.companies.ext.controller.AppCt.showCCompanyDlg",
+                      "enabled": true,
+                      "visible": true,
+                      "text": "Create"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "DeliveryCompanyObjectPage": {
+          "type": "Component",
+          "id": "DeliveryCompanyObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/DeliveryCompany",
+              "content": {
+                "header": {
+                  "actions": {
+                    "ECompany": {
+                      "press": "com.sap.internal.digitallab.packagehandling.app.manage.companies.ext.controller.AppCt.showECompanyDlg",
+                      "text": "Edit",
+                      "type": "Emphasized"
+                    },
+                    "tableSettings": {
+                      "entitySet": "Company"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "extends": {
+      "extensions": {
+        "sap.ui.controllerExtensions": {}
+      }
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": ["companyui"],
+    "archeType": "transactional"
+  }
+}

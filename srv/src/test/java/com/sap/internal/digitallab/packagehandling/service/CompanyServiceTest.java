@@ -90,7 +90,8 @@ public class CompanyServiceTest extends BaseServiceTest {
                         .contentType("application/json")
                         .body("{" +
                                 "      \"name\": \"FedEx\"," +
-                                "      \"logo\": \"https://images.app.goo.gl/bzEzvAdv1wb6Socf6\"" +
+                                "      \"logo@mediaContentType\": \"image/jpeg\"," +
+                                "      \"logo@odata.mediaReadLink\": \"https://images.app.goo.gl/bzEzvAdv1wb6Socf6\"" +
                                 "}")
                         .when()
                         .post(host + port + prefix + "DeliveryCompany")
@@ -105,8 +106,7 @@ public class CompanyServiceTest extends BaseServiceTest {
                 .then()
                 .statusCode(200)
                 .body("ID", Matchers.notNullValue())
-                .body("name", Matchers.equalTo("FedEx"))
-                .body("logo", Matchers.equalTo("https://images.app.goo.gl/bzEzvAdv1wb6Socf6"));
+                .body("name", Matchers.equalTo("FedEx"));
     }
 
     @Test
@@ -117,7 +117,7 @@ public class CompanyServiceTest extends BaseServiceTest {
                         .contentType("application/json")
                         .body("{" +
                                 "      \"name\": \"FedEx2\"," +
-                                "      \"logo\": \"https://images.app.goo.gl/bzEzvAdv1wb6Socf6\"" +
+                                "      \"logo@odata.mediaReadLink\": \"https://images.app.goo.gl/bzEzvAdv1wb6Socf6\"" +
                                 "}")
                         .when()
                         .post(host + port + prefix + "DeliveryCompany")
@@ -132,8 +132,7 @@ public class CompanyServiceTest extends BaseServiceTest {
                 .then()
                 .statusCode(200)
                 .body("ID", Matchers.notNullValue())
-                .body("name", Matchers.equalTo("FedEx2"))
-                .body("logo", Matchers.equalTo("https://images.app.goo.gl/bzEzvAdv1wb6Socf6"));
+                .body("name", Matchers.equalTo("FedEx2"));
     }
 
     @Test
@@ -143,7 +142,7 @@ public class CompanyServiceTest extends BaseServiceTest {
                 .contentType("application/json")
                 .body("{" +
                         "      \"name\": \"FedEx5\"," +
-                        "      \"logo\": \"https://images.app.goo.gl/bzEzvAdv1wb6Socf6\"" +
+                        "      \"logo@odata.mediaReadLink\": \"https://images.app.goo.gl/bzEzvAdv1wb6Socf6\"" +
                         "}")
                 .when()
                 .put(host + port + prefix + "DeliveryCompany(6480a902-007c-4cdd-a6a3-0f3a88d24fe0)")
@@ -168,7 +167,7 @@ public class CompanyServiceTest extends BaseServiceTest {
                 .contentType("application/json")
                 .body("{" +
                         "      \"name\": \"FedEx6\"," +
-                        "      \"logo\": \"https://images.app.goo.gl/bzEzvAdv1wb6Socf6\"" +
+                        "      \"logo@odata.mediaReadLink\": \"https://images.app.goo.gl/bzEzvAdv1wb6Socf6\"" +
                         "}")
                 .when()
                 .put(host + port + prefix + "DeliveryCompany(6480a902-007c-4cdd-a6a3-0f3a88d24fe0)")
@@ -191,7 +190,7 @@ public class CompanyServiceTest extends BaseServiceTest {
                 .contentType("application/json")
                 .body("{" +
                         "      \"name\": \"FedEx7\"," +
-                        "      \"logo\": \"https://images.app.goo.gl/bzEzvAdv1wb6Socf6\"" +
+                        "      \"logo@odata.mediaReadLink\": \"https://images.app.goo.gl/bzEzvAdv1wb6Socf6\"" +
                         "}")
                 .when()
                 .put(host + port + prefix + "DeliveryCompany(6480a902-007c-4cdd-a6a3-0f3a88d24fe0)")
@@ -203,7 +202,7 @@ public class CompanyServiceTest extends BaseServiceTest {
                 .contentType("application/json")
                 .body("{" +
                         "      \"name\": \"FedEx7\"," +
-                        "      \"logo\": \"https://images.app.goo.gl/bzEzvAdv1wb6Socf6\"" +
+                        "      \"logo@odata.mediaReadLink\": \"https://images.app.goo.gl/bzEzvAdv1wb6Socf6\"" +
                         "}")
                 .when()
                 .put(host + port + prefix + "DeliveryCompany(6480a902-007c-4cdd-a6a3-0f3a88d24fe0)")
@@ -218,7 +217,7 @@ public class CompanyServiceTest extends BaseServiceTest {
                 .contentType("application/json")
                 .body("{" +
                         "      \"name\": \"FedEx3\"," +
-                        "      \"logo\": \"https://images.app.goo.gl/bzEzvAdv1wb6Socf6\"" +
+                        "      \"logo@odata.mediaReadLink\": \"https://images.app.goo.gl/bzEzvAdv1wb6Socf6\"" +
                         "}")
                 .when()
                 .post(host + port + prefix + "DeliveryCompany")
@@ -230,7 +229,7 @@ public class CompanyServiceTest extends BaseServiceTest {
                 .contentType("application/json")
                 .body("{" +
                         "      \"name\": \"FedEx4\"," +
-                        "      \"logo\": \"https://images.app.goo.gl/bzEzvAdv1wb6Socf6\"" +
+                        "      \"logo@odata.mediaReadLink\": \"https://images.app.goo.gl/bzEzvAdv1wb6Socf6\"" +
                         "}")
                 .when()
                 .post(host + port + prefix + "DeliveryCompany")
@@ -245,7 +244,7 @@ public class CompanyServiceTest extends BaseServiceTest {
                 .contentType("application/json")
                 .body("{" +
                         "      \"name\": \"MPL\"," +
-                        "      \"logo\": \"https://images.app.goo.gl/bzEzvAdv1wb6Socf6\"" +
+                        "      \"logo@odata.mediaReadLink\": \"https://images.app.goo.gl/bzEzvAdv1wb6Socf6\"" +
                         "}")
                 .when()
                 .post(host + port + prefix + "DeliveryCompany")
@@ -258,7 +257,7 @@ public class CompanyServiceTest extends BaseServiceTest {
                 .body("{" +
                         "      \"ID\": \"6480a902-007c-4cdd-a6a3-0f3a88d24fe0\", " +
                         "      \"name\": \"MPL\"," +
-                        "      \"logo\": \"https://images.app.goo.gl/bzEzvAdv1wb6Socf6\"" +
+                        "      \"logo@odata.mediaReadLink\": \"https://images.app.goo.gl/bzEzvAdv1wb6Socf6\"" +
                         "}")
                 .when()
                 .put(host + port + prefix + "DeliveryCompany")

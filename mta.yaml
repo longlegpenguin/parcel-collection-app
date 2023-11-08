@@ -77,10 +77,17 @@ modules:
       - managestorages.zip
       name: managestorages
       target-path: resources/
-
+    - artifacts:
+      - managecompanies.zip
+      name: managecompanies
+      target-path: resources/
     - artifacts:
       - registerpackages.zip
       name: registerpackages
+      target-path: resources/
+    - artifacts:
+      - listhistory.zip
+      name: listhistory
       target-path: resources/
 - name: managestorages
   type: html5
@@ -92,9 +99,29 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
+- name: managecompanies
+  type: html5
+  path: app/company
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
 - name: registerpackages
   type: html5
   path: app/registration
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: listhistory
+  type: html5
+  path: app/history
   build-parameters:
     build-result: dist
     builder: custom
