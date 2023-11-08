@@ -165,13 +165,13 @@
                   "actions": {
                     "Confirm": {
                       "press": "com.sap.internal.digitallab.packagehandling.app.manage.package.ext.controller.AppCt.showConfirmDlg",
-                      "enabled": true,
+                      "enabled": "com.sap.internal.digitallab.packagehandling.app.manage.package.ext.controller.AppCt.enabledForSelect",
                       "visible": true,
                       "text": "Confirm"
                     },
                     "PickUp": {
                       "press": "com.sap.internal.digitallab.packagehandling.app.manage.package.ext.controller.AppCt.showPickUpMBox",
-                      "enabled": true,
+                      "enabled": "com.sap.internal.digitallab.packagehandling.app.manage.package.ext.controller.AppCt.enabledForSingleSelect",
                       "visible": true,
                       "text": "Pick Up"
                     }

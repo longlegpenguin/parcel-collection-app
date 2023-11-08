@@ -7,11 +7,11 @@
         alignItems="Center"
     >
         <items>
-            <!-- <Image
+            <Image
                 src="{deliveryCompany/logo}"
                 height="50px"
                 class="sapUiTinyMarginEnd"
-            /> -->
+            />
             <Text
                 text="{deliveryCompany/name}"
                 class="sapUiTinyMarginBegin"

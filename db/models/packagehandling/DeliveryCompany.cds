@@ -10,7 +10,7 @@ using {com.sap.internal.digitallab.packagehandling.core.Package} from './Package
 
 entity DeliveryCompany : cuid, managed {
     name     : String(255) not null;
-    logo     : String(255) @Core.IsURL: true; //@Core.IsMediaType;
+    logo     : String(255) ;//@Core.IsURL: true; //@Core.IsMediaType;
     packages : Association to many Package
                    on packages.deliveryCompany = $self;
 }

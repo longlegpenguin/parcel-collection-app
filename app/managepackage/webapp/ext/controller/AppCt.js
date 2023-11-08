@@ -44,7 +44,7 @@ sap.ui.define(
           _loadConfirmDlg(this, aSelectedContexts);
         }
       },
-      
+
       showPickUpMBox: function (oBindingContext, aSelectedContexts) {
         if (aSelectedContexts == undefined || aSelectedContexts.length !== 1) {
           MessageBox.warning("Please select exactly one package to pickup.");
@@ -55,6 +55,20 @@ sap.ui.define(
 
       showEditDlg: function (oBindingContext, aSelectedContexts) {
         _loadEditDlg(this, aSelectedContexts);
+      },
+
+      enabledForSingleSelect: function (oBindingContext, aSelectedContexts) {
+        if (aSelectedContexts && aSelectedContexts.length === 1) {
+          return true;
+        }
+        return false;
+      },
+
+      enabledForSelect: function (oBindingContext, aSelectedContexts) {
+        if (aSelectedContexts && aSelectedContexts.length >= 1) {
+          return true;
+        }
+        return false;
       },
     };
   }
