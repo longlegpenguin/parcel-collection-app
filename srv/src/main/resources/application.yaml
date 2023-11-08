@@ -6,9 +6,15 @@ cds:
   data-source.auto-config.enabled: false
   data-source:
     csv:
-      paths: test/data
+      paths:
+        - db/data
+        - db/data/**
+        - test/data
+        - test/data/**
+        - ../test/data/**
   sql.supportedLocales: "*" ## cut
-  odata-v4.endpoint.path: "/api"
+  # odata-v4.endpoint.path: "/odata/v4"
+  # odata-v2.endpoint.path: "/odata/v2"
   odata-v4.serializer.enabled: true
   multi-tenancy:
     compatibility.enabled: false
@@ -19,22 +25,21 @@ cds:
       admin:
         password: admin
         roles:
-        - Administrator
+          - Administrator
       I111111:
         password: user
         roles:
-        - User
+          - User
       manager:
         password: manager
         roles:
-        - FacilityManager
+          - FacilityManager
       recep:
         password: recep
         roles:
           - Receptionist
 server:
   port: 8084
-
 
 ---
 spring:
@@ -56,7 +61,11 @@ cds:
         - test/data
         - test/data/**
         - ../test/data/**
+        - db/data
+        - db/data/**
+        - ../db/data**
   odata-v4.endpoint.path: "/api"
+  odata-v2.endpoint.path: "/api-v2"
   odata-v4.serializer.enabled: true
   multi-tenancy:
     compatibility.enabled: false

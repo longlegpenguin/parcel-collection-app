@@ -1,11 +1,13 @@
 {
-    "build": {
-        "target": "."
-    },
-    "requires": {
-        "[production]": {
-            "db": "hana"
-        },
-        "auth": "xsuaa"
+  "build": {
+    "target": "."
+  },
+  "requires": {
+    "[production]": {
+      "db": "hana"
     }
+  },
+  "cov2ap": {
+    "plugin": true
+  }
 }

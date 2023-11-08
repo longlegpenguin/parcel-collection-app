@@ -1,4 +1,0 @@
-code,name,descr
-new,New,"The package is new, but not placed in the storage yet."
-pickedup,Picked Up,The package is picked up by the recipient.
-confirmed,Confirmed,The package is confirmed and placed into a slot.

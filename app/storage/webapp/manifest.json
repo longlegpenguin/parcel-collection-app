@@ -1,0 +1,317 @@
+{
+  "_version": "1.58.0",
+  "sap.app": {
+    "id": "com.sap.internal.digitallab.packagehandling.app.manage.storages",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "${project.version}"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:lrop",
+      "version": "1.11.3",
+      "toolsId": "3e572102-a67d-4f24-85b5-ce88e2370c0f"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/odata/v4/StorageService/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "localUri": "localService/metadata.xml",
+          "odataVersion": "4.0"
+        }
+      },
+      "myService": {
+        "uri": "/odata/v2/StorageService/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "localUri": "localService/metadataII.xml",
+          "odataVersion": "2.0"
+        }
+      }
+    },
+    "ach": "app",
+    "crossNavigation": {
+      "inbounds": {
+        "Launchpad-lauch": {
+          "semanticObject": "Launchpad",
+          "action": "lauch",
+          "title": "{{flpTitle}}",
+          "subTitle": "{{flpSubtitle}}",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "sap-icon://product",
+      "favIcon": "sap-icon://product",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "dependencies": {
+      "minUI5Version": "${sap.ui5.dist.version}",
+      "libs": {
+        "sap.m": {
+          "lazy": false
+        },
+        "sap.ui.core": {
+          "lazy": false
+        },
+        "sap.ushell": {
+          "lazy": false
+        },
+        "sap.fe.templates": {
+          "lazy": false
+        }
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "com.sap.internal.digitallab.packagehandling.app.manage.storages.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "MyModel": {
+        "dataSource": "myService",
+        "type": "sap.ui.model.odata.v2.ODataModel",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "@i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "uri": "i18n/i18n.properties"
+      }
+    },
+    "handleValidation": true,
+    "resources": {
+      "css": []
+    },
+    "routing": {
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "StorageList",
+          "target": "StorageList"
+        },
+        {
+          "pattern": "Storage({key}):?query:",
+          "name": "StorageObjectPage",
+          "target": "StorageObjectPage"
+        },
+        {
+          "pattern": "Storage({key})/storageSlot({key2}):?query:",
+          "name": "StorageSlotObjectPage",
+          "target": "StorageSlotObjectPage"
+        }
+      ],
+      "targets": {
+        "StorageList": {
+          "type": "Component",
+          "id": "StorageList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/Storage",
+              "variantManagement": "Page",
+              "navigation": {
+                "Storage": {
+                  "detail": {
+                    "route": "StorageObjectPage"
+                  }
+                }
+              },
+              "initialLoad": true,
+              "content": {
+                "header": {
+                  "actions": {
+                    "upload": {
+                      "press": "com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.controller.UploadController.showUploadDialog",
+                      "text": "Import Books"
+                    },
+                    "tableSettings": {
+                      "entitySet": "Storage",
+                      "createWithParameterDialog": {
+                        "fields": {
+                          "name": { "path": "name" }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "selectionMode": "Auto",
+                    "entitySet": "Storage",
+                    "createWithParameterDialog": {
+                      "fields": {
+                        "name": { "path": "name" }
+                      }
+                    }
+                  },
+                  "actions": {
+                    "CStorage": {
+                      "press": "com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.controller.AppCt.showCStorageDlg",
+                      "enabled": true,
+                      "visible": true,
+                      "text": "{i18n>CreateStorageAction}"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "StorageObjectPage": {
+          "type": "Component",
+          "id": "StorageObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "entitySet": "Storage",
+              "sectionLayout": "Page",
+              "variantManagement": "Control",
+              "showRelatedApps": true,
+              "navigation": {
+                "storageSlot": {
+                  "detail": {
+                    "route": "StorageSlotObjectPage"
+                  }
+                }
+              },
+              "content": {
+                "header": {
+                  "actions": {
+                    "edit": {
+                      "press": "com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.controller.AppCt.showUStorageDlg",
+                      "text": "Edit",
+                      "type": "Emphasized"
+                    }
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "storageSlot/@com.sap.vocabularies.UI.v1.LineItem": {
+                  "actions": {
+                    "CSlot": {
+                      "press": "com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.controller.AppCt.showCSlotDlg",
+                      "enabled": true,
+                      "visible": true,
+                      "text": "{i18n>CreateSlotAction}"
+                    },
+                    "massCreateSlot": {
+                      "press": "com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.controller.AppCt.showMassCreateDlg",
+                      "enabled": true,
+                      "visible": true,
+                      "text": "Mass Create"
+                    }
+                  },
+                  "tableSettings":{
+                    "type":"GridTable",
+                    "selectionMode":"Multi"
+                 }
+                }
+              }
+            }
+          }
+        },
+        "StorageSlotObjectPage": {
+          "type": "Component",
+          "id": "StorageSlotObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/Storage/storageSlot",
+              "entitySet": "StorageSlot",
+              "sectionLayout": "Page",
+              "content": {
+                "header": {
+                  "actions": {
+                    "editSlot": {
+                      "press": "com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.controller.AppCt.showUSlotDlg",
+                      "text": "Edit"
+                    },
+                    "deleteSlot": {
+                      "press": "com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.controller.DSlotMBoxCt.onWarning2MessageBoxPress",
+                      "text": "Delete"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "extends": {
+      "extensions": {
+        "sap.ui.controllerExtentions": {
+          "sap.suite.ui.generic.template.ListReport.view.ListReport": {
+            "controllerName": "com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.controller.StorageListExt",
+            "sap.ui.generic.app": {
+              "Storage": {
+                "EntitySet": "Storage",
+                "Actions": {
+                  "CreateStorageAction": {
+                    "id": "createStorageBtn",
+                    "press": ".onPressCreateStorageAction",
+                    "text": "{i18n>Create}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "sap.ui.controllerExtensions": {}
+      }
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": ["storageui"],
+    "archeType": "transactional"
+  }
+}

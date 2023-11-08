@@ -1,0 +1,163 @@
+{
+  "services": {
+    "LaunchPage": {
+      "adapter": {
+        "config": {
+          "catalogs": [],
+          "groups": [
+            {
+              "id": "Administration",
+              "title": "Administration",
+              "isPreset": true,
+              "isVisible": true,
+              "isGroupLocked": false,
+              "tiles": [
+                {
+                  "id": "manage-storages",
+                  "tileType": "sap.ushell.ui.tile.StaticTile",
+                  "properties": {
+                    "targetURL": "#Storages-manage",
+                    "title": "Manage Storages",
+                    "description": "Add/edit/delete storages and slots"
+                  }
+                },
+                {
+                  "id": "manage-companies",
+                  "tileType": "sap.ushell.ui.tile.StaticTile",
+                  "properties": {
+                    "targetURL": "#Companies-manage",
+                    "title": "Manage Companies",
+                    "description": "Add/edit/delete companies"
+                  }
+                },
+                {
+                  "id": "manage-packages",
+                  "tileType": "sap.ushell.ui.tile.StaticTile",
+                  "properties": {
+                    "targetURL": "#Packages-manage",
+                    "title": "Manage Storages",
+                    "description": "edit/delete/confirm packages"
+                  }
+                },
+                {
+                  "id": "register-packages",
+                  "tileType": "sap.ushell.ui.tile.StaticTile",
+                  "properties": {
+                    "targetURL": "#Packages-register",
+                    "title": "Register Packages",
+                    "description": "Add/edit/delete storages and slots"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "End-Application",
+              "title": "End Application",
+              "isPreset": true,
+              "isVisible": true,
+              "isGroupLocked": false,
+              "tiles": [
+                {
+                  "id": "packages-list",
+                  "tileType": "sap.ushell.ui.tile.StaticTile",
+                  "properties": {
+                    "targetURL": "#Packages-list",
+                    "title": "My Packages",
+                    "description": "Review own package histories"
+                  }
+                },
+                {
+                  "id": "package-pickup",
+                  "tileType": "sap.ushell.ui.tile.StaticTile",
+                  "properties": {
+                    "targetURL": "#Packages-pickup",
+                    "title": "Package Pickup",
+                    "description": "Add/edit/delete reviews"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "NavTargetResolution": {
+      "config": {
+        "enableClientSideTargetResolution": true
+      }
+    },
+    "ClientSideTargetResolution": {
+      "adapter": {
+        "config": {
+          "inbounds": {
+            "manage-storages": {
+              "semanticObject": "Storages",
+              "action": "manage",
+              "signature": {
+                "parameters": {},
+                "additionalParameters": "allowed"
+              },
+              "resolutionResult": {
+                "applicationType": "SAPUI5",
+                "additionalInformation": "SAPUI5.Component=com.sap.internal.digitallab.packagehandling.app.manage.storages",
+                "url": "/storage/webapp"
+              }
+            },
+            "manage-packages": {
+              "semanticObject": "Packages",
+              "action": "manage",
+              "signature": {
+                "parameters": {},
+                "additionalParameters": "allowed"
+              },
+              "resolutionResult": {
+                "applicationType": "SAPUI5",
+                "additionalInformation": "SAPUI5.Component=ph.app.manage",
+                "url": "/manage/webapp"
+              }
+            },
+            "register-companies": {
+              "semanticObject": "Packages",
+              "action": "manage",
+              "signature": {
+                "parameters": {},
+                "additionalParameters": "allowed"
+              },
+              "resolutionResult": {
+                "applicationType": "SAPUI5",
+                "additionalInformation": "SAPUI5.Component=ph.app.register",
+                "url": "/register/webapp"
+              }
+            },
+            "packages-list": {
+              "semanticObject": "Packages",
+              "action": "list",
+              "signature": {
+                "parameters": {},
+                "additionalParameters": "allowed"
+              },
+              "resolutionResult": {
+                "applicationType": "SAPUI5",
+                "additionalInformation": "SAPUI5.Component=ph.app.history",
+                "url": "/history/webapp"
+              }
+            },
+            "package-pickup": {
+              "semanticObject": "Packages",
+              "action": "pickup",
+              "signature": {
+                "parameters": {},
+                "additionalParameters": "allowed"
+              },
+              "resolutionResult": {
+                "applicationType": "SAPUI5",
+                "additionalInformation": "SAPUI5.Component=ph.app.pickup",
+                "url": "/pickup/webapp"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

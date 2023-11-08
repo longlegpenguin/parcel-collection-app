@@ -46,8 +46,8 @@ annotate core.Storage with {
     buildingFloor @mandatory;
 };
 
-annotate core.StorageSlot with {
+annotate StorageService.StorageSlot with {
     name     @mandatory;
     storage  @mandatory  @assert.target;
-    status   @readonly   @cds.on.insert: {status_code: 'empty'};
+    status   ;
 };
