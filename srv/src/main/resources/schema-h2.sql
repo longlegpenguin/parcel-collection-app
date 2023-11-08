@@ -525,7 +525,8 @@ FROM com_sap_internal_digitallab_packagehandling_core_Storage AS Storage_0;
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_DeliveryCompany AS SELECT
   DeliveryCompany_0.ID,
-  DeliveryCompany_0.name
+  DeliveryCompany_0.name,
+  DeliveryCompany_0.logo
 FROM com_sap_internal_digitallab_packagehandling_core_DeliveryCompany AS DeliveryCompany_0; 
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_Building AS SELECT
