@@ -1,0 +1,767 @@
+<edmx:Edmx Version="1.0">
+<edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml">
+<edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/>
+</edmx:Reference>
+<edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+<edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+</edmx:Reference>
+<edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+<edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+</edmx:Reference>
+<edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+<edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+</edmx:Reference>
+<edmx:DataServices m:DataServiceVersion="2.0">
+<Schema Namespace="com.sap.internal.digitallab.packagehandling.service.PackageService">
+<EntityContainer Name="EntityContainer" m:IsDefaultEntityContainer="true">
+<EntitySet Name="Package" EntityType="com.sap.internal.digitallab.packagehandling.service.PackageService.Package"/>
+<EntitySet Name="PackageType" EntityType="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageType"/>
+<EntitySet Name="PackageStatus" EntityType="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageStatus"/>
+<EntitySet Name="StorageSlot" EntityType="com.sap.internal.digitallab.packagehandling.service.PackageService.StorageSlot"/>
+<EntitySet Name="Storage" EntityType="com.sap.internal.digitallab.packagehandling.service.PackageService.Storage"/>
+<EntitySet Name="DeliveryCompany" EntityType="com.sap.internal.digitallab.packagehandling.service.PackageService.DeliveryCompany"/>
+<EntitySet Name="Building" EntityType="com.sap.internal.digitallab.packagehandling.service.PackageService.Building"/>
+<EntitySet Name="BuildingFloor" EntityType="com.sap.internal.digitallab.packagehandling.service.PackageService.BuildingFloor"/>
+<EntitySet Name="PackageType_texts" EntityType="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageType_texts"/>
+<EntitySet Name="PackageStatus_texts" EntityType="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageStatus_texts"/>
+<FunctionImport Name="confirm" ReturnType="Edm.Boolean" m:HttpMethod="POST" sap:applicable-path="confirm_ac">
+<Parameter Name="packagesIds" Type="Collection(Edm.Guid)" Nullable="false" Mode="In"/>
+<Parameter Name="slotId" Type="Edm.Guid" Mode="In" Nullable="true"/>
+</FunctionImport>
+<FunctionImport Name="pickup" EntitySet="Package" ReturnType="com.sap.internal.digitallab.packagehandling.service.PackageService.Package" m:HttpMethod="POST" sap:applicable-path="pickup_ac">
+<Parameter Name="packageId" Type="Edm.Guid" Mode="In" Nullable="true"/>
+</FunctionImport>
+<AssociationSet Name="Package_slot" Association="com.sap.internal.digitallab.packagehandling.service.PackageService.Package_slot">
+<End Role="Package" EntitySet="Package"/>
+<End Role="StorageSlot" EntitySet="StorageSlot"/>
+</AssociationSet>
+<AssociationSet Name="Package_deliveryCompany" Association="com.sap.internal.digitallab.packagehandling.service.PackageService.Package_deliveryCompany">
+<End Role="Package" EntitySet="Package"/>
+<End Role="DeliveryCompany" EntitySet="DeliveryCompany"/>
+</AssociationSet>
+<AssociationSet Name="Package_type" Association="com.sap.internal.digitallab.packagehandling.service.PackageService.Package_type">
+<End Role="Package" EntitySet="Package"/>
+<End Role="PackageType" EntitySet="PackageType"/>
+</AssociationSet>
+<AssociationSet Name="Package_status" Association="com.sap.internal.digitallab.packagehandling.service.PackageService.Package_status">
+<End Role="Package" EntitySet="Package"/>
+<End Role="PackageStatus" EntitySet="PackageStatus"/>
+</AssociationSet>
+<AssociationSet Name="PackageType_texts_1" Association="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageType_texts_1">
+<End Role="PackageType" EntitySet="PackageType"/>
+<End Role="PackageType_texts" EntitySet="PackageType_texts"/>
+</AssociationSet>
+<AssociationSet Name="PackageType_localized" Association="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageType_localized">
+<End Role="PackageType" EntitySet="PackageType"/>
+<End Role="PackageType_texts" EntitySet="PackageType_texts"/>
+</AssociationSet>
+<AssociationSet Name="PackageStatus_texts_1" Association="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageStatus_texts_1">
+<End Role="PackageStatus" EntitySet="PackageStatus"/>
+<End Role="PackageStatus_texts" EntitySet="PackageStatus_texts"/>
+</AssociationSet>
+<AssociationSet Name="PackageStatus_localized" Association="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageStatus_localized">
+<End Role="PackageStatus" EntitySet="PackageStatus"/>
+<End Role="PackageStatus_texts" EntitySet="PackageStatus_texts"/>
+</AssociationSet>
+<AssociationSet Name="StorageSlot_storage" Association="com.sap.internal.digitallab.packagehandling.service.PackageService.StorageSlot_storage">
+<End Role="StorageSlot" EntitySet="StorageSlot"/>
+<End Role="Storage" EntitySet="Storage"/>
+</AssociationSet>
+<AssociationSet Name="Storage_buildingFloor" Association="com.sap.internal.digitallab.packagehandling.service.PackageService.Storage_buildingFloor">
+<End Role="Storage" EntitySet="Storage"/>
+<End Role="BuildingFloor" EntitySet="BuildingFloor"/>
+</AssociationSet>
+<AssociationSet Name="BuildingFloor_building" Association="com.sap.internal.digitallab.packagehandling.service.PackageService.BuildingFloor_building">
+<End Role="BuildingFloor" EntitySet="BuildingFloor"/>
+<End Role="Building" EntitySet="Building"/>
+</AssociationSet>
+</EntityContainer>
+<EntityType Name="Package">
+<Key>
+<PropertyRef Name="ID"/>
+</Key>
+<Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+<Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+<Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+<Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+<Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+<Property Name="recipient" Type="Edm.String" MaxLength="255" Nullable="false"/>
+<Property Name="comfirmationTime" Type="Edm.DateTimeOffset" Precision="7"/>
+<Property Name="pickupTime" Type="Edm.DateTimeOffset" Precision="7"/>
+<NavigationProperty Name="slot" Relationship="com.sap.internal.digitallab.packagehandling.service.PackageService.Package_slot" FromRole="Package" ToRole="StorageSlot"/>
+<Property Name="slot_ID" Type="Edm.Guid"/>
+<NavigationProperty Name="deliveryCompany" Relationship="com.sap.internal.digitallab.packagehandling.service.PackageService.Package_deliveryCompany" FromRole="Package" ToRole="DeliveryCompany"/>
+<Property Name="deliveryCompany_ID" Type="Edm.Guid"/>
+<NavigationProperty Name="type" Relationship="com.sap.internal.digitallab.packagehandling.service.PackageService.Package_type" FromRole="Package" ToRole="PackageType"/>
+<Property Name="type_code" Type="Edm.String" MaxLength="255" Nullable="false"/>
+<NavigationProperty Name="status" Relationship="com.sap.internal.digitallab.packagehandling.service.PackageService.Package_status" FromRole="Package" ToRole="PackageStatus"/>
+<Property Name="status_code" Type="Edm.String" MaxLength="255" Nullable="false"/>
+<Property Name="receptionist" Type="Edm.String" MaxLength="255" Nullable="false"/>
+<Property Name="comment" Type="Edm.String" MaxLength="255"/>
+<Property Name="delete_ac" Type="Edm.Boolean"/>
+<Property Name="confirm_ac" Type="Edm.Boolean"/>
+<Property Name="pickup_ac" Type="Edm.Boolean"/>
+</EntityType>
+<EntityType Name="PackageType">
+<Key>
+<PropertyRef Name="code"/>
+</Key>
+<Property Name="name" Type="Edm.String" MaxLength="255"/>
+<Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+<Property Name="code" Type="Edm.String" MaxLength="255" Nullable="false"/>
+<NavigationProperty Name="texts" Relationship="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageType_texts_1" FromRole="PackageType" ToRole="PackageType_texts"/>
+<NavigationProperty Name="localized" Relationship="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageType_localized" FromRole="PackageType" ToRole="PackageType_texts"/>
+</EntityType>
+<EntityType Name="PackageStatus">
+<Key>
+<PropertyRef Name="code"/>
+</Key>
+<Property Name="name" Type="Edm.String" MaxLength="255"/>
+<Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+<Property Name="code" Type="Edm.String" MaxLength="255" Nullable="false"/>
+<NavigationProperty Name="texts" Relationship="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageStatus_texts_1" FromRole="PackageStatus" ToRole="PackageStatus_texts"/>
+<NavigationProperty Name="localized" Relationship="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageStatus_localized" FromRole="PackageStatus" ToRole="PackageStatus_texts"/>
+</EntityType>
+<EntityType Name="StorageSlot">
+<Key>
+<PropertyRef Name="ID"/>
+</Key>
+<Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+<Property Name="name" Type="Edm.String" MaxLength="255" Nullable="false"/>
+<NavigationProperty Name="storage" Relationship="com.sap.internal.digitallab.packagehandling.service.PackageService.StorageSlot_storage" FromRole="StorageSlot" ToRole="Storage"/>
+<Property Name="storage_ID" Type="Edm.Guid" Nullable="false"/>
+</EntityType>
+<EntityType Name="Storage">
+<Key>
+<PropertyRef Name="ID"/>
+</Key>
+<Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+<Property Name="name" Type="Edm.String" MaxLength="255" Nullable="false"/>
+<NavigationProperty Name="buildingFloor" Relationship="com.sap.internal.digitallab.packagehandling.service.PackageService.Storage_buildingFloor" FromRole="Storage" ToRole="BuildingFloor"/>
+<Property Name="buildingFloor_ID" Type="Edm.Guid" Nullable="false"/>
+</EntityType>
+<EntityType Name="DeliveryCompany">
+<Key>
+<PropertyRef Name="ID"/>
+</Key>
+<Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+<Property Name="name" Type="Edm.String" MaxLength="255" Nullable="false"/>
+<Property Name="logo" Type="Edm.String" MaxLength="255"/>
+</EntityType>
+<EntityType Name="Building">
+<Key>
+<PropertyRef Name="ID"/>
+</Key>
+<Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+<Property Name="name" Type="Edm.String" MaxLength="255" Nullable="false"/>
+<NavigationProperty Name="floors" Relationship="com.sap.internal.digitallab.packagehandling.service.PackageService.BuildingFloor_building" FromRole="Building" ToRole="BuildingFloor"/>
+</EntityType>
+<EntityType Name="BuildingFloor">
+<Key>
+<PropertyRef Name="ID"/>
+</Key>
+<Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+<Property Name="name" Type="Edm.String" MaxLength="255" Nullable="false"/>
+<NavigationProperty Name="building" Relationship="com.sap.internal.digitallab.packagehandling.service.PackageService.BuildingFloor_building" FromRole="BuildingFloor" ToRole="Building"/>
+<Property Name="building_ID" Type="Edm.Guid" Nullable="false"/>
+</EntityType>
+<EntityType Name="PackageType_texts">
+<Key>
+<PropertyRef Name="locale"/>
+<PropertyRef Name="code"/>
+</Key>
+<Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+<Property Name="name" Type="Edm.String" MaxLength="255"/>
+<Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+<Property Name="code" Type="Edm.String" MaxLength="255" Nullable="false"/>
+</EntityType>
+<EntityType Name="PackageStatus_texts">
+<Key>
+<PropertyRef Name="locale"/>
+<PropertyRef Name="code"/>
+</Key>
+<Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+<Property Name="name" Type="Edm.String" MaxLength="255"/>
+<Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+<Property Name="code" Type="Edm.String" MaxLength="255" Nullable="false"/>
+</EntityType>
+<Association Name="Package_slot">
+<End Role="Package" Type="com.sap.internal.digitallab.packagehandling.service.PackageService.Package" Multiplicity="*"/>
+<End Role="StorageSlot" Type="com.sap.internal.digitallab.packagehandling.service.PackageService.StorageSlot" Multiplicity="0..1"/>
+<ReferentialConstraint>
+<Principal Role="StorageSlot">
+<PropertyRef Name="ID"/>
+</Principal>
+<Dependent Role="Package">
+<PropertyRef Name="slot_ID"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="Package_deliveryCompany">
+<End Role="Package" Type="com.sap.internal.digitallab.packagehandling.service.PackageService.Package" Multiplicity="*"/>
+<End Role="DeliveryCompany" Type="com.sap.internal.digitallab.packagehandling.service.PackageService.DeliveryCompany" Multiplicity="0..1"/>
+<ReferentialConstraint>
+<Principal Role="DeliveryCompany">
+<PropertyRef Name="ID"/>
+</Principal>
+<Dependent Role="Package">
+<PropertyRef Name="deliveryCompany_ID"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="Package_type">
+<End Role="Package" Type="com.sap.internal.digitallab.packagehandling.service.PackageService.Package" Multiplicity="*"/>
+<End Role="PackageType" Type="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageType" Multiplicity="1"/>
+<ReferentialConstraint>
+<Principal Role="PackageType">
+<PropertyRef Name="code"/>
+</Principal>
+<Dependent Role="Package">
+<PropertyRef Name="type_code"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="Package_status">
+<End Role="Package" Type="com.sap.internal.digitallab.packagehandling.service.PackageService.Package" Multiplicity="*"/>
+<End Role="PackageStatus" Type="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageStatus" Multiplicity="1"/>
+<ReferentialConstraint>
+<Principal Role="PackageStatus">
+<PropertyRef Name="code"/>
+</Principal>
+<Dependent Role="Package">
+<PropertyRef Name="status_code"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="PackageType_texts_1">
+<End Role="PackageType" Type="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageType" Multiplicity="1">
+<OnDelete Action="Cascade"/>
+</End>
+<End Role="PackageType_texts" Type="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageType_texts" Multiplicity="*"/>
+</Association>
+<Association Name="PackageType_localized">
+<End Role="PackageType" Type="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageType" Multiplicity="*"/>
+<End Role="PackageType_texts" Type="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageType_texts" Multiplicity="0..1"/>
+</Association>
+<Association Name="PackageStatus_texts_1">
+<End Role="PackageStatus" Type="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageStatus" Multiplicity="1">
+<OnDelete Action="Cascade"/>
+</End>
+<End Role="PackageStatus_texts" Type="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageStatus_texts" Multiplicity="*"/>
+</Association>
+<Association Name="PackageStatus_localized">
+<End Role="PackageStatus" Type="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageStatus" Multiplicity="*"/>
+<End Role="PackageStatus_texts" Type="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageStatus_texts" Multiplicity="0..1"/>
+</Association>
+<Association Name="StorageSlot_storage">
+<End Role="StorageSlot" Type="com.sap.internal.digitallab.packagehandling.service.PackageService.StorageSlot" Multiplicity="*"/>
+<End Role="Storage" Type="com.sap.internal.digitallab.packagehandling.service.PackageService.Storage" Multiplicity="1"/>
+<ReferentialConstraint>
+<Principal Role="Storage">
+<PropertyRef Name="ID"/>
+</Principal>
+<Dependent Role="StorageSlot">
+<PropertyRef Name="storage_ID"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="Storage_buildingFloor">
+<End Role="Storage" Type="com.sap.internal.digitallab.packagehandling.service.PackageService.Storage" Multiplicity="*"/>
+<End Role="BuildingFloor" Type="com.sap.internal.digitallab.packagehandling.service.PackageService.BuildingFloor" Multiplicity="1"/>
+<ReferentialConstraint>
+<Principal Role="BuildingFloor">
+<PropertyRef Name="ID"/>
+</Principal>
+<Dependent Role="Storage">
+<PropertyRef Name="buildingFloor_ID"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="BuildingFloor_building">
+<End Role="BuildingFloor" Type="com.sap.internal.digitallab.packagehandling.service.PackageService.BuildingFloor" Multiplicity="*"/>
+<End Role="Building" Type="com.sap.internal.digitallab.packagehandling.service.PackageService.Building" Multiplicity="1"/>
+<ReferentialConstraint>
+<Principal Role="Building">
+<PropertyRef Name="ID"/>
+</Principal>
+<Dependent Role="BuildingFloor">
+<PropertyRef Name="building_ID"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.Package">
+<Annotation Term="UI.SelectionFields">
+<Collection>
+<PropertyPath>recipient</PropertyPath>
+<PropertyPath>type/name</PropertyPath>
+<PropertyPath>deliveryCompany/name</PropertyPath>
+<PropertyPath>comfirmationTime</PropertyPath>
+</Collection>
+</Annotation>
+<Annotation Term="UI.LineItem">
+<Collection>
+<Record Type="UI.DataField">
+<PropertyValue Property="Value" Path="recipient"/>
+</Record>
+<Record Type="UI.DataField">
+<PropertyValue Property="Value" Path="type/name"/>
+</Record>
+<Record Type="UI.DataField">
+<PropertyValue Property="Value" Path="status/name"/>
+</Record>
+<Record Type="UI.DataField">
+<PropertyValue Property="Value" Path="comfirmationTime"/>
+</Record>
+<Record Type="UI.DataField">
+<PropertyValue Property="Value" Path="pickupTime"/>
+</Record>
+</Collection>
+</Annotation>
+<Annotation Term="UI.FieldGroup" Qualifier="GeneratedGroup1">
+<Record Type="UI.FieldGroupType">
+<PropertyValue Property="Data">
+<Collection>
+<Record Type="UI.DataField">
+<PropertyValue Property="Value" Path="recipient"/>
+</Record>
+<Record Type="UI.DataField">
+<PropertyValue Property="Label" String="comfirmationTime"/>
+<PropertyValue Property="Value" Path="comfirmationTime"/>
+</Record>
+<Record Type="UI.DataField">
+<PropertyValue Property="Label" String="pickupTime"/>
+<PropertyValue Property="Value" Path="pickupTime"/>
+</Record>
+<Record Type="UI.DataField">
+<PropertyValue Property="Label" String="type_code"/>
+<PropertyValue Property="Value" Path="type_code"/>
+</Record>
+<Record Type="UI.DataField">
+<PropertyValue Property="Label" String="status_code"/>
+<PropertyValue Property="Value" Path="status_code"/>
+</Record>
+<Record Type="UI.DataField">
+<PropertyValue Property="Value" Path="receptionist"/>
+</Record>
+<Record Type="UI.DataField">
+<PropertyValue Property="Label" String="comment"/>
+<PropertyValue Property="Value" Path="comment"/>
+</Record>
+<Record Type="UI.DataField">
+<PropertyValue Property="Label" String="delete_ac"/>
+<PropertyValue Property="Value" Path="delete_ac"/>
+</Record>
+<Record Type="UI.DataField">
+<PropertyValue Property="Label" String="confirm_ac"/>
+<PropertyValue Property="Value" Path="confirm_ac"/>
+</Record>
+<Record Type="UI.DataField">
+<PropertyValue Property="Label" String="pickup_ac"/>
+<PropertyValue Property="Value" Path="pickup_ac"/>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="UI.Facets">
+<Collection>
+<Record Type="UI.ReferenceFacet">
+<PropertyValue Property="ID" String="GeneratedFacet1"/>
+<PropertyValue Property="Label" String="General Information"/>
+<PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#GeneratedGroup1"/>
+</Record>
+</Collection>
+</Annotation>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.EntityContainer/Package">
+<Annotation Term="Capabilities.DeleteRestrictions">
+<Record Type="Capabilities.DeleteRestrictionsType">
+<PropertyValue Property="Deletable" Path="delete_ac"/>
+</Record>
+</Annotation>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.Package/ID">
+<Annotation Term="UI.HiddenFilter" Bool="true"/>
+<Annotation Term="UI.Hidden" Bool="true"/>
+<Annotation Term="Common.Label" String="UUID"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.Package/createdAt">
+<Annotation Term="UI.HiddenFilter" Bool="true"/>
+<Annotation Term="UI.Hidden" Bool="true"/>
+<Annotation Term="Core.Immutable" Bool="true"/>
+<Annotation Term="Core.Computed" Bool="true"/>
+<Annotation Term="Common.Label" String="Created On"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.Package/createdBy">
+<Annotation Term="UI.HiddenFilter" Bool="true"/>
+<Annotation Term="UI.Hidden" Bool="true"/>
+<Annotation Term="Core.Immutable" Bool="true"/>
+<Annotation Term="Core.Computed" Bool="true"/>
+<Annotation Term="Core.Description" String="User's unique ID"/>
+<Annotation Term="Common.Label" String="Created By"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.Package/modifiedAt">
+<Annotation Term="UI.HiddenFilter" Bool="true"/>
+<Annotation Term="UI.Hidden" Bool="true"/>
+<Annotation Term="Core.Computed" Bool="true"/>
+<Annotation Term="Common.Label" String="Last Update On"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.Package/modifiedBy">
+<Annotation Term="UI.HiddenFilter" Bool="true"/>
+<Annotation Term="UI.Hidden" Bool="true"/>
+<Annotation Term="Core.Computed" Bool="true"/>
+<Annotation Term="Core.Description" String="User's unique ID"/>
+<Annotation Term="Common.Label" String="Last Update By"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.Package/recipient">
+<Annotation Term="Common.Label" String="Recipient"/>
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+<Annotation Term="Core.Description" String="User's unique ID"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.Package/comfirmationTime">
+<Annotation Term="Common.Label" String="Delivery Time"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.Package/pickupTime">
+<Annotation Term="Common.Label" String="Pickup Time"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.Package/slot">
+<Annotation Term="UI.HiddenFilter" Bool="true"/>
+<Annotation Term="UI.Hidden" Bool="true"/>
+<Annotation Term="Common.Label" String="Slot"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.Package/slot_ID">
+<Annotation Term="UI.HiddenFilter" Bool="true"/>
+<Annotation Term="UI.Hidden" Bool="true"/>
+<Annotation Term="Common.Label" String="Slot"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.Package/deliveryCompany">
+<Annotation Term="UI.HiddenFilter" Bool="true"/>
+<Annotation Term="UI.Hidden" Bool="true"/>
+<Annotation Term="Common.Label" String="Delivery Company"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.Package/deliveryCompany_ID">
+<Annotation Term="UI.HiddenFilter" Bool="true"/>
+<Annotation Term="UI.Hidden" Bool="true"/>
+<Annotation Term="Common.Label" String="Delivery Company"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.Package/type">
+<Annotation Term="Common.Label" String="Type"/>
+<Annotation Term="UI.HiddenFilter" Bool="true"/>
+<Annotation Term="UI.Hidden" Bool="true"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.Package/type_code">
+<Annotation Term="Common.ValueListWithFixedValues" Bool="true"/>
+<Annotation Term="Common.Label" String="Type"/>
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+<Annotation Term="Common.ValueList">
+<Record Type="Common.ValueListType">
+<PropertyValue Property="Label" String="Type"/>
+<PropertyValue Property="CollectionPath" String="PackageType"/>
+<PropertyValue Property="Parameters">
+<Collection>
+<Record Type="Common.ValueListParameterInOut">
+<PropertyValue Property="LocalDataProperty" PropertyPath="type_code"/>
+<PropertyValue Property="ValueListProperty" String="code"/>
+</Record>
+<Record Type="Common.ValueListParameterDisplayOnly">
+<PropertyValue Property="ValueListProperty" String="name"/>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="UI.HiddenFilter" Bool="true"/>
+<Annotation Term="UI.Hidden" Bool="true"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.Package/status">
+<Annotation Term="Common.Label" String="Status"/>
+<Annotation Term="UI.HiddenFilter" Bool="true"/>
+<Annotation Term="UI.Hidden" Bool="true"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.Package/status_code">
+<Annotation Term="Common.ValueListWithFixedValues" Bool="true"/>
+<Annotation Term="Common.Label" String="Status"/>
+<Annotation Term="Common.ValueList">
+<Record Type="Common.ValueListType">
+<PropertyValue Property="Label" String="Status"/>
+<PropertyValue Property="CollectionPath" String="PackageStatus"/>
+<PropertyValue Property="Parameters">
+<Collection>
+<Record Type="Common.ValueListParameterInOut">
+<PropertyValue Property="LocalDataProperty" PropertyPath="status_code"/>
+<PropertyValue Property="ValueListProperty" String="code"/>
+</Record>
+<Record Type="Common.ValueListParameterDisplayOnly">
+<PropertyValue Property="ValueListProperty" String="name"/>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="UI.HiddenFilter" Bool="true"/>
+<Annotation Term="UI.Hidden" Bool="true"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.Package/receptionist">
+<Annotation Term="UI.HiddenFilter" Bool="true"/>
+<Annotation Term="UI.Hidden" Bool="true"/>
+<Annotation Term="Common.Label" String="Receptionist"/>
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+<Annotation Term="Core.Description" String="User's unique ID"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.Package/comment">
+<Annotation Term="UI.HiddenFilter" Bool="true"/>
+<Annotation Term="UI.Hidden" Bool="true"/>
+<Annotation Term="Common.Label" String="Comment"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.Package/delete_ac">
+<Annotation Term="UI.HiddenFilter" Bool="true"/>
+<Annotation Term="UI.Hidden" Bool="true"/>
+<Annotation Term="Core.Computed" Bool="true"/>
+<Annotation Term="Common.Label" String="Can Delete"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.Package/confirm_ac">
+<Annotation Term="UI.HiddenFilter" Bool="true"/>
+<Annotation Term="UI.Hidden" Bool="true"/>
+<Annotation Term="Core.Computed" Bool="true"/>
+<Annotation Term="Common.Label" String="Can Confirm"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.Package/pickup_ac">
+<Annotation Term="UI.HiddenFilter" Bool="true"/>
+<Annotation Term="UI.Hidden" Bool="true"/>
+<Annotation Term="Core.Computed" Bool="true"/>
+<Annotation Term="Common.Label" String="Can Pickup"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageType">
+<Annotation Term="UI.Identification">
+<Collection>
+<Record Type="UI.DataField">
+<PropertyValue Property="Value" Path="name"/>
+</Record>
+</Collection>
+</Annotation>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.EntityContainer/PackageType">
+<Annotation Term="Capabilities.DeleteRestrictions">
+<Record Type="Capabilities.DeleteRestrictionsType">
+<PropertyValue Property="Deletable" Bool="false"/>
+</Record>
+</Annotation>
+<Annotation Term="Capabilities.InsertRestrictions">
+<Record Type="Capabilities.InsertRestrictionsType">
+<PropertyValue Property="Insertable" Bool="false"/>
+</Record>
+</Annotation>
+<Annotation Term="Capabilities.UpdateRestrictions">
+<Record Type="Capabilities.UpdateRestrictionsType">
+<PropertyValue Property="Updatable" Bool="false"/>
+</Record>
+</Annotation>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageType/name">
+<Annotation Term="Common.Label" String="Type"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageType/descr">
+<Annotation Term="Common.Label" String="Description"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageType/code">
+<Annotation Term="Common.Label" String="Type Code"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageStatus">
+<Annotation Term="UI.Identification">
+<Collection>
+<Record Type="UI.DataField">
+<PropertyValue Property="Value" Path="name"/>
+</Record>
+</Collection>
+</Annotation>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.EntityContainer/PackageStatus">
+<Annotation Term="Capabilities.DeleteRestrictions">
+<Record Type="Capabilities.DeleteRestrictionsType">
+<PropertyValue Property="Deletable" Bool="false"/>
+</Record>
+</Annotation>
+<Annotation Term="Capabilities.InsertRestrictions">
+<Record Type="Capabilities.InsertRestrictionsType">
+<PropertyValue Property="Insertable" Bool="false"/>
+</Record>
+</Annotation>
+<Annotation Term="Capabilities.UpdateRestrictions">
+<Record Type="Capabilities.UpdateRestrictionsType">
+<PropertyValue Property="Updatable" Bool="false"/>
+</Record>
+</Annotation>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageStatus/name">
+<Annotation Term="Common.Label" String="Status"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageStatus/descr">
+<Annotation Term="Common.Label" String="Description"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageStatus/code">
+<Annotation Term="Common.Label" String="Status Code"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.EntityContainer/StorageSlot">
+<Annotation Term="Capabilities.DeleteRestrictions">
+<Record Type="Capabilities.DeleteRestrictionsType">
+<PropertyValue Property="Deletable" Path="delete_ac"/>
+</Record>
+</Annotation>
+<Annotation Term="Capabilities.InsertRestrictions">
+<Record Type="Capabilities.InsertRestrictionsType">
+<PropertyValue Property="Insertable" Bool="false"/>
+</Record>
+</Annotation>
+<Annotation Term="Capabilities.UpdateRestrictions">
+<Record Type="Capabilities.UpdateRestrictionsType">
+<PropertyValue Property="Updatable" Bool="false"/>
+</Record>
+</Annotation>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.StorageSlot/ID">
+<Annotation Term="Common.Label" String="UUID"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.StorageSlot/name">
+<Annotation Term="Common.Label" String="Slot"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.StorageSlot/storage">
+<Annotation Term="Common.Label" String="Storage"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.StorageSlot/storage_ID">
+<Annotation Term="Common.Label" String="Storage"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.EntityContainer/Storage">
+<Annotation Term="Capabilities.DeleteRestrictions">
+<Record Type="Capabilities.DeleteRestrictionsType">
+<PropertyValue Property="Deletable" Path="delete_ac"/>
+</Record>
+</Annotation>
+<Annotation Term="Capabilities.InsertRestrictions">
+<Record Type="Capabilities.InsertRestrictionsType">
+<PropertyValue Property="Insertable" Bool="false"/>
+</Record>
+</Annotation>
+<Annotation Term="Capabilities.UpdateRestrictions">
+<Record Type="Capabilities.UpdateRestrictionsType">
+<PropertyValue Property="Updatable" Bool="false"/>
+</Record>
+</Annotation>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.Storage/ID">
+<Annotation Term="Common.Label" String="UUID"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.Storage/name">
+<Annotation Term="Common.Label" String="Name"/>
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.Storage/buildingFloor">
+<Annotation Term="Common.Label" String="Building Floor"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.Storage/buildingFloor_ID">
+<Annotation Term="Common.Label" String="Building Floor"/>
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.EntityContainer/DeliveryCompany">
+<Annotation Term="Capabilities.DeleteRestrictions">
+<Record Type="Capabilities.DeleteRestrictionsType">
+<PropertyValue Property="Deletable" Bool="false"/>
+</Record>
+</Annotation>
+<Annotation Term="Capabilities.InsertRestrictions">
+<Record Type="Capabilities.InsertRestrictionsType">
+<PropertyValue Property="Insertable" Bool="false"/>
+</Record>
+</Annotation>
+<Annotation Term="Capabilities.UpdateRestrictions">
+<Record Type="Capabilities.UpdateRestrictionsType">
+<PropertyValue Property="Updatable" Bool="false"/>
+</Record>
+</Annotation>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.DeliveryCompany/ID">
+<Annotation Term="Common.Label" String="UUID"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.DeliveryCompany/name">
+<Annotation Term="Common.Label" String="Delivery Company"/>
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.DeliveryCompany/logo">
+<Annotation Term="Core.IsURL" Bool="true"/>
+<Annotation Term="Common.Label" String="Logo"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.EntityContainer/Building">
+<Annotation Term="Capabilities.DeleteRestrictions">
+<Record Type="Capabilities.DeleteRestrictionsType">
+<PropertyValue Property="Deletable" Bool="false"/>
+</Record>
+</Annotation>
+<Annotation Term="Capabilities.InsertRestrictions">
+<Record Type="Capabilities.InsertRestrictionsType">
+<PropertyValue Property="Insertable" Bool="false"/>
+</Record>
+</Annotation>
+<Annotation Term="Capabilities.UpdateRestrictions">
+<Record Type="Capabilities.UpdateRestrictionsType">
+<PropertyValue Property="Updatable" Bool="false"/>
+</Record>
+</Annotation>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.Building/ID">
+<Annotation Term="Common.Label" String="UUID"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.Building/name">
+<Annotation Term="Common.Label" String="Name"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.Building/floors">
+<Annotation Term="Common.Label" String="Floors"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.EntityContainer/BuildingFloor">
+<Annotation Term="Capabilities.DeleteRestrictions">
+<Record Type="Capabilities.DeleteRestrictionsType">
+<PropertyValue Property="Deletable" Bool="false"/>
+</Record>
+</Annotation>
+<Annotation Term="Capabilities.InsertRestrictions">
+<Record Type="Capabilities.InsertRestrictionsType">
+<PropertyValue Property="Insertable" Bool="false"/>
+</Record>
+</Annotation>
+<Annotation Term="Capabilities.UpdateRestrictions">
+<Record Type="Capabilities.UpdateRestrictionsType">
+<PropertyValue Property="Updatable" Bool="false"/>
+</Record>
+</Annotation>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.BuildingFloor/ID">
+<Annotation Term="Common.Label" String="UUID"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.BuildingFloor/name">
+<Annotation Term="Common.Label" String="Name"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.BuildingFloor/building">
+<Annotation Term="Common.Label" String="Building"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.BuildingFloor/building_ID">
+<Annotation Term="Common.Label" String="Building"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageType_texts/locale">
+<Annotation Term="Common.Label" String="Language Code"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageType_texts/name">
+<Annotation Term="Common.Label" String="Name"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageType_texts/descr">
+<Annotation Term="Common.Label" String="Description"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageStatus_texts/locale">
+<Annotation Term="Common.Label" String="Language Code"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageStatus_texts/name">
+<Annotation Term="Common.Label" String="Name"/>
+</Annotations>
+<Annotations Target="com.sap.internal.digitallab.packagehandling.service.PackageService.PackageStatus_texts/descr">
+<Annotation Term="Common.Label" String="Description"/>
+</Annotations>
+</Schema>
+</edmx:DataServices>
+</edmx:Edmx>

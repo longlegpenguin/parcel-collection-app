@@ -36,41 +36,37 @@ sap.ui.define(
         },
 
         _parseElem(elem) {
-            return elem.replaceAll('(', ')').split(')')[1]
+          return elem.replaceAll("(", ")").split(")")[1];
         },
 
         onSaveButtonPress: function (oEvent) {
           this._aSelectedContext.forEach((elem) => {
-            console.log("Confirming Selected : " + this._parseElem(elem.toString()));
+            console.log(
+              "Confirming Selected : " + this._parseElem(elem.toString())
+            );
           });
-          
-          var oData = this._getInputs();
-          console.log(JSON.stringify(oData));
-        //   var oModel = this._oExtensionAPI.getModel("MyModel");
 
-        //   var fnSuccess = function () {
-        //     this._setBusy(false);
-        //     this._closeDialog();
-        //     MessageToast.show("Created!");
-        //   }.bind(this);
+          var oPayload = this._getInputs();
+          console.log(JSON.stringify(oPayload));
 
-        //   var fnError = function (oError) {
-        //     this._setBusy(false);
-        //     var msg = this._getErrorMsg(oError);
-        //     MessageBox.error(msg);
-        //   }.bind(this);
-
-        //   var oContext = oModel.createEntry("/StorageSlot", {
-        //     properties: oData,
-        //     success: fnSuccess,
-        //     error: fnError,
-        //   });
-
-        //   oModel.submitChanges({
-        //     success: function () {},
-        //     error: function () {},
-        //   });
-        //   oContext.delete();
+          this._byId("idConfirmForm")
+            .getObjectBinding()
+            .setParameter("slotId", oPayload.slotId)
+            .setParameter("packagesIds", oPayload.packagesIds)
+            .execute()
+            .then(
+              () => {
+                MessageToast.show("Package(s) Confirmed!");
+                this._closeDialog();
+              },
+              (oError) => {
+                if (!oError.canceled)
+                  MessageBox.alert(this._getErrorMsg(oError), {
+                    icon: MessageBox.Icon.ERROR,
+                    title: "Error",
+                  });
+              }
+            );
         },
 
         onStorageSelectChange: function (oEvent) {
@@ -104,13 +100,14 @@ sap.ui.define(
         },
 
         _getInputs: function () {
-          var s = this._byId("idStorageSelect").getSelectedKey();
           var sl = this._byId("idStorageSlotSelect").getSelectedKey();
-          var aPackIds = this._aSelectedContext.map(elem => this._parseElem(elem.toString()));
-          
+          var aPackIds = this._aSelectedContext.map((elem) =>
+            this._parseElem(elem.toString())
+          );
+
           return {
             slotId: sl,
-            packagesIds: aPackIds
+            packagesIds: aPackIds,
           };
         },
 
