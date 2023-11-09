@@ -27,6 +27,37 @@ annotate service.Package with @(
             Target: '@UI.FieldGroup#AdminData',
         }
     ],
+    UI.SelectionVariant #variant1 : {
+        Text : '{i18n>SVariant1}',
+        SelectOptions : [
+            {
+                PropertyName : status.criticality,
+                Ranges : [
+                    {
+                        Sign : #I,
+                        High : 2,
+                        Option : #BT,
+                        Low : 0,
+                    },
+                ],
+            },
+        ],
+    },
+    UI.SelectionVariant #variant2 : {
+        Text            : '{i18n>SVariant2}',
+        SelectOptions   : [
+            {
+                PropertyName    : status.criticality,
+                Ranges          : [
+                    {
+                        Sign    : #I,
+                        Option  : #EQ, //Equals
+                        Low     : 3,
+                    },
+                ],
+            },
+        ],
+    },
     UI.LineItem       : [
         {
             $Type: 'UI.DataField',
@@ -37,8 +68,10 @@ annotate service.Package with @(
             Value: type.name,
         },
         {
-            $Type: 'UI.DataField',
-            Value: status.name,
+            $Type             : 'UI.DataField',
+            Criticality       : status.criticality,
+            Value             : status.name,
+            ![@UI.Importance] : #High
         },
         {
             $Type: 'UI.DataField',

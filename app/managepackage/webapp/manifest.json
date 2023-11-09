@@ -131,6 +131,19 @@
           "name": "sap.fe.templates.ListReport",
           "options": {
             "settings": {
+              "views": {
+                "paths": [
+                  {
+                    "key": "tab1",
+                    "annotationPath": "com.sap.vocabularies.UI.v1.SelectionVariant#variant1"
+                  },
+                  {
+                    "key": "tab2",
+                    "annotationPath": "com.sap.vocabularies.UI.v1.SelectionVariant#variant2"
+                  }
+                ],
+                "showCounts": true
+              },
               "contextPath": "/Package",
               "variantManagement": "Page",
               "initialLoad": true,
@@ -145,7 +158,19 @@
                 "@com.sap.vocabularies.UI.v1.LineItem": {
                   "tableSettings": {
                     "type": "ResponsiveTable",
-                    "selectionMode": "Multi"
+                    "selectionMode": "Multi",
+                    "quickVariantSelection": {
+                      "paths": [
+                        {
+                          "annotationPath": "com.sap.vocabularies.UI.v1.SelectionVariant#variant1"
+                        },
+                        {
+                          "annotationPath": "com.sap.vocabularies.UI.v1.SelectionVariant#variant2"
+                        }
+                      ],
+                      "hideTableTitle": false,
+                      "showCounts": true
+                    }
                   },
                   "columns": {
                     "DCColumn": {

@@ -1,4 +1,4 @@
-code,name,descr
-unavailable,Unavailable,"Slot is not available, no packages can be assigned to it."
-empty,Empty,"Slot is empty, a package can be added to it."
-inuse,In Use,Slot has at least one package assignment.
+code,criticality,name,descr
+unavailable,1,Unavailable,"Slot is not available, no packages can be assigned to it."
+empty,3,Empty,"Slot is empty, a package can be added to it."
+inuse,2,In Use,Slot has at least one package assignment.
