@@ -28,31 +28,45 @@ annotate service.Package with @(
         }
     ],
     UI.SelectionVariant #variant1 : {
-        Text : '{i18n>SVariant1}',
+        Text : 'Confirmed',
         SelectOptions : [
             {
                 PropertyName : status.criticality,
                 Ranges : [
                     {
-                        Sign : #I,
-                        High : 2,
-                        Option : #BT,
-                        Low : 0,
+                        Sign    : #I,
+                        Option  : #EQ, 
+                        Low     : 2,
                     },
                 ],
             },
         ],
     },
     UI.SelectionVariant #variant2 : {
-        Text            : '{i18n>SVariant2}',
+        Text            : 'Picked Up',
         SelectOptions   : [
             {
                 PropertyName    : status.criticality,
                 Ranges          : [
                     {
                         Sign    : #I,
-                        Option  : #EQ, //Equals
+                        Option  : #EQ,
                         Low     : 3,
+                    },
+                ],
+            },
+        ],
+    },
+    UI.SelectionVariant #variant3 : {
+        Text            : 'New',
+        SelectOptions   : [
+            {
+                PropertyName    : status.criticality,
+                Ranges          : [
+                    {
+                        Sign    : #I,
+                        Option  : #EQ, 
+                        Low     : 1,
                     },
                 ],
             },

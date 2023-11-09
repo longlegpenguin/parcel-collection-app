@@ -222,6 +222,7 @@ CREATE TABLE com_sap_internal_digitallab_packagehandling_core_PackageStatus (
   name NVARCHAR(255),
   descr NVARCHAR(1000),
   code NVARCHAR(255) NOT NULL,
+  criticality INTEGER,
   PRIMARY KEY(code)
 ); 
 
@@ -236,6 +237,7 @@ CREATE TABLE com_sap_internal_digitallab_packagehandling_core_SlotStatus (
   name NVARCHAR(255),
   descr NVARCHAR(1000),
   code NVARCHAR(255) NOT NULL,
+  criticality INTEGER,
   PRIMARY KEY(code)
 ); 
 
@@ -333,7 +335,8 @@ FROM com_sap_internal_digitallab_packagehandling_core_StorageSlot AS StorageSlot
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_StorageService_SlotStatus AS SELECT
   SlotStatus_0.name,
   SlotStatus_0.descr,
-  SlotStatus_0.code
+  SlotStatus_0.code,
+  SlotStatus_0.criticality
 FROM com_sap_internal_digitallab_packagehandling_core_SlotStatus AS SlotStatus_0; 
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_StorageService_Building AS SELECT
@@ -389,7 +392,8 @@ FROM com_sap_internal_digitallab_packagehandling_core_PackageType AS PackageType
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PickupService_PackageStatus AS SELECT
   PackageStatus_0.name,
   PackageStatus_0.descr,
-  PackageStatus_0.code
+  PackageStatus_0.code,
+  PackageStatus_0.criticality
 FROM com_sap_internal_digitallab_packagehandling_core_PackageStatus AS PackageStatus_0; 
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PickupService_StorageSlot AS SELECT
@@ -435,7 +439,8 @@ FROM com_sap_internal_digitallab_packagehandling_core_PackageType AS PackageType
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_HistoryService_PackageStatus AS SELECT
   PackageStatus_0.name,
   PackageStatus_0.descr,
-  PackageStatus_0.code
+  PackageStatus_0.code,
+  PackageStatus_0.criticality
 FROM com_sap_internal_digitallab_packagehandling_core_PackageStatus AS PackageStatus_0; 
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_HistoryService_DeliveryCompany AS SELECT
@@ -474,7 +479,8 @@ FROM com_sap_internal_digitallab_packagehandling_core_PackageType AS PackageType
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_RegistrationService_PackageStatus AS SELECT
   PackageStatus_0.name,
   PackageStatus_0.descr,
-  PackageStatus_0.code
+  PackageStatus_0.code,
+  PackageStatus_0.criticality
 FROM com_sap_internal_digitallab_packagehandling_core_PackageStatus AS PackageStatus_0; 
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_RegistrationService_DeliveryCompany AS SELECT
@@ -508,7 +514,8 @@ FROM com_sap_internal_digitallab_packagehandling_core_PackageType AS PackageType
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_PackageStatus AS SELECT
   PackageStatus_0.name,
   PackageStatus_0.descr,
-  PackageStatus_0.code
+  PackageStatus_0.code,
+  PackageStatus_0.criticality
 FROM com_sap_internal_digitallab_packagehandling_core_PackageStatus AS PackageStatus_0; 
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_StorageSlot AS SELECT
@@ -628,13 +635,15 @@ FROM com_sap_internal_digitallab_packagehandling_core_PackageStatus_texts AS tex
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_HistoryService_SlotStatus AS SELECT
   SlotStatus_0.name,
   SlotStatus_0.descr,
-  SlotStatus_0.code
+  SlotStatus_0.code,
+  SlotStatus_0.criticality
 FROM com_sap_internal_digitallab_packagehandling_core_SlotStatus AS SlotStatus_0; 
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_RegistrationService_SlotStatus AS SELECT
   SlotStatus_0.name,
   SlotStatus_0.descr,
-  SlotStatus_0.code
+  SlotStatus_0.code,
+  SlotStatus_0.criticality
 FROM com_sap_internal_digitallab_packagehandling_core_SlotStatus AS SlotStatus_0; 
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_HistoryService_SlotStatus_texts AS SELECT
@@ -660,7 +669,8 @@ FROM (com_sap_internal_digitallab_packagehandling_common_FloorType AS L_0 LEFT J
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_core_PackageStatus AS SELECT
   coalesce(localized_1.name, L_0.name) AS name,
   coalesce(localized_1.descr, L_0.descr) AS descr,
-  L_0.code
+  L_0.code,
+  L_0.criticality
 FROM (com_sap_internal_digitallab_packagehandling_core_PackageStatus AS L_0 LEFT JOIN com_sap_internal_digitallab_packagehandling_core_PackageStatus_texts AS localized_1 ON localized_1.code = L_0.code AND localized_1.locale = @locale); 
 
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_core_PackageType AS SELECT
@@ -672,7 +682,8 @@ FROM (com_sap_internal_digitallab_packagehandling_core_PackageType AS L_0 LEFT J
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_core_SlotStatus AS SELECT
   coalesce(localized_1.name, L_0.name) AS name,
   coalesce(localized_1.descr, L_0.descr) AS descr,
-  L_0.code
+  L_0.code,
+  L_0.criticality
 FROM (com_sap_internal_digitallab_packagehandling_core_SlotStatus AS L_0 LEFT JOIN com_sap_internal_digitallab_packagehandling_core_SlotStatus_texts AS localized_1 ON localized_1.code = L_0.code AND localized_1.locale = @locale); 
 
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_common_BuildingFloor AS SELECT
@@ -784,7 +795,8 @@ FROM com_sap_internal_digitallab_packagehandling_common_Receptionist AS L;
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_StorageService_SlotStatus AS SELECT
   SlotStatus_0.name,
   SlotStatus_0.descr,
-  SlotStatus_0.code
+  SlotStatus_0.code,
+  SlotStatus_0.criticality
 FROM localized_com_sap_internal_digitallab_packagehandling_core_SlotStatus AS SlotStatus_0; 
 
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_PickupService_PackageType AS SELECT
@@ -796,7 +808,8 @@ FROM localized_com_sap_internal_digitallab_packagehandling_core_PackageType AS P
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_PickupService_PackageStatus AS SELECT
   PackageStatus_0.name,
   PackageStatus_0.descr,
-  PackageStatus_0.code
+  PackageStatus_0.code,
+  PackageStatus_0.criticality
 FROM localized_com_sap_internal_digitallab_packagehandling_core_PackageStatus AS PackageStatus_0; 
 
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_HistoryService_PackageType AS SELECT
@@ -808,7 +821,8 @@ FROM localized_com_sap_internal_digitallab_packagehandling_core_PackageType AS P
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_HistoryService_PackageStatus AS SELECT
   PackageStatus_0.name,
   PackageStatus_0.descr,
-  PackageStatus_0.code
+  PackageStatus_0.code,
+  PackageStatus_0.criticality
 FROM localized_com_sap_internal_digitallab_packagehandling_core_PackageStatus AS PackageStatus_0; 
 
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_RegistrationService_PackageType AS SELECT
@@ -820,7 +834,8 @@ FROM localized_com_sap_internal_digitallab_packagehandling_core_PackageType AS P
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_RegistrationService_PackageStatus AS SELECT
   PackageStatus_0.name,
   PackageStatus_0.descr,
-  PackageStatus_0.code
+  PackageStatus_0.code,
+  PackageStatus_0.criticality
 FROM localized_com_sap_internal_digitallab_packagehandling_core_PackageStatus AS PackageStatus_0; 
 
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_PackageService_PackageType AS SELECT
@@ -832,19 +847,22 @@ FROM localized_com_sap_internal_digitallab_packagehandling_core_PackageType AS P
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_PackageService_PackageStatus AS SELECT
   PackageStatus_0.name,
   PackageStatus_0.descr,
-  PackageStatus_0.code
+  PackageStatus_0.code,
+  PackageStatus_0.criticality
 FROM localized_com_sap_internal_digitallab_packagehandling_core_PackageStatus AS PackageStatus_0; 
 
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_HistoryService_SlotStatus AS SELECT
   SlotStatus_0.name,
   SlotStatus_0.descr,
-  SlotStatus_0.code
+  SlotStatus_0.code,
+  SlotStatus_0.criticality
 FROM localized_com_sap_internal_digitallab_packagehandling_core_SlotStatus AS SlotStatus_0; 
 
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_RegistrationService_SlotStatus AS SELECT
   SlotStatus_0.name,
   SlotStatus_0.descr,
-  SlotStatus_0.code
+  SlotStatus_0.code,
+  SlotStatus_0.criticality
 FROM localized_com_sap_internal_digitallab_packagehandling_core_SlotStatus AS SlotStatus_0; 
 
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_StorageService_StorageSlot AS SELECT
