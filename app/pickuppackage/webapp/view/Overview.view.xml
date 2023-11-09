@@ -1,7 +1,71 @@
-<mvc:View controllerName="com.sap.internal.digitallab.packagehandling.app.pickuppackage.controller.Overview"
-    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
-    xmlns="sap.m">
-    <Page id="page" title="{i18n>title}">
-        <content />
+<mvc:View
+    controllerName="com.sap.internal.digitallab.packagehandling.app.pickuppackage.controller.Overview"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+>
+    <Page id="page">
+        <content>
+            <!-- Picture -->
+            <VBox alignItems="Center">
+                <Image
+                    src="{view>/imagePath}"
+                    width="70%"
+                />
+            </VBox>
+
+            <VBox alignItems="Center">
+                <Title
+                    id="idWelcomeTitle"
+                    text="Welcome here, {usr>/uname}!"
+                    level="H1"
+                    class="bigger"
+                />
+            </VBox>
+
+            <VBox
+                alignItems="Center"
+             
+            >
+                <Text
+                    visible="{ path: '$count', targetType: 'any', formatter: '.gt0' }"
+                    id="idOkText"
+                    text="You have the following packages:"
+                    class=""
+                />
+                <Text
+                    id="idNoText"
+                    visible="{ path: '$count', targetType: 'any', formatter: '.eq0' }"
+                    text="You have {$count} package. Come back later."
+                />
+            </VBox>
+
+            <Panel
+                class="sapUiResponsiveMargin"
+                visible="{= ${Package/$count} > 0 }"
+            >
+                <!-- Package List -->
+                <List
+                    id="idPackList"
+                    binding="/Package"
+                    class="sapUiResponsiveMargin"
+                    items="{
+                        path : '/Package',
+                        parameters : {
+                            $count : true
+                        }
+                    }"
+                >
+                    <headerToolbar>
+                        <Toolbar>
+                            <Title text="Packages({/Package/$count})" />
+                        </Toolbar>
+                    </headerToolbar>
+                    <items>
+                        <StandardListItem title="{type_code}" />
+                    </items>
+                </List>
+            </Panel>
+        </content>
     </Page>
 </mvc:View>

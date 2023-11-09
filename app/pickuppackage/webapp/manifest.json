@@ -39,8 +39,8 @@
       "tablet@2": ""
     },
     "deviceTypes": {
-      "desktop": true,
-      "tablet": true,
+      "desktop": false,
+      "tablet": false,
       "phone": true
     }
   },
@@ -100,6 +100,15 @@
       "css": [
         {
           "uri": "css/style.css"
+        }
+      ],
+      "images": [
+        {
+          "uri": "images/",
+          "include": [
+            "**/*.jpg",
+            "**/*.png"
+          ]
         }
       ]
     },
