@@ -16,12 +16,7 @@ sap.ui.define(
           const oModel = new JSONModel({ imagePath: sPath });
           this.getView().setModel(oModel, "view");
 
-          console.log("Overview Controller alive!");
-
-          console.log("Me " + this.getView());
-          console.log("Owner Component " + this.getOwnerComponent());
-          console.log("model: " + this.getView().getModel());
-          console.log("device model: " + this.getView().getModel("device"));
+          this._selectedAll = false;
         },
 
         onBeforeRendering: function () {
@@ -46,14 +41,43 @@ sap.ui.define(
             .setBindingContext(
               oView.byId("idPackList").getBinding("items").getHeaderContext()
             );
+          oView
+            .byId("idListPanel")
+            .setBindingContext(
+              oView.byId("idPackList").getBinding("items").getHeaderContext()
+            );
+        },
+
+        onBoxClicked: function (oEvent) {
+          var yes = oEvent.getSource().getSelected();
+          var oList = this.getView().byId("idPackList");
+          yes ? oList.selectAll(true) : oList.removeSelections(true);
+        },
+
+        onPickupButtonPress: function (oEvent) {
+            console.log("Lets's see");
+            var oList = this.getView().byId("idPackList");
+            var items = oList.getSelectedItems()
+            console.log(items[0].oBindingContexts.undefined.sPath);
         },
 
         eq0: function (cnt) {
           return cnt == 0;
         },
-        
+
         gt0: function (cnt) {
           return cnt > 0;
+        },
+
+        icon: function (type_code) {
+          if (type_code === "letter") {
+            return "sap-icon://letter";
+          } else if (type_code === "newspaper") {
+            return "sap-icon://newspaper";
+          } else if (type_code === "normal") {
+            return "sap-icon://product";
+          }
+          return "sap-icon://error";
         },
       }
     );

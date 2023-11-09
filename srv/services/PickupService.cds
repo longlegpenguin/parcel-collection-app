@@ -9,7 +9,7 @@ using {com.sap.internal.digitallab.packagehandling.core as core} from '../../db/
 service PickupService {
 
     @readonly
-    entity Package         as projection on core.Package where recipient = $user;
+    entity Package         as projection on core.Package; //where recipient = $user;
 
     @readonly
     entity PackageType     as projection on core.PackageType;

@@ -4,10 +4,16 @@
     displayBlock="true"
     xmlns="sap.m"
 >
-    <Page id="page">
+    <Page
+        id="page"
+        showHeader="false"
+    >
         <content>
             <!-- Picture -->
-            <VBox alignItems="Center">
+            <VBox
+                alignItems="Center"
+                class="sapUiLargeMarginBegin sapUiLargeMarginEnd"
+            >
                 <Image
                     src="{view>/imagePath}"
                     width="70%"
@@ -25,7 +31,7 @@
 
             <VBox
                 alignItems="Center"
-             
+                class="sapUiSmallMargin"
             >
                 <Text
                     visible="{ path: '$count', targetType: 'any', formatter: '.gt0' }"
@@ -41,31 +47,56 @@
             </VBox>
 
             <Panel
-                class="sapUiResponsiveMargin"
-                visible="{= ${Package/$count} > 0 }"
+                id="idListPanel"
+                class="sapUiMediumMargin"
+                width="auto"
+                visible="{ path: '$count', targetType: 'any', formatter: '.gt0' }"
             >
                 <!-- Package List -->
                 <List
                     id="idPackList"
                     binding="/Package"
-                    class="sapUiResponsiveMargin"
+                    mode="MultiSelect"
+                    selectionChange="onSelectionChange"
                     items="{
                         path : '/Package',
                         parameters : {
                             $count : true
                         }
                     }"
+                    visible="{ path: '/Package/$count', targetType: 'any', formatter: '.gt0' }"
                 >
                     <headerToolbar>
                         <Toolbar>
                             <Title text="Packages({/Package/$count})" />
+                            <ToolbarSpacer />
+                            <CheckBox
+                                text="Toggle All"
+                                select="onBoxClicked"
+                            />
                         </Toolbar>
                     </headerToolbar>
                     <items>
-                        <StandardListItem title="{type_code}" />
+                        <StandardListItem
+                            icon="{ path: 'type/code', targetType: 'any', formatter: '.icon' }"
+                            title="{type/name} ({deliveryCompany/name})"
+                            description="Registered At: {comfirmationTime}"
+                        />
                     </items>
                 </List>
             </Panel>
         </content>
+        <footer>
+            <OverflowToolbar class="sapUiSmallMargin round">
+                <ToolbarSpacer />
+                <Button
+                    activeIcon=""
+                    press=".onPickupButtonPress"
+                    text="Pickup"
+                    type="Emphasized"
+                    width=""
+                />
+            </OverflowToolbar>
+        </footer>
     </Page>
 </mvc:View>
