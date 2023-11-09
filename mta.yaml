@@ -93,6 +93,10 @@ modules:
       - managepackage.zip
       name: managepackage
       target-path: resources/
+    - artifacts:
+      - comsapinternaldigitallabpackagehandlingapppickuppackage.zip
+      name: comsapinternaldigitallabpackagehandlingapppickuppackage
+      target-path: resources/
 - name: managestorages
   type: html5
   path: app/storage
@@ -136,6 +140,16 @@ modules:
 - name: managepackage
   type: html5
   path: app/package
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comsapinternaldigitallabpackagehandlingapppickuppackage
+  type: html5
+  path: app/pickuppackage
   build-parameters:
     build-result: dist
     builder: custom

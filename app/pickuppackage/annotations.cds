@@ -1,0 +1,1 @@
+using com.sap.internal.digitallab.packagehandling.service.PickupService as service from '../../srv/services/PickupService';

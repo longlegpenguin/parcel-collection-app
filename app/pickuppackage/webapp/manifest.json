@@ -1,0 +1,148 @@
+{
+  "_version": "1.58.0",
+  "sap.app": {
+    "id": "com.sap.internal.digitallab.packagehandling.app.pickuppackage",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "${project.version}"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.11.3",
+      "toolsId": "521be86b-5775-4a62-8c62-0b8d14d35308"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/odata/v4/PickupService/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "localUri": "localService/metadata.xml",
+          "odataVersion": "4.0"
+        }
+      }
+    },
+    "ach": "INT-DLH-PH"
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "dependencies": {
+      "minUI5Version": "${sap.ui5.dist.version}",
+      "libs": {
+        "sap.m": {
+          "lazy": false
+        },
+        "sap.ui.core": {
+          "lazy": false
+        },
+        "sap.f": {
+          "lazy": false
+        },
+        "sap.suite.ui.generic.template": {
+          "lazy": false
+        },
+        "sap.ui.comp": {
+          "lazy": false
+        },
+        "sap.ui.generic.app": {
+          "lazy": false
+        },
+        "sap.ui.table": {
+          "lazy": false
+        },
+        "sap.ushell": {
+          "lazy": false
+        }
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "com.sap.internal.digitallab.packagehandling.app.pickuppackage.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "viewType": "XML",
+        "async": true,
+        "viewPath": "com.sap.internal.digitallab.packagehandling.app.pickuppackage.view",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "clearControlAggregation": false
+      },
+      "routes": [
+        {
+          "name": "RouteOverview",
+          "pattern": ":?query:",
+          "target": [
+            "TargetOverview"
+          ]
+        }
+      ],
+      "targets": {
+        "TargetOverview": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Overview",
+          "viewName": "Overview"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "com.sap.internal.digitallab.packagehandling.app.pickuppackage.view.App",
+      "type": "XML",
+      "async": true,
+      "id": "App"
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [
+      "FDLH0105"
+    ],
+    "archeType": "transactional"
+  }
+}
