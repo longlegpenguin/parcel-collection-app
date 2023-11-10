@@ -3,17 +3,12 @@ sap.ui.define(
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
     "com/sap/internal/digitallab/packagehandling/app/pickuppackage/component/PkMBox",
-    "sap/m/List",
-    "sap/m/StandardListItem",
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
    */
-  function (BaseController, JSONModel, PkMBox, List, StandardListItem) {
+  function (BaseController, JSONModel, PkMBox) {
     "use strict";
-    function _parseElem(elem) {
-      return elem.replaceAll("(", ")").split(")")[1];
-    }
 
     return BaseController.extend(
       "com.sap.internal.digitallab.packagehandling.app.pickuppackage.controller.Overview",
@@ -46,12 +41,10 @@ sap.ui.define(
           $.get({
             url: "odata/v4/PickupService/PackageType",
             success: (oData) => {
-              console.log("Types: " + JSON.stringify(oData, null, 4));
               this._types = oData.value;
               oData.value.forEach((c) => {
                 this._dic[c.code] = c.name;
               });
-              console.log("Type: " + JSON.stringify(this._types[0], null, 4));
               console.log("Dic: " + JSON.stringify(this._dic, null, 4));
             },
             error: function (error) {
@@ -66,13 +59,10 @@ sap.ui.define(
           var sCurrentUser = oUser.getId();
           var oLocalModel = this.getView().getModel("usr");
           oLocalModel.setProperty("/uname", sCurrentUser);
-          console.log("?????");
 
           $.get({
             url: "odata/v4/PickupService/Package",
             success: (oData) => {
-              console.log("Data: " + JSON.stringify(oData, null, 4));
-              console.log();
               this.getView()
                 .getModel("packages")
                 .setProperty("/length", oData.value.length);
@@ -81,18 +71,6 @@ sap.ui.define(
               console.log("Error: " + JSON.stringify(error, null, 4));
             },
           });
-        },
-
-        setHeaderContext: function () {
-          var oView = this.getView();
-
-          var oContext = oView
-            .byId("idPackageList")
-            .getBinding("items")
-            .getHeaderContext();
-          oView.byId("idNoText").setBindingContext(oContext);
-          oView.byId("idOkText").setBindingContext(oContext);
-          oView.byId("idListPanel").setBindingContext(oContext);
         },
 
         onToggleAllCheckBoxSelect: function (oEvent) {
@@ -110,6 +88,7 @@ sap.ui.define(
             console.log("Picking up: " + item.oBindingContexts.undefined.sPath);
             this._pickup(item.oBindingContexts.undefined.sPath);
           });
+          this.getView().refresh();
         },
 
         _pickup: function (sPath) {
