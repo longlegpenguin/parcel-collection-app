@@ -1,10 +1,17 @@
 sap.ui.define(
-  ["sap/ui/core/mvc/Controller", "sap/ui/model/json/JSONModel"],
+  [
+    "sap/ui/core/mvc/Controller",
+    "sap/ui/model/json/JSONModel",
+    "com/sap/internal/digitallab/packagehandling/app/pickuppackage/component/PkMBox",
+  ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
    */
-  function (BaseController, JSONModel) {
+  function (BaseController, JSONModel, PkMBox) {
     "use strict";
+    function _parseElem(elem) {
+      return elem.replaceAll("(", ")").split(")")[1];
+    }
 
     return BaseController.extend(
       "com.sap.internal.digitallab.packagehandling.app.pickuppackage.controller.Overview",
@@ -15,8 +22,6 @@ sap.ui.define(
           );
           const oModel = new JSONModel({ imagePath: sPath });
           this.getView().setModel(oModel, "view");
-
-          this._selectedAll = false;
         },
 
         onBeforeRendering: function () {
@@ -25,40 +30,47 @@ sap.ui.define(
           var sCurrentUser = oUser.getId();
           var oLocalModel = this.getView().getModel("usr");
           oLocalModel.setProperty("/uname", sCurrentUser);
-
-          this.setHeaderContext();
+          console.log("?????");
+          // this.setHeaderContext();
         },
 
         setHeaderContext: function () {
           var oView = this.getView();
-          oView
-            .byId("idNoText")
-            .setBindingContext(
-              oView.byId("idPackList").getBinding("items").getHeaderContext()
-            );
-          oView
-            .byId("idOkText")
-            .setBindingContext(
-              oView.byId("idPackList").getBinding("items").getHeaderContext()
-            );
-          oView
-            .byId("idListPanel")
-            .setBindingContext(
-              oView.byId("idPackList").getBinding("items").getHeaderContext()
-            );
+          // var oContext = {
+          //   path: "/Package",
+          //   parameters: {
+          //     $count: true,
+          //   },
+          // };
+          var oContext = oView
+            .byId("idPackageList")
+            .getBinding("items")
+            .getHeaderContext();
+          oView.byId("idNoText").setBindingContext(oContext);
+          oView.byId("idOkText").setBindingContext(oContext);
+          oView.byId("idListPanel").setBindingContext(oContext);
         },
 
-        onBoxClicked: function (oEvent) {
+        onToggleAllCheckBoxSelect: function (oEvent) {
           var yes = oEvent.getSource().getSelected();
-          var oList = this.getView().byId("idPackList");
-          yes ? oList.selectAll(true) : oList.removeSelections(true);
+          var oList = this.getView().byId("idPackageList");
+          yes ? oList.selectAll() : oList.removeSelections(true);
         },
 
         onPickupButtonPress: function (oEvent) {
-            console.log("Lets's see");
-            var oList = this.getView().byId("idPackList");
-            var items = oList.getSelectedItems()
-            console.log(items[0].oBindingContexts.undefined.sPath);
+          console.log("Lets's see");
+          var oList = this.getView().byId("idPackageList");
+          var items = oList.getSelectedItems();
+          console.log(items[0].oBindingContexts.undefined.sPath);
+          items.forEach((item) => {
+            console.log("Picking up: " + item.oBindingContexts.undefined.sPath);
+            this._pickup(item.oBindingContexts.undefined.sPath);
+          });
+        },
+
+        _pickup: function (sPath) {
+          //var oPkMBox =
+          new PkMBox(this.getView().getModel()).onPickUpPress(sPath);
         },
 
         eq0: function (cnt) {
@@ -79,6 +91,8 @@ sap.ui.define(
           }
           return "sap-icon://error";
         },
+
+        onPackageListSelectionChange: function (oEvent) {},
       }
     );
   }

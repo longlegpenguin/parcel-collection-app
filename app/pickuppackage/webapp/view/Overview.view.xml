@@ -34,14 +34,14 @@
                 class="sapUiSmallMargin"
             >
                 <Text
-                    visible="{ path: '$count', targetType: 'any', formatter: '.gt0' }"
+                    visible="{ path: '/Package/$count', targetType: 'any', formatter: '.gt0' }"
                     id="idOkText"
                     text="You have the following packages:"
                     class=""
                 />
                 <Text
                     id="idNoText"
-                    visible="{ path: '$count', targetType: 'any', formatter: '.eq0' }"
+                    visible="{ path: '/Package/$count', targetType: 'any', formatter: '.eq0' }"
                     text="You have {$count} package. Come back later."
                 />
             </VBox>
@@ -50,21 +50,18 @@
                 id="idListPanel"
                 class="sapUiMediumMargin"
                 width="auto"
-                visible="{ path: '$count', targetType: 'any', formatter: '.gt0' }"
+                visible="{ path: '/Package/$count', targetType: 'any', formatter: '.gt0' }"
             >
                 <!-- Package List -->
                 <List
-                    id="idPackList"
+                    id="idPackageList"
                     binding="/Package"
                     mode="MultiSelect"
-                    selectionChange="onSelectionChange"
+                    selectionChange="onPackageListSelectionChange"
                     items="{
-                        path : '/Package',
-                        parameters : {
-                            $count : true
-                        }
+                        path : '/Package'
+                       
                     }"
-                    visible="{ path: '/Package/$count', targetType: 'any', formatter: '.gt0' }"
                 >
                     <headerToolbar>
                         <Toolbar>
@@ -72,7 +69,7 @@
                             <ToolbarSpacer />
                             <CheckBox
                                 text="Toggle All"
-                                select="onBoxClicked"
+                                select="onToggleAllCheckBoxSelect"
                             />
                         </Toolbar>
                     </headerToolbar>

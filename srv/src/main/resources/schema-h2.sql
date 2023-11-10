@@ -380,8 +380,7 @@ CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PickupService_Pa
   Package_0.status_code,
   Package_0.receptionist,
   Package_0.comment
-FROM com_sap_internal_digitallab_packagehandling_core_Package AS Package_0
-WHERE Package_0.recipient = @applicationuser; 
+FROM com_sap_internal_digitallab_packagehandling_core_Package AS Package_0; 
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PickupService_PackageType AS SELECT
   PackageType_0.name,
@@ -901,8 +900,7 @@ CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_Pickup
   Package_0.status_code,
   Package_0.receptionist,
   Package_0.comment
-FROM localized_com_sap_internal_digitallab_packagehandling_core_Package AS Package_0
-WHERE Package_0.recipient = @applicationuser; 
+FROM localized_com_sap_internal_digitallab_packagehandling_core_Package AS Package_0; 
 
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_HistoryService_Package AS SELECT
   Package_0.ID,
