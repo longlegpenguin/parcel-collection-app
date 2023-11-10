@@ -1,10 +1,84 @@
 <mvc:View
-	controllerName=""
-	xmlns:mvc="sap.ui.core.mvc"
-	xmlns="sap.m"
-	xmlns:c="sap.ui.core"
-	displayBlock="true"
-	height="100%"
-	busyIndicatorDelay="0"
+    controllerName="com.sap.internal.digitallab.packagehandling.app.pickuppackage.controller.Done"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    displayBlock="true"
+    height="100%"
+    busyIndicatorDelay="0"
 >
+    <Page
+        id="idPage"
+        showHeader="false"
+    >
+        <content>
+            <!-- Picture -->
+            <VBox
+                alignItems="Center"
+                class="sapUiLargeMarginBegin sapUiLargeMarginEnd"
+            >
+                <Image
+                    src="{view2>/imagePath}"
+                    width="100%"
+                />
+            </VBox>
+
+            <VBox alignItems="Center">
+                <Title
+                    text="Good News, {usr>/uname}!"
+                    level="H1"
+                    class="bigger"
+                />
+            </VBox>
+
+            <VBox
+                alignItems="Center"
+                class="sapUiSmallMargin"
+            >
+                <Text
+                    visible="{ path: 'packages>/length', targetType: 'any', formatter: '.gt0' }"
+                    text="You can still pick following packages:"
+                    class=""
+                />
+                <Text
+                    visible="{ path: 'packages>/length', targetType: 'any', formatter: '.eq0' }"
+                    text="You have no package to pickup any more."
+                />
+            </VBox>
+
+            <Panel
+                id="idListPanel"
+                class="sapUiMediumMargin"
+                width="auto"
+                visible="{ path: 'packages>/length', targetType: 'any', formatter: '.gt0' }"
+            >
+                <!-- Package List -->
+                <List
+                    id="idPackageList"
+                    binding="/Package"
+                    items="{
+                        path : '/Package'             
+                    }"
+                >
+                    <items>
+                        <StandardListItem
+                            icon="{ path: 'type_code', targetType: 'any', formatter: '.icon' }"
+                            title="{path: 'type_code', targetType: 'any', formatter: '.type_name'} ({path: 'deliveryCompany_ID', targetType: 'any', formatter: '.company_name'})"
+                            info=" | {slot_ID}"
+                        />
+                    </items>
+                </List>
+            </Panel>
+        </content>
+        <footer>
+            <OverflowToolbar class="sapUiSmallMargin round">
+                <ToolbarSpacer />
+                <Button
+                    activeIcon=""
+                    press=".onCloseButtonPress"
+                    text="Close"
+                    width=""
+                />
+            </OverflowToolbar>
+        </footer>
+    </Page>
 </mvc:View>

@@ -1,24 +1,17 @@
 sap.ui.define(
-  [
-    "sap/ui/core/mvc/Controller",
-    "sap/ui/model/json/JSONModel",
-    "com/sap/internal/digitallab/packagehandling/app/pickuppackage/component/PkMBox",
-  ],
-  /**
-   * @param {typeof sap.ui.core.mvc.Controller} Controller
-   */
-  function (BaseController, JSONModel, PkMBox) {
+  ["sap/ui/core/mvc/Controller", "sap/ui/model/json/JSONModel"],
+  function (Controller, JSONModel) {
     "use strict";
 
-    return BaseController.extend(
-      "com.sap.internal.digitallab.packagehandling.app.pickuppackage.controller.Overview",
+    return Controller.extend(
+      "com.sap.internal.digitallab.packagehandling.app.pickuppackage.controller.Done",
       {
         onInit: function () {
           const sPath = sap.ui.require.toUrl(
-            "com/sap/internal/digitallab/packagehandling/app/pickuppackage/images/image2.png"
+            "com/sap/internal/digitallab/packagehandling/app/pickuppackage/images/image3.png"
           );
           const oModel = new JSONModel({ imagePath: sPath });
-          this.getView().setModel(oModel, "view");
+          this.getView().setModel(oModel, "view2");
 
           this._dic = {};
 
@@ -73,31 +66,6 @@ sap.ui.define(
           });
         },
 
-        onToggleAllCheckBoxSelect: function (oEvent) {
-          var yes = oEvent.getSource().getSelected();
-          var oList = this.getView().byId("idPackageList");
-          yes ? oList.selectAll() : oList.removeSelections(true);
-        },
-
-        onPickupButtonPress: function (oEvent) {
-          console.log("Lets's see");
-          var oList = this.getView().byId("idPackageList");
-          var items = oList.getSelectedItems();
-          console.log(items[0].oBindingContexts.undefined.sPath);
-          items.forEach((item) => {
-            console.log("Picking up: " + item.oBindingContexts.undefined.sPath);
-            this._pickup(item.oBindingContexts.undefined.sPath);
-          });
-          // var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-          // oRouter.navTo("done");
-        },
-
-        _pickup: function (sPath) {
-          var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-
-          new PkMBox(this.getView().getModel(), oRouter).onPickUpPress(sPath);
-        },
-
         eq0: function (cnt) {
           return cnt == 0;
         },
@@ -128,7 +96,11 @@ sap.ui.define(
           return this._dic[id];
         },
 
-        onPackageListSelectionChange: function (oEvent) {},
+        onCloseButtonPress: function (oEvent) {
+          console.log("Closed");
+          var oRouter = this.getOwnerComponent().getRouter();
+          oRouter.navTo("overview");
+        },
       }
     );
   }

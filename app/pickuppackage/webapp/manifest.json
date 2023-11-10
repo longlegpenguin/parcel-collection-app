@@ -124,20 +124,39 @@
       },
       "routes": [
         {
-          "name": "RouteOverview",
-          "pattern": ":?query:",
+          "name": "overview",
+          "pattern": "",
           "target": [
-            "TargetOverview"
+            "overview"
+          ]
+        },
+        {
+          "name": "overview2",
+          "pattern": "overview",
+          "target": [
+            "overview"
+          ]
+        },
+        {
+          "name": "done",
+          "pattern": "done",
+          "target": [
+            "done"
           ]
         }
       ],
       "targets": {
-        "TargetOverview": {
+        "overview": {
           "viewType": "XML",
-          "transition": "slide",
-          "clearControlAggregation": false,
-          "viewId": "Overview",
-          "viewName": "Overview"
+          "viewId": "overview",
+          "viewName": "Overview",
+          "clearAggregation": true
+        },
+        "done": {
+          "viewType": "XML",
+          "viewId": "done",
+          "viewName": "Done",
+          "clearAggregation": true
         }
       }
     },

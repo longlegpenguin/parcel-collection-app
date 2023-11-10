@@ -16,13 +16,12 @@
             >
                 <Image
                     src="{view>/imagePath}"
-                    width="70%"
+                    width="100%"
                 />
             </VBox>
 
             <VBox alignItems="Center">
                 <Title
-                    id="idWelcomeTitle"
                     text="Welcome here, {usr>/uname}!"
                     level="H1"
                     class="bigger"
@@ -35,12 +34,10 @@
             >
                 <Text
                     visible="{ path: 'packages>/length', targetType: 'any', formatter: '.gt0' }"
-                    id="idOkText"
                     text="You have the following packages:"
                     class=""
                 />
                 <Text
-                    id="idNoText"
                     visible="{ path: 'packages>/length', targetType: 'any', formatter: '.eq0' }"
                     text="You have no package. Come back later."
                 />

@@ -14,8 +14,9 @@ sap.ui.define(
     return ManagedObject.extend(
       "com.sap.internal.digitallab.packagehandling.app.pickuppackage.component.PkMBox",
       {
-        constructor: function (oModel) {
+        constructor: function (oModel, oRouter) {
           this._oModel = oModel;
+          this._oRouter = oRouter;
         },
 
         onPickUpPress: function (sPath) {
@@ -39,6 +40,7 @@ sap.ui.define(
                       () => {
                         MessageToast.show("Package Picked Up!");
                         this._oModel.refresh();
+                        this._oRouter.navTo("done");
                       },
                       (oError) => {
                         if (!oError.canceled)
