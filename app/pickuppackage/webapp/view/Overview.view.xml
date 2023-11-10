@@ -34,15 +34,15 @@
                 class="sapUiSmallMargin"
             >
                 <Text
-                    visible="{ path: '/Package/$count', targetType: 'any', formatter: '.gt0' }"
+                    visible="{ path: 'packages>/length', targetType: 'any', formatter: '.gt0' }"
                     id="idOkText"
                     text="You have the following packages:"
                     class=""
                 />
                 <Text
                     id="idNoText"
-                    visible="{ path: '/Package/$count', targetType: 'any', formatter: '.eq0' }"
-                    text="You have {$count} package. Come back later."
+                    visible="{ path: 'packages>/length', targetType: 'any', formatter: '.eq0' }"
+                    text="You have no package. Come back later."
                 />
             </VBox>
 
@@ -50,7 +50,7 @@
                 id="idListPanel"
                 class="sapUiMediumMargin"
                 width="auto"
-                visible="{ path: '/Package/$count', targetType: 'any', formatter: '.gt0' }"
+                visible="{ path: 'packages>/length', targetType: 'any', formatter: '.gt0' }"
             >
                 <!-- Package List -->
                 <List
@@ -59,13 +59,12 @@
                     mode="MultiSelect"
                     selectionChange="onPackageListSelectionChange"
                     items="{
-                        path : '/Package'
-                       
+                        path : '/Package'             
                     }"
                 >
                     <headerToolbar>
                         <Toolbar>
-                            <Title text="Packages({/Package/$count})" />
+                            <Title text="Packages ({packages>/length})" />
                             <ToolbarSpacer />
                             <CheckBox
                                 text="Toggle All"
@@ -75,8 +74,8 @@
                     </headerToolbar>
                     <items>
                         <StandardListItem
-                            icon="{ path: 'type/code', targetType: 'any', formatter: '.icon' }"
-                            title="{type/name} ({deliveryCompany/name})"
+                            icon="{ path: 'type_code', targetType: 'any', formatter: '.icon' }"
+                            title="{path: 'type_code', targetType: 'any', formatter: '.type_name'} ({path: 'deliveryCompany_ID', targetType: 'any', formatter: '.company_name'})"
                             description="Registered At: {comfirmationTime}"
                         />
                     </items>

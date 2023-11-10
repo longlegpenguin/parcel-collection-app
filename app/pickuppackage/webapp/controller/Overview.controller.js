@@ -3,11 +3,13 @@ sap.ui.define(
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
     "com/sap/internal/digitallab/packagehandling/app/pickuppackage/component/PkMBox",
+    "sap/m/List",
+    "sap/m/StandardListItem",
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
    */
-  function (BaseController, JSONModel, PkMBox) {
+  function (BaseController, JSONModel, PkMBox, List, StandardListItem) {
     "use strict";
     function _parseElem(elem) {
       return elem.replaceAll("(", ")").split(")")[1];
@@ -22,6 +24,40 @@ sap.ui.define(
           );
           const oModel = new JSONModel({ imagePath: sPath });
           this.getView().setModel(oModel, "view");
+
+          this._dic = {};
+
+          $.get({
+            url: "odata/v4/PickupService/DeliveryCompany",
+            success: (oData) => {
+              console.log("Types: " + JSON.stringify(oData, null, 4));
+              this._types = oData.value;
+              oData.value.forEach((c) => {
+                this._dic[c.ID] = c.name;
+              });
+              console.log("Type: " + JSON.stringify(this._types[0], null, 4));
+              console.log("Dic: " + JSON.stringify(this._dic, null, 4));
+            },
+            error: function (error) {
+              console.log("Error: " + JSON.stringify(error, null, 4));
+            },
+          });
+
+          $.get({
+            url: "odata/v4/PickupService/PackageType",
+            success: (oData) => {
+              console.log("Types: " + JSON.stringify(oData, null, 4));
+              this._types = oData.value;
+              oData.value.forEach((c) => {
+                this._dic[c.code] = c.name;
+              });
+              console.log("Type: " + JSON.stringify(this._types[0], null, 4));
+              console.log("Dic: " + JSON.stringify(this._dic, null, 4));
+            },
+            error: function (error) {
+              console.log("Error: " + JSON.stringify(error, null, 4));
+            },
+          });
         },
 
         onBeforeRendering: function () {
@@ -31,17 +67,25 @@ sap.ui.define(
           var oLocalModel = this.getView().getModel("usr");
           oLocalModel.setProperty("/uname", sCurrentUser);
           console.log("?????");
-          // this.setHeaderContext();
+
+          $.get({
+            url: "odata/v4/PickupService/Package",
+            success: (oData) => {
+              console.log("Data: " + JSON.stringify(oData, null, 4));
+              console.log();
+              this.getView()
+                .getModel("packages")
+                .setProperty("/length", oData.value.length);
+            },
+            error: function (error) {
+              console.log("Error: " + JSON.stringify(error, null, 4));
+            },
+          });
         },
 
         setHeaderContext: function () {
           var oView = this.getView();
-          // var oContext = {
-          //   path: "/Package",
-          //   parameters: {
-          //     $count: true,
-          //   },
-          // };
+
           var oContext = oView
             .byId("idPackageList")
             .getBinding("items")
@@ -78,6 +122,8 @@ sap.ui.define(
         },
 
         gt0: function (cnt) {
+          console.log("cnt: " + cnt);
+
           return cnt > 0;
         },
 
@@ -90,6 +136,15 @@ sap.ui.define(
             return "sap-icon://product";
           }
           return "sap-icon://error";
+        },
+
+        type_name: function (type_code) {
+          console.log(this._dic[type_code]);
+          return this._dic[type_code];
+        },
+
+        company_name: function (id) {
+          return this._dic[id];
         },
 
         onPackageListSelectionChange: function (oEvent) {},

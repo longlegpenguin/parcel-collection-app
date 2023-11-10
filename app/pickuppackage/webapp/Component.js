@@ -34,6 +34,7 @@ sap.ui.define(
           this.setModel(models.createDeviceModel(), "device");
           console.log("Local user mdl: " + models.createLocalUsrModel());
           this.setModel(models.createLocalUsrModel(), "usr");
+          this.setModel(models.createLocalPackModel(), "packages");
           console.log("model? " + this.getModel("usr"));
         },
       }

@@ -24,6 +24,21 @@ sap.ui.define(
         });
         return oModel;
       },
+
+      createLocalPackModel: function () {
+        var oModel = new JSONModel({
+            length: 0
+        });
+        return oModel;
+      },
+      // createLocalCompanyModel: function () {
+      //   var oModel = new JSONModel({
+      //       values: [
+      //         {"0": }
+      //       ]
+      //   });
+      //   return oModel;
+      // },
     };
   }
 );
