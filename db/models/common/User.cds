@@ -11,4 +11,5 @@ entity User : cuid, managed {
     lastName    : String(255) not null;
     mailAddress : String(255) not null;
     phoneNumber : String(255);
+    fullName : String = firstName || ' ' || lastName;
 }

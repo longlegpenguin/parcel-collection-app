@@ -58,10 +58,10 @@ service PackageService {
     };
 
     @readonly
-    entity User as projection on common.User;
+    entity User            as projection on common.User;
 
     @readonly
-    entity Receptionist as projection on common.Receptionist;
+    entity Receptionist    as projection on common.Receptionist;
 
     @sap.applicable.path: 'confirm_ac'
     action confirm(packagesIds : many UUID, slotId : UUID) returns Boolean;

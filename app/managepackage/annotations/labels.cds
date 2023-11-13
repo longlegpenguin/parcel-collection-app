@@ -13,7 +13,7 @@ annotate service.Storage with {
 };
 
 annotate service.Package with {
-    recipient        @title: 'Recipient';
+    recipient        @title: 'Recipient'  @Common.Text: recipient.fullName  @Common.TextArrangement: #TextOnly;
     comfirmationTime @title: 'Delivery Time';
     pickupTime       @title: 'Pickup Time';
     slot             @title: 'Slot';
@@ -60,4 +60,15 @@ annotate service.DeliveryCompany with {
     name @title: 'Delivery Company';
     logo @title: 'Logo';
     ID   @title: 'UUID';
+};
+
+
+annotate service.User with {
+    ID          @title: 'UUID';
+    sapId       @title: 'I/C-Number';
+    firstName   @title: 'First Name';
+    lastName    @title: 'Last Name';
+    mailAddress @title: 'E-mail';
+    phoneNumber @title: 'Phone number';
+    fullName    @title: 'Name';
 };

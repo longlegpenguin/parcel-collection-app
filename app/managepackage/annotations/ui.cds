@@ -1,13 +1,13 @@
 using com.sap.internal.digitallab.packagehandling.service.PackageService as service from '../../../srv/services/PackageService';
 
 annotate service.Package with @(
-    UI.SelectionFields: [
+    UI.SelectionFields           : [
         recipient.sapId,
         type.name,
         deliveryCompany.name,
         comfirmationTime
     ],
-    UI.FilterFacets   : [
+    UI.FilterFacets              : [
         {
             $Type : 'UI.ReferenceFacet',
             ID    : 'BasicData',
@@ -27,55 +27,44 @@ annotate service.Package with @(
             Target: '@UI.FieldGroup#AdminData',
         }
     ],
-    UI.SelectionVariant #variant1 : {
-        Text : 'Confirmed',
-        SelectOptions : [
-            {
-                PropertyName : status.criticality,
-                Ranges : [
-                    {
-                        Sign    : #I,
-                        Option  : #EQ, 
-                        Low     : 2,
-                    },
-                ],
-            },
-        ],
+    UI.SelectionVariant #variant1: {
+        Text         : 'Confirmed',
+        SelectOptions: [{
+            PropertyName: status.criticality,
+            Ranges      : [{
+                Sign  : #I,
+                Option: #EQ,
+                Low   : 2,
+            }, ],
+        }, ],
     },
-    UI.SelectionVariant #variant2 : {
-        Text            : 'Picked Up',
-        SelectOptions   : [
-            {
-                PropertyName    : status.criticality,
-                Ranges          : [
-                    {
-                        Sign    : #I,
-                        Option  : #EQ,
-                        Low     : 3,
-                    },
-                ],
-            },
-        ],
+    UI.SelectionVariant #variant2: {
+        Text         : 'Picked Up',
+        SelectOptions: [{
+            PropertyName: status.criticality,
+            Ranges      : [{
+                Sign  : #I,
+                Option: #EQ,
+                Low   : 3,
+            }, ],
+        }, ],
     },
-    UI.SelectionVariant #variant3 : {
-        Text            : 'New',
-        SelectOptions   : [
-            {
-                PropertyName    : status.criticality,
-                Ranges          : [
-                    {
-                        Sign    : #I,
-                        Option  : #EQ, 
-                        Low     : 1,
-                    },
-                ],
-            },
-        ],
+    UI.SelectionVariant #variant3: {
+        Text         : 'New',
+        SelectOptions: [{
+            PropertyName: status.criticality,
+            Ranges      : [{
+                Sign  : #I,
+                Option: #EQ,
+                Low   : 1,
+            }, ],
+        }, ],
     },
-    UI.LineItem       : [
+    UI.LineItem                  : [
         {
-            $Type: 'UI.DataField',
-            Value: recipient.sapId,
+            $Type             : 'UI.DataField',
+            Value             : recipient_ID,
+            ![@UI.Importance] : #High,
         },
         {
             $Type: 'UI.DataField',
@@ -187,8 +176,9 @@ annotate service.Package with @(
         $Type: 'UI.FieldGroupType',
         Data : [
             {
-                $Type: 'UI.DataField',
-                Value: recipient.sapId,
+                $Type             : 'UI.DataField',
+                Value             : recipient_ID,
+                ![@UI.Importance] : #High,
             },
             {
                 $Type: 'UI.DataField',
@@ -229,3 +219,54 @@ annotate service.Package with @(
         },
     ]
 );
+
+annotate service.User with @(
+    UI.FieldGroup #udata: {
+        Label: 'User Info',
+        Data : [
+            {Value: firstName},
+            {Value: lastName},
+            {Value: sapId},
+            {Value: mailAddress},
+            {Value: phoneNumber},
+        ],
+    },
+    UI.QuickViewFacets  : [{
+        $Type : 'UI.ReferenceFacet',
+        Target: '@UI.FieldGroup#udata',
+    }],
+);
+
+annotate service.User with @(UI.HeaderInfo: {
+    TypeName      : 'User',
+    TypeNamePlural: 'Users',
+    Title         : {
+        $Type: 'UI.DataField',
+        Value: 'User',
+    },
+    Description   : {
+        $Type: 'UI.DataField',
+        Value: fullName,
+    },
+    ImageUrl      : '',
+    TypeImageUrl  : 'sap-icon://blank-tag',
+}, );
+
+// annotate service.Package with @(
+//     Communication.Contact : {
+//         fn   : name, //full name
+//         kind : #org,
+//         tel  : [{
+//             uri  : phone,
+//             type : #preferred
+//         }],
+//         adr  : [{
+//             building : building,
+//             country  : country.name,
+//             street   : street,
+//             locality : city,
+//             code     : postCode,
+//             type     : #preferred
+//         }],
+//     }
+// );

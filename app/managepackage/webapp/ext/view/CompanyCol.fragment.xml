@@ -3,14 +3,13 @@
     xmlns="sap.m"
 >
     <FlexBox
-        justifyContent="Start"
         alignItems="Center"
     >
         <items>
             <Image
                 src="{deliveryCompany/logo}"
                 height="50px"
-                class="sapUiTinyMarginEnd"
+                class="sapUiTinyMarginEnd circle"
             />
             <Text
                 text="{deliveryCompany/name}"
