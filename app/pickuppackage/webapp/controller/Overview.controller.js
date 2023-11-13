@@ -79,24 +79,39 @@ sap.ui.define(
           yes ? oList.selectAll() : oList.removeSelections(true);
         },
 
+        // onPickupButtonPress: function (oEvent) {
+        //   console.log("Lets's see");
+        //   var oList = this.getView().byId("idPackageList");
+        //   var items = oList.getSelectedItems();
+        //   console.log(items[0].oBindingContexts.undefined.sPath);
+        //   items.forEach((item) => {
+        //     console.log("Picking up: " + item.oBindingContexts.undefined.sPath);
+        //     this._pickup(item.oBindingContexts.undefined.sPath);
+        //   });
+        //   // var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+        //   // oRouter.navTo("done");
+        // },
         onPickupButtonPress: function (oEvent) {
           console.log("Lets's see");
           var oList = this.getView().byId("idPackageList");
           var items = oList.getSelectedItems();
           console.log(items[0].oBindingContexts.undefined.sPath);
-          items.forEach((item) => {
-            console.log("Picking up: " + item.oBindingContexts.undefined.sPath);
-            this._pickup(item.oBindingContexts.undefined.sPath);
-          });
+          var aPaths = items.map((item) => item.oBindingContexts.undefined.sPath);
+          this._pickupAll(aPaths);
           // var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
           // oRouter.navTo("done");
         },
 
-        _pickup: function (sPath) {
+        _pickupAll: function (aPaths) {
           var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 
-          new PkMBox(this.getView().getModel(), oRouter).onPickUpPress(sPath);
+          new PkMBox(this.getView().getModel(), oRouter).onPickUpPress(aPaths);
         },
+        // _pickup: function (sPath) {
+        //   var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+
+        //   new PkMBox(this.getView().getModel(), oRouter).onPickUpPress(sPath);
+        // },
 
         eq0: function (cnt) {
           return cnt == 0;
