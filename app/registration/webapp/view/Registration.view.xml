@@ -38,15 +38,23 @@
 					</f:layout>
 					<f:formContainers>
 						<f:FormContainer>
+						
 							<f:formElements>
-								<f:FormElement label="Recipient">
+							<f:FormElement
+									label="Recipient"
+									binding="/User"
+								>
 									<f:fields>
-										<Input
-											value="{localData>/data/recipient}"
-											id="idRecipientInput"
-											required="true"
-											tooltip="required"
-										/>
+										<Select
+											id="idUserSelect"
+											items="{/User}"
+                                            selectedKey="{localData>/data/recipient_ID}"
+										>
+											<core:Item
+												key="{ID}"
+												text="{firstName} {lastName} ({sapId})"
+											/>
+										</Select>
 									</f:fields>
 								</f:FormElement>
 								<f:FormElement
@@ -92,13 +100,22 @@
 										/>
 									</f:fields>
 								</f:FormElement>
-								<f:FormElement label="Receptionist">
+								
+								<f:FormElement
+									label="Receptionist"
+									binding="/Receptionist"
+								>
 									<f:fields>
-										<Input
-											value=""
-											id="idReceptionistInput"
-											editable="false"
-										/>
+										<Select
+											id="idReceptionistSelect"
+											items="{/Receptionist}"
+                                            selectedKey="{localData>/data/receptionist_ID}"
+										>
+											<core:Item
+												key="{ID}"
+												text="{user/firstName} {user/lastName} ({user/sapId})"
+											/>
+										</Select>
 									</f:fields>
 								</f:FormElement>
 							</f:formElements>

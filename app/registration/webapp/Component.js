@@ -34,10 +34,10 @@ sap.ui.define(
 
         var oData = {
           data: {
-            recipient: "",
+            recipient_ID: "",
             type: "normal",
             company: null,
-            receptionist: "",
+            receptionist_ID: "",
           },
         };
         var oModel = new JSONModel(oData);

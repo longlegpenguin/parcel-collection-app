@@ -21,21 +21,51 @@ sap.ui.define(
           console.log("Owner Component " + this.getOwnerComponent());
           console.log("model: " + this.getView().getModel());
           console.log("device model: " + this.getView().getModel("device"));
+          this._dic = {};
+          $.get({
+            url: "odata/v4/RegistrationService/User",
+            success: (oData) => {
+              oData.value.forEach((c) => {
+                this._dic[c.sapId] = c.ID;
+              });
+            },
+            error: function (error) {
+              console.log("Error: " + JSON.stringify(error, null, 4));
+            },
+          });
+
+          // sap.ushell.Container.getServiceAsync(
+          //   "CrossApplicationNavigation"
+          // ).then(function (oService) {
+          //   oService
+          //     .hrefForExternalAsync({
+          //       target: {
+          //         semanticObject: "Packages",
+          //         action: "manage",
+          //       },
+          //       params: {},
+          //     })
+          //     .then(function (sHref) {
+          //       // Place sHref somewhere in the DOM
+          //     });
+          // });
         },
 
         onBeforeRendering: function () {
           console.log("Here I am");
           var oUser = sap.ushell.Container.getUser();
           var sCurrentUser = oUser.getId();
-          this.getView().byId("idReceptionistInput").setValue(sCurrentUser);
+          this.getView()
+            .byId("idReceptionistSelect")
+            .setSelectedKey(sCurrentUser);
         },
 
         onSaveButtonPress: function (oEvent) {
           var oData = this._getInputs();
           var fnSuccess = function () {
-            MessageToast.show("Created!");
+            MessageToast.show("Created! Navigating to Package Management...");
             this._resetInputs();
-            this._navBack();
+            this._navToPack();
           }.bind(this);
           this._postPack(oData, fnSuccess);
         },
@@ -52,6 +82,19 @@ sap.ui.define(
         onDiscardButtonPress: function (oEvent) {
           this._resetInputs();
           this._navBack();
+        },
+
+        _navToPack: function () {
+          var oCrossAppNavigator = sap.ushell.Container.getService(
+            "CrossApplicationNavigation"
+          );
+          var targetApp = {
+            target: {
+              semanticObject: "Packages",
+              action: "manage",
+            },
+          };
+          oCrossAppNavigator.toExternal(targetApp);
         },
 
         _postPack(oData, fnSuccess) {
@@ -93,7 +136,7 @@ sap.ui.define(
           var oUser = sap.ushell.Container.getUser();
           var sCurrentUser = oUser.getId();
           var oLocalModel = this.getView().getModel("localData");
-          oLocalModel.setProperty("/data/recipient", "");
+          oLocalModel.setProperty("/data/recipient_ID", "");
           oLocalModel.setProperty("/data/type", "normal");
           oLocalModel.setProperty("/data/company", "DHL");
           oLocalModel.setProperty("/data/comment", "");
@@ -108,7 +151,7 @@ sap.ui.define(
           var sCurrentUser = oUser.getId();
           var sRecipient = this.getView()
             .getModel("localData")
-            .getProperty("/data/recipient");
+            .getProperty("/data/recipient_ID");
           var tp = this.getView()
             .getModel("localData")
             .getProperty("/data/type");
@@ -118,11 +161,15 @@ sap.ui.define(
           var cm = this.getView()
             .getModel("localData")
             .getProperty("/data/comment");
+          var recep = this.getView()
+            .getModel("localData")
+            .getProperty("/data/receptionist_ID");
+          console.log(sRecipient);
           return {
-            recipient: sRecipient,
+            recipient_ID: sRecipient,
             type_code: tp,
             deliveryCompany_ID: dc,
-            receptionist: sCurrentUser,
+            receptionist_ID: recep,
             comment: cm,
             status_code: "new",
           };
