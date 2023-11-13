@@ -6,51 +6,6 @@
           "catalogs": [],
           "groups": [
             {
-              "id": "Administration",
-              "title": "Administration",
-              "isPreset": true,
-              "isVisible": true,
-              "isGroupLocked": false,
-              "tiles": [
-                {
-                  "id": "manage-storages",
-                  "tileType": "sap.ushell.ui.tile.StaticTile",
-                  "properties": {
-                    "targetURL": "#Storages-manage",
-                    "title": "Manage Storages",
-                    "description": "Add/edit/delete storages and slots"
-                  }
-                },
-                {
-                  "id": "manage-companies",
-                  "tileType": "sap.ushell.ui.tile.StaticTile",
-                  "properties": {
-                    "targetURL": "#Companies-manage",
-                    "title": "Manage Companies",
-                    "description": "Add/edit/delete companies"
-                  }
-                },
-                {
-                  "id": "manage-packages",
-                  "tileType": "sap.ushell.ui.tile.StaticTile",
-                  "properties": {
-                    "targetURL": "#Packages-manage",
-                    "title": "Manage Packages",
-                    "description": "edit/delete/confirm packages"
-                  }
-                },
-                {
-                  "id": "register-packages",
-                  "tileType": "sap.ushell.ui.tile.StaticTile",
-                  "properties": {
-                    "targetURL": "#Packages-register",
-                    "title": "Register Packages",
-                    "description": "register new packages"
-                  }
-                }
-              ]
-            },
-            {
               "id": "End-Application",
               "title": "End Application",
               "isPreset": true,
@@ -73,6 +28,60 @@
                     "targetURL": "#Packages-pickup",
                     "title": "Package Pickup",
                     "description": "Add/edit/delete reviews"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "Parcel-Handling",
+              "title": "Parcel Handling",
+              "isPreset": true,
+              "isVisible": true,
+              "isGroupLocked": false,
+              "tiles": [
+                {
+                  "id": "manage-packages",
+                  "tileType": "sap.ushell.ui.tile.StaticTile",
+                  "properties": {
+                    "targetURL": "#Packages-manage",
+                    "title": "Manage Packages",
+                    "description": "edit/delete/confirm packages"
+                  }
+                },
+                {
+                  "id": "register-packages",
+                  "tileType": "sap.ushell.ui.tile.StaticTile",
+                  "properties": {
+                    "targetURL": "#Packages-register",
+                    "title": "Register Packages",
+                    "description": "register new packages"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "Administration",
+              "title": "Administration",
+              "isPreset": true,
+              "isVisible": true,
+              "isGroupLocked": false,
+              "tiles": [
+                {
+                  "id": "manage-storages",
+                  "tileType": "sap.ushell.ui.tile.StaticTile",
+                  "properties": {
+                    "targetURL": "#Storages-manage",
+                    "title": "Manage Storages",
+                    "description": "Add/edit/delete storages and slots"
+                  }
+                },
+                {
+                  "id": "manage-companies",
+                  "tileType": "sap.ushell.ui.tile.StaticTile",
+                  "properties": {
+                    "targetURL": "#Companies-manage",
+                    "title": "Manage Companies",
+                    "description": "Add/edit/delete companies"
                   }
                 }
               ]
