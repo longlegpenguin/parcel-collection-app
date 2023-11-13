@@ -28,7 +28,7 @@ public class RegistrationServiceHandler implements EventHandler {
         Set<String> userRoles = context.getUserInfo().getRoles();
         String userId = context.getUserInfo().getId();
         if (userRoles.contains("Receptionist")) {
-            pack.setReceptionist(userId);
+            pack.setReceptionistId(userId);
         }
         LOGGER.info("Creating package: {}", pack);
     }

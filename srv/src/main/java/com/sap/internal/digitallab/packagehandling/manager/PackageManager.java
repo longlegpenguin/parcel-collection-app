@@ -77,7 +77,7 @@ public class PackageManager {
         packRepo.updateStatusCodeById(packStatusMgr.CONFIRMED_STATUS_CODE, packId);
         packRepo.updateConfirmedTimeById(packId);
         slotMgr.refreshStatus(slotId);
-        EmailSender.sendEmail(getPackageWithId(packId).get(Package.RECIPIENT).toString() + " received a package");
+        EmailSender.sendEmail(getPackageWithId(packId).get(Package.RECIPIENT_ID).toString() + " received a package");
     }
 
     /**
@@ -92,7 +92,7 @@ public class PackageManager {
         packRepo.updatePickedUpTimeById(packId);
         String slotId = packRepo.readById(packId).single().get(Package.SLOT_ID).toString();
         slotMgr.refreshStatus(slotId);
-        EmailSender.sendEmail(getPackageWithId(packId).get(Package.RECIPIENT).toString() + " picked up a package");
+        EmailSender.sendEmail(getPackageWithId(packId).get(Package.RECIPIENT_ID).toString() + " picked up a package");
     }
 
     /**

@@ -23,13 +23,13 @@ public class PackageServiceTest extends BaseServiceTest {
     void testUpdatePackage() {
         String url = host + port + prefix + "Package(BE7DD47C-0A65-43D0-91B1-508CF88ACBDF)";
         String body = "{" +
-                "  \"recipient\": \"I555555\"," +
+                "  \"recipient_ID\": \"CD5B6B86-90E4-4F19-BA3B-1F3366F92F18\"," +
                 "  \"pickupTime\": null," +
                 "  \"slot_ID\": null," +
                 "  \"deliveryCompany_ID\": \"724a082e-8f05-4d5e-bbc3-b8acaa30b8fb\"," +
                 "  \"type_code\": \"newspaper\"," +
                 "  \"status_code\": \"new\"," +
-                "  \"receptionist\": \"C456789\"" +
+                "  \"receptionist_ID\": \"0278CAE0-6680-489F-ABAE-25DBE4B5C312\"" +
                 "}";
         update(ADMIN_KEY, mockUsers.get(ADMIN_KEY), url, body)
                 .then()

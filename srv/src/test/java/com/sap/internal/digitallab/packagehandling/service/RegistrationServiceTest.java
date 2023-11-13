@@ -11,10 +11,10 @@ public class RegistrationServiceTest extends BaseServiceTest {
     void testCreatePackageByAdmin() {
         String url = host + port + prefix + "Package";
         String body = "{" +
-                "  \"recipient\": \"I555555\"," +
+                "  \"recipient_ID\": \"CD5B6B86-90E4-4F19-BA3B-1F3366F92F18\"," +
                 "  \"deliveryCompany_ID\": \"6480a902-007c-4cdd-a6a3-0f3a88d24fe0\"," +
                 "  \"type_code\": \"newspaper\"," +
-                "  \"receptionist\": \"I345678\"," +
+                "  \"receptionist_ID\": \"0278CAE0-6680-489F-ABAE-25DBE4B5C312\"," +
                 "  \"comment\": \"no comment\"" +
                 "}";
         create(ADMIN_KEY, mockUsers.get(ADMIN_KEY), url, body)
@@ -28,16 +28,16 @@ public class RegistrationServiceTest extends BaseServiceTest {
     void testCreatePackageByReceptionistShouldAutoFillRecep() {
         String url = host + port + prefix + "Package";
         String body = "{" +
-                "  \"recipient\": \"I555555\"," +
+                "  \"recipient_ID\": \"CD5B6B86-90E4-4F19-BA3B-1F3366F92F18\"," +
                 "  \"deliveryCompany_ID\": \"6480a902-007c-4cdd-a6a3-0f3a88d24fe0\"," +
                 "  \"type_code\": \"newspaper\"," +
-                "  \"receptionist\": \"I345678\"," +
+                "  \"receptionist_ID\": \"0278CAE0-6680-489F-ABAE-25DBE4B5C312\"," +
                 "  \"comment\": \"no comment\"" +
                 "}";
         create(RECEPTIONIST_KEY, mockUsers.get(RECEPTIONIST_KEY), url, body)
                 .then()
                 .statusCode(201)
-                .body("receptionist", Matchers.equalTo("mock/recep"))
+                .body("receptionist_ID", Matchers.equalTo("mock/recep"))
                 .body("ID", Matchers.notNullValue());
     }
 

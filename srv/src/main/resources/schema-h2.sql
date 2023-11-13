@@ -492,8 +492,8 @@ CREATE VIEW com_sap_internal_digitallab_packagehandling_service_HistoryService_P
   Package_0.status_code,
   Package_0.receptionist_ID,
   Package_0.comment
-FROM com_sap_internal_digitallab_packagehandling_core_Package AS Package_0
-WHERE Package_0.recipient_ID = @applicationuser; 
+FROM (com_sap_internal_digitallab_packagehandling_core_Package AS Package_0 LEFT JOIN com_sap_internal_digitallab_packagehandling_common_User AS recipient_1 ON Package_0.recipient_ID = recipient_1.ID)
+WHERE recipient_1.sapId = @applicationuser; 
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_HistoryService_PackageType AS SELECT
   PackageType_0.name,
@@ -1057,8 +1057,8 @@ CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_Histor
   Package_0.status_code,
   Package_0.receptionist_ID,
   Package_0.comment
-FROM localized_com_sap_internal_digitallab_packagehandling_core_Package AS Package_0
-WHERE Package_0.recipient_ID = @applicationuser; 
+FROM (localized_com_sap_internal_digitallab_packagehandling_core_Package AS Package_0 LEFT JOIN com_sap_internal_digitallab_packagehandling_common_User AS recipient_1 ON Package_0.recipient_ID = recipient_1.ID)
+WHERE recipient_1.sapId = @applicationuser; 
 
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_RegistrationService_Package AS SELECT
   Package_0.ID,
