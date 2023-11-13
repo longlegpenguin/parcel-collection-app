@@ -2,7 +2,7 @@ using com.sap.internal.digitallab.packagehandling.service.PackageService as serv
 
 annotate service.Package with @(
     UI.SelectionFields: [
-        recipient,
+        recipient.sapId,
         type.name,
         deliveryCompany.name,
         comfirmationTime
@@ -75,7 +75,7 @@ annotate service.Package with @(
     UI.LineItem       : [
         {
             $Type: 'UI.DataField',
-            Value: recipient,
+            Value: recipient.sapId,
         },
         {
             $Type: 'UI.DataField',
@@ -155,7 +155,7 @@ annotate service.Package with @(
         Data : [
             {
                 $Type: 'UI.DataField',
-                Value: receptionist,
+                Value: receptionist.user.sapId,
             },
             {
                 $Type: 'UI.DataField',
@@ -188,7 +188,7 @@ annotate service.Package with @(
         Data : [
             {
                 $Type: 'UI.DataField',
-                Value: recipient,
+                Value: recipient.sapId,
             },
             {
                 $Type: 'UI.DataField',

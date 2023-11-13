@@ -1,4 +1,9 @@
 
+DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_PackageService_Receptionist;
+DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_RegistrationService_Receptionist;
+DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_HistoryService_Receptionist;
+DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_PickupService_Receptionist;
+DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_StorageService_Receptionist;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_HistoryService_DeliveryCompany;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_StorageService_Storage;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_RegistrationService_StorageSlot;
@@ -47,6 +52,8 @@ DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_HistoryS
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PickupService_PackageStatus_texts;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PickupService_PackageType_texts;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_StorageService_SlotStatus_texts;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PackageService_Receptionist;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PackageService_User;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PackageService_BuildingFloor;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PackageService_Building;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PackageService_DeliveryCompany;
@@ -55,14 +62,20 @@ DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PackageS
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PackageService_PackageStatus;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PackageService_PackageType;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PackageService_Package;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_RegistrationService_Receptionist;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_RegistrationService_User;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_RegistrationService_DeliveryCompany;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_RegistrationService_PackageStatus;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_RegistrationService_PackageType;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_RegistrationService_Package;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_HistoryService_Receptionist;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_HistoryService_User;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_HistoryService_DeliveryCompany;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_HistoryService_PackageStatus;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_HistoryService_PackageType;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_HistoryService_Package;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PickupService_Receptionist;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PickupService_User;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PickupService_DeliveryCompany;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PickupService_Storage;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PickupService_StorageSlot;
@@ -70,6 +83,8 @@ DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PickupSe
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PickupService_PackageType;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_PickupService_Package;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_CompanyService_DeliveryCompany;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_StorageService_Receptionist;
+DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_StorageService_User;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_StorageService_BuildingFloor;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_StorageService_Building;
 DROP VIEW IF EXISTS com_sap_internal_digitallab_packagehandling_service_StorageService_SlotStatus;
@@ -206,14 +221,14 @@ CREATE TABLE com_sap_internal_digitallab_packagehandling_core_Package (
   createdBy NVARCHAR(255),
   modifiedAt TIMESTAMP(7),
   modifiedBy NVARCHAR(255),
-  recipient NVARCHAR(255) NOT NULL,
+  recipient_ID NVARCHAR(36) NOT NULL,
   comfirmationTime TIMESTAMP(7),
   pickupTime TIMESTAMP(7),
   slot_ID NVARCHAR(36),
   deliveryCompany_ID NVARCHAR(36),
   type_code NVARCHAR(255) NOT NULL,
   status_code NVARCHAR(255) NOT NULL,
-  receptionist NVARCHAR(255) NOT NULL,
+  receptionist_ID NVARCHAR(36) NOT NULL,
   comment NVARCHAR(255),
   PRIMARY KEY(ID)
 ); 
@@ -355,6 +370,30 @@ CREATE VIEW com_sap_internal_digitallab_packagehandling_service_StorageService_B
   BuildingFloor_0.building_ID
 FROM com_sap_internal_digitallab_packagehandling_common_BuildingFloor AS BuildingFloor_0; 
 
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_StorageService_User AS SELECT
+  User_0.ID,
+  User_0.createdAt,
+  User_0.createdBy,
+  User_0.modifiedAt,
+  User_0.modifiedBy,
+  User_0.sapId,
+  User_0.firstName,
+  User_0.lastName,
+  User_0.mailAddress,
+  User_0.phoneNumber
+FROM com_sap_internal_digitallab_packagehandling_common_User AS User_0; 
+
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_StorageService_Receptionist AS SELECT
+  Receptionist_0.ID,
+  Receptionist_0.createdAt,
+  Receptionist_0.createdBy,
+  Receptionist_0.modifiedAt,
+  Receptionist_0.modifiedBy,
+  Receptionist_0.user_ID,
+  Receptionist_0.reception_ID,
+  Receptionist_0.guard
+FROM com_sap_internal_digitallab_packagehandling_common_Receptionist AS Receptionist_0; 
+
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_CompanyService_DeliveryCompany AS SELECT
   DeliveryCompany_0.ID,
   DeliveryCompany_0.createdAt,
@@ -371,14 +410,14 @@ CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PickupService_Pa
   Package_0.createdBy,
   Package_0.modifiedAt,
   Package_0.modifiedBy,
-  Package_0.recipient,
+  Package_0.recipient_ID,
   Package_0.comfirmationTime,
   Package_0.pickupTime,
   Package_0.slot_ID,
   Package_0.deliveryCompany_ID,
   Package_0.type_code,
   Package_0.status_code,
-  Package_0.receptionist,
+  Package_0.receptionist_ID,
   Package_0.comment,
   slot_1.name AS slotName,
   storage_2.name AS storageName
@@ -414,23 +453,47 @@ CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PickupService_De
   DeliveryCompany_0.name
 FROM com_sap_internal_digitallab_packagehandling_core_DeliveryCompany AS DeliveryCompany_0; 
 
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PickupService_User AS SELECT
+  User_0.ID,
+  User_0.createdAt,
+  User_0.createdBy,
+  User_0.modifiedAt,
+  User_0.modifiedBy,
+  User_0.sapId,
+  User_0.firstName,
+  User_0.lastName,
+  User_0.mailAddress,
+  User_0.phoneNumber
+FROM com_sap_internal_digitallab_packagehandling_common_User AS User_0; 
+
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PickupService_Receptionist AS SELECT
+  Receptionist_0.ID,
+  Receptionist_0.createdAt,
+  Receptionist_0.createdBy,
+  Receptionist_0.modifiedAt,
+  Receptionist_0.modifiedBy,
+  Receptionist_0.user_ID,
+  Receptionist_0.reception_ID,
+  Receptionist_0.guard
+FROM com_sap_internal_digitallab_packagehandling_common_Receptionist AS Receptionist_0; 
+
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_HistoryService_Package AS SELECT
   Package_0.ID,
   Package_0.createdAt,
   Package_0.createdBy,
   Package_0.modifiedAt,
   Package_0.modifiedBy,
-  Package_0.recipient,
+  Package_0.recipient_ID,
   Package_0.comfirmationTime,
   Package_0.pickupTime,
   Package_0.slot_ID,
   Package_0.deliveryCompany_ID,
   Package_0.type_code,
   Package_0.status_code,
-  Package_0.receptionist,
+  Package_0.receptionist_ID,
   Package_0.comment
 FROM com_sap_internal_digitallab_packagehandling_core_Package AS Package_0
-WHERE Package_0.recipient = @applicationuser; 
+WHERE Package_0.recipient_ID = @applicationuser; 
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_HistoryService_PackageType AS SELECT
   PackageType_0.name,
@@ -455,20 +518,44 @@ CREATE VIEW com_sap_internal_digitallab_packagehandling_service_HistoryService_D
   DeliveryCompany_0.logo
 FROM com_sap_internal_digitallab_packagehandling_core_DeliveryCompany AS DeliveryCompany_0; 
 
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_HistoryService_User AS SELECT
+  User_0.ID,
+  User_0.createdAt,
+  User_0.createdBy,
+  User_0.modifiedAt,
+  User_0.modifiedBy,
+  User_0.sapId,
+  User_0.firstName,
+  User_0.lastName,
+  User_0.mailAddress,
+  User_0.phoneNumber
+FROM com_sap_internal_digitallab_packagehandling_common_User AS User_0; 
+
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_HistoryService_Receptionist AS SELECT
+  Receptionist_0.ID,
+  Receptionist_0.createdAt,
+  Receptionist_0.createdBy,
+  Receptionist_0.modifiedAt,
+  Receptionist_0.modifiedBy,
+  Receptionist_0.user_ID,
+  Receptionist_0.reception_ID,
+  Receptionist_0.guard
+FROM com_sap_internal_digitallab_packagehandling_common_Receptionist AS Receptionist_0; 
+
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_RegistrationService_Package AS SELECT
   Package_0.ID,
   Package_0.createdAt,
   Package_0.createdBy,
   Package_0.modifiedAt,
   Package_0.modifiedBy,
-  Package_0.recipient,
+  Package_0.recipient_ID,
   Package_0.comfirmationTime,
   Package_0.pickupTime,
   Package_0.slot_ID,
   Package_0.deliveryCompany_ID,
   Package_0.type_code,
   Package_0.status_code,
-  Package_0.receptionist,
+  Package_0.receptionist_ID,
   Package_0.comment
 FROM com_sap_internal_digitallab_packagehandling_core_Package AS Package_0; 
 
@@ -490,20 +577,44 @@ CREATE VIEW com_sap_internal_digitallab_packagehandling_service_RegistrationServ
   DeliveryCompany_0.name
 FROM com_sap_internal_digitallab_packagehandling_core_DeliveryCompany AS DeliveryCompany_0; 
 
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_RegistrationService_User AS SELECT
+  User_0.ID,
+  User_0.createdAt,
+  User_0.createdBy,
+  User_0.modifiedAt,
+  User_0.modifiedBy,
+  User_0.sapId,
+  User_0.firstName,
+  User_0.lastName,
+  User_0.mailAddress,
+  User_0.phoneNumber
+FROM com_sap_internal_digitallab_packagehandling_common_User AS User_0; 
+
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_RegistrationService_Receptionist AS SELECT
+  Receptionist_0.ID,
+  Receptionist_0.createdAt,
+  Receptionist_0.createdBy,
+  Receptionist_0.modifiedAt,
+  Receptionist_0.modifiedBy,
+  Receptionist_0.user_ID,
+  Receptionist_0.reception_ID,
+  Receptionist_0.guard
+FROM com_sap_internal_digitallab_packagehandling_common_Receptionist AS Receptionist_0; 
+
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_Package AS SELECT
   Package_0.ID,
   Package_0.createdAt,
   Package_0.createdBy,
   Package_0.modifiedAt,
   Package_0.modifiedBy,
-  Package_0.recipient,
+  Package_0.recipient_ID,
   Package_0.comfirmationTime,
   Package_0.pickupTime,
   Package_0.slot_ID,
   Package_0.deliveryCompany_ID,
   Package_0.type_code,
   Package_0.status_code,
-  Package_0.receptionist,
+  Package_0.receptionist_ID,
   Package_0.comment
 FROM com_sap_internal_digitallab_packagehandling_core_Package AS Package_0; 
 
@@ -548,6 +659,30 @@ CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_B
   BuildingFloor_0.name,
   BuildingFloor_0.building_ID
 FROM com_sap_internal_digitallab_packagehandling_common_BuildingFloor AS BuildingFloor_0; 
+
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_User AS SELECT
+  User_0.ID,
+  User_0.createdAt,
+  User_0.createdBy,
+  User_0.modifiedAt,
+  User_0.modifiedBy,
+  User_0.sapId,
+  User_0.firstName,
+  User_0.lastName,
+  User_0.mailAddress,
+  User_0.phoneNumber
+FROM com_sap_internal_digitallab_packagehandling_common_User AS User_0; 
+
+CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_Receptionist AS SELECT
+  Receptionist_0.ID,
+  Receptionist_0.createdAt,
+  Receptionist_0.createdBy,
+  Receptionist_0.modifiedAt,
+  Receptionist_0.modifiedBy,
+  Receptionist_0.user_ID,
+  Receptionist_0.reception_ID,
+  Receptionist_0.guard
+FROM com_sap_internal_digitallab_packagehandling_common_Receptionist AS Receptionist_0; 
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_StorageService_SlotStatus_texts AS SELECT
   texts_0.locale,
@@ -706,14 +841,14 @@ CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_core_Package A
   L.createdBy,
   L.modifiedAt,
   L.modifiedBy,
-  L.recipient,
+  L.recipient_ID,
   L.comfirmationTime,
   L.pickupTime,
   L.slot_ID,
   L.deliveryCompany_ID,
   L.type_code,
   L.status_code,
-  L.receptionist,
+  L.receptionist_ID,
   L.comment
 FROM com_sap_internal_digitallab_packagehandling_core_Package AS L; 
 
@@ -894,14 +1029,14 @@ CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_Pickup
   Package_0.createdBy,
   Package_0.modifiedAt,
   Package_0.modifiedBy,
-  Package_0.recipient,
+  Package_0.recipient_ID,
   Package_0.comfirmationTime,
   Package_0.pickupTime,
   Package_0.slot_ID,
   Package_0.deliveryCompany_ID,
   Package_0.type_code,
   Package_0.status_code,
-  Package_0.receptionist,
+  Package_0.receptionist_ID,
   Package_0.comment,
   slot_1.name AS slotName,
   storage_2.name AS storageName
@@ -913,17 +1048,17 @@ CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_Histor
   Package_0.createdBy,
   Package_0.modifiedAt,
   Package_0.modifiedBy,
-  Package_0.recipient,
+  Package_0.recipient_ID,
   Package_0.comfirmationTime,
   Package_0.pickupTime,
   Package_0.slot_ID,
   Package_0.deliveryCompany_ID,
   Package_0.type_code,
   Package_0.status_code,
-  Package_0.receptionist,
+  Package_0.receptionist_ID,
   Package_0.comment
 FROM localized_com_sap_internal_digitallab_packagehandling_core_Package AS Package_0
-WHERE Package_0.recipient = @applicationuser; 
+WHERE Package_0.recipient_ID = @applicationuser; 
 
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_RegistrationService_Package AS SELECT
   Package_0.ID,
@@ -931,14 +1066,14 @@ CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_Regist
   Package_0.createdBy,
   Package_0.modifiedAt,
   Package_0.modifiedBy,
-  Package_0.recipient,
+  Package_0.recipient_ID,
   Package_0.comfirmationTime,
   Package_0.pickupTime,
   Package_0.slot_ID,
   Package_0.deliveryCompany_ID,
   Package_0.type_code,
   Package_0.status_code,
-  Package_0.receptionist,
+  Package_0.receptionist_ID,
   Package_0.comment
 FROM localized_com_sap_internal_digitallab_packagehandling_core_Package AS Package_0; 
 
@@ -948,14 +1083,14 @@ CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_Packag
   Package_0.createdBy,
   Package_0.modifiedAt,
   Package_0.modifiedBy,
-  Package_0.recipient,
+  Package_0.recipient_ID,
   Package_0.comfirmationTime,
   Package_0.pickupTime,
   Package_0.slot_ID,
   Package_0.deliveryCompany_ID,
   Package_0.type_code,
   Package_0.status_code,
-  Package_0.receptionist,
+  Package_0.receptionist_ID,
   Package_0.comment
 FROM localized_com_sap_internal_digitallab_packagehandling_core_Package AS Package_0; 
 
@@ -1002,4 +1137,59 @@ CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_Histor
   DeliveryCompany_0.name,
   DeliveryCompany_0.logo
 FROM localized_com_sap_internal_digitallab_packagehandling_core_DeliveryCompany AS DeliveryCompany_0; 
+
+CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_StorageService_Receptionist AS SELECT
+  Receptionist_0.ID,
+  Receptionist_0.createdAt,
+  Receptionist_0.createdBy,
+  Receptionist_0.modifiedAt,
+  Receptionist_0.modifiedBy,
+  Receptionist_0.user_ID,
+  Receptionist_0.reception_ID,
+  Receptionist_0.guard
+FROM localized_com_sap_internal_digitallab_packagehandling_common_Receptionist AS Receptionist_0; 
+
+CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_PickupService_Receptionist AS SELECT
+  Receptionist_0.ID,
+  Receptionist_0.createdAt,
+  Receptionist_0.createdBy,
+  Receptionist_0.modifiedAt,
+  Receptionist_0.modifiedBy,
+  Receptionist_0.user_ID,
+  Receptionist_0.reception_ID,
+  Receptionist_0.guard
+FROM localized_com_sap_internal_digitallab_packagehandling_common_Receptionist AS Receptionist_0; 
+
+CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_HistoryService_Receptionist AS SELECT
+  Receptionist_0.ID,
+  Receptionist_0.createdAt,
+  Receptionist_0.createdBy,
+  Receptionist_0.modifiedAt,
+  Receptionist_0.modifiedBy,
+  Receptionist_0.user_ID,
+  Receptionist_0.reception_ID,
+  Receptionist_0.guard
+FROM localized_com_sap_internal_digitallab_packagehandling_common_Receptionist AS Receptionist_0; 
+
+CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_RegistrationService_Receptionist AS SELECT
+  Receptionist_0.ID,
+  Receptionist_0.createdAt,
+  Receptionist_0.createdBy,
+  Receptionist_0.modifiedAt,
+  Receptionist_0.modifiedBy,
+  Receptionist_0.user_ID,
+  Receptionist_0.reception_ID,
+  Receptionist_0.guard
+FROM localized_com_sap_internal_digitallab_packagehandling_common_Receptionist AS Receptionist_0; 
+
+CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_PackageService_Receptionist AS SELECT
+  Receptionist_0.ID,
+  Receptionist_0.createdAt,
+  Receptionist_0.createdBy,
+  Receptionist_0.modifiedAt,
+  Receptionist_0.modifiedBy,
+  Receptionist_0.user_ID,
+  Receptionist_0.reception_ID,
+  Receptionist_0.guard
+FROM localized_com_sap_internal_digitallab_packagehandling_common_Receptionist AS Receptionist_0; 
 

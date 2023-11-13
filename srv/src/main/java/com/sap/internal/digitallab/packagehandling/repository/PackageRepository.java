@@ -144,6 +144,6 @@ public class PackageRepository {
         return Select.from(Package_.class)
                 .where(
                         p -> p.status_code().eq(statusCode)
-                                .and(p.recipient().eq(uname)));
+                                .and(p.recipient_ID().eq(uname)));
     }
 }

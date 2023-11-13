@@ -10,7 +10,7 @@ using {com.sap.internal.digitallab.packagehandling.common as common} from '../..
 service HistoryService {
 
     @readonly
-    entity Package         as projection on core.Package where recipient = $user;
+    entity Package         as projection on core.Package where recipient.ID = $user;
 
     @readonly
     entity PackageType     as projection on core.PackageType;
@@ -20,5 +20,12 @@ service HistoryService {
 
     @readonly
     entity DeliveryCompany as projection on core.DeliveryCompany;
+
+    @readonly
+    entity User            as projection on common.User;
+
+    @readonly
+    entity Receptionist    as projection on common.Receptionist;
+
 
 }

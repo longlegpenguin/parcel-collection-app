@@ -9,9 +9,7 @@ using {com.sap.internal.digitallab.packagehandling.common as common} from '../..
 @path: 'RegistrationService'
 service RegistrationService {
 
-    @(restrict: [{
-        grant: ['CREATE'],
-    }])
+    @(restrict: [{grant: ['CREATE'], }])
     entity Package         as projection on core.Package;
 
     @readonly
@@ -25,6 +23,12 @@ service RegistrationService {
         ID,
         name
     };
+
+    @readonly
+    entity User            as projection on common.User;
+
+    @readonly
+    entity Receptionist    as projection on common.Receptionist;
 
 }
 

@@ -1,6 +1,7 @@
 namespace com.sap.internal.digitallab.packagehandling.service;
 
 using {com.sap.internal.digitallab.packagehandling.core as core} from '../../db/models/packagehandling/';
+using {com.sap.internal.digitallab.packagehandling.common as common} from '../../db/models/common/';
 
 /**
  * Service definition
@@ -40,6 +41,12 @@ service PickupService {
         ID,
         name
     };
+
+    @readonly
+    entity User as projection on common.User;
+
+    @readonly
+    entity Receptionist as projection on common.Receptionist;
 
     @sap.applicable.path: 'pickup_ac'
     action pickup(packageId : UUID) returns Package;

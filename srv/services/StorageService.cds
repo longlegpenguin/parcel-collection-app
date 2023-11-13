@@ -35,6 +35,12 @@ service StorageService {
         building
     };
 
+    @readonly
+    entity User          as projection on common.User;
+
+    @readonly
+    entity Receptionist  as projection on common.Receptionist;
+
     action massCreate(row : Integer, rowType : String(1), col : Integer, colType : String(1), storage : type of Storage : ID) returns Integer;
 }
 
@@ -49,5 +55,5 @@ annotate core.Storage with {
 annotate StorageService.StorageSlot with {
     name     @mandatory;
     storage  @mandatory  @assert.target;
-    status   ;
+    status;
 };
