@@ -379,8 +379,10 @@ CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PickupService_Pa
   Package_0.type_code,
   Package_0.status_code,
   Package_0.receptionist,
-  Package_0.comment
-FROM com_sap_internal_digitallab_packagehandling_core_Package AS Package_0; 
+  Package_0.comment,
+  slot_1.name AS slotName,
+  storage_2.name AS storageName
+FROM ((com_sap_internal_digitallab_packagehandling_core_Package AS Package_0 LEFT JOIN com_sap_internal_digitallab_packagehandling_core_StorageSlot AS slot_1 ON Package_0.slot_ID = slot_1.ID) LEFT JOIN com_sap_internal_digitallab_packagehandling_core_Storage AS storage_2 ON slot_1.storage_ID = storage_2.ID); 
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PickupService_PackageType AS SELECT
   PackageType_0.name,
@@ -397,8 +399,9 @@ FROM com_sap_internal_digitallab_packagehandling_core_PackageStatus AS PackageSt
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PickupService_StorageSlot AS SELECT
   StorageSlot_0.ID,
-  StorageSlot_0.name
-FROM com_sap_internal_digitallab_packagehandling_core_StorageSlot AS StorageSlot_0; 
+  StorageSlot_0.name,
+  storage_1.name AS storageName
+FROM (com_sap_internal_digitallab_packagehandling_core_StorageSlot AS StorageSlot_0 LEFT JOIN com_sap_internal_digitallab_packagehandling_core_Storage AS storage_1 ON StorageSlot_0.storage_ID = storage_1.ID); 
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PickupService_Storage AS SELECT
   Storage_0.ID,
@@ -899,8 +902,10 @@ CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_Pickup
   Package_0.type_code,
   Package_0.status_code,
   Package_0.receptionist,
-  Package_0.comment
-FROM localized_com_sap_internal_digitallab_packagehandling_core_Package AS Package_0; 
+  Package_0.comment,
+  slot_1.name AS slotName,
+  storage_2.name AS storageName
+FROM ((localized_com_sap_internal_digitallab_packagehandling_core_Package AS Package_0 LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_core_StorageSlot AS slot_1 ON Package_0.slot_ID = slot_1.ID) LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_core_Storage AS storage_2 ON slot_1.storage_ID = storage_2.ID); 
 
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_HistoryService_Package AS SELECT
   Package_0.ID,

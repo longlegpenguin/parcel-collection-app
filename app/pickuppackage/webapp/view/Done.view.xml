@@ -63,7 +63,7 @@
                         <StandardListItem
                             icon="{ path: 'type_code', targetType: 'any', formatter: '.icon' }"
                             title="{path: 'type_code', targetType: 'any', formatter: '.type_name'} ({path: 'deliveryCompany_ID', targetType: 'any', formatter: '.company_name'})"
-                            info=" | {slot_ID}"
+                            info=" {path: 'slot_ID', targetType: 'any', formatter: '.loc_info'}"
                         />
                     </items>
                 </List>

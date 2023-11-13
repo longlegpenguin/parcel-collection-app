@@ -21,17 +21,39 @@ sap.ui.define(
           this.getView().setModel(oModel, "view");
 
           this._dic = {};
+          this._locDic = {};
+
+          var oView = this.getView();
+          oView.addEventDelegate(
+            {
+              onAfterShow: (oEvent) => {
+                this.getView().getModel().refresh();
+                this.getView().getModel("packages").refresh();
+                $.get({
+                  url: "odata/v4/PickupService/Package",
+                  success: (oData) => {
+                    this.getView()
+                      .getModel("packages")
+                      .setProperty("/length", oData.value.length);
+                  },
+                  error: function (error) {
+                    console.log("Error: " + JSON.stringify(error, null, 4));
+                  },
+                });
+                this.getView().byId("idPickupButton").setEnabled(false);
+              },
+            },
+            oView
+          );
 
           $.get({
             url: "odata/v4/PickupService/DeliveryCompany",
             success: (oData) => {
-              console.log("Types: " + JSON.stringify(oData, null, 4));
-              this._types = oData.value;
               oData.value.forEach((c) => {
                 this._dic[c.ID] = c.name;
               });
-              console.log("Type: " + JSON.stringify(this._types[0], null, 4));
-              console.log("Dic: " + JSON.stringify(this._dic, null, 4));
+              // console.log("Type: " + JSON.stringify(this._types[0], null, 4));
+              // console.log("Dic: " + JSON.stringify(this._dic, null, 4));
             },
             error: function (error) {
               console.log("Error: " + JSON.stringify(error, null, 4));
@@ -41,11 +63,25 @@ sap.ui.define(
           $.get({
             url: "odata/v4/PickupService/PackageType",
             success: (oData) => {
-              this._types = oData.value;
               oData.value.forEach((c) => {
                 this._dic[c.code] = c.name;
               });
-              console.log("Dic: " + JSON.stringify(this._dic, null, 4));
+              // console.log("Dic: " + JSON.stringify(this._dic, null, 4));
+            },
+            error: function (error) {
+              console.log("Error: " + JSON.stringify(error, null, 4));
+            },
+          });
+
+          $.get({
+            url: "odata/v4/PickupService/StorageSlot",
+            success: (oData) => {
+              oData.value.forEach((c) => {
+                this._locDic[c.ID] = c.name + " | " + c.storageName;
+              });
+              // console.log(
+              //   "Location Dic: " + JSON.stringify(this._locDic, null, 4)
+              // );
             },
             error: function (error) {
               console.log("Error: " + JSON.stringify(error, null, 4));
@@ -72,34 +108,23 @@ sap.ui.define(
             },
           });
         },
-
+        onAfterRendering: function () {
+          this.getView().byId("idPickupButton").setEnabled(false);
+          console.log("After Rendeing");
+        },
         onToggleAllCheckBoxSelect: function (oEvent) {
           var yes = oEvent.getSource().getSelected();
-          var oList = this.getView().byId("idPackageList");
+          var oList = this._getList();
           yes ? oList.selectAll() : oList.removeSelections(true);
+          this._resetBtnEnablement();
         },
 
-        // onPickupButtonPress: function (oEvent) {
-        //   console.log("Lets's see");
-        //   var oList = this.getView().byId("idPackageList");
-        //   var items = oList.getSelectedItems();
-        //   console.log(items[0].oBindingContexts.undefined.sPath);
-        //   items.forEach((item) => {
-        //     console.log("Picking up: " + item.oBindingContexts.undefined.sPath);
-        //     this._pickup(item.oBindingContexts.undefined.sPath);
-        //   });
-        //   // var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-        //   // oRouter.navTo("done");
-        // },
         onPickupButtonPress: function (oEvent) {
-          console.log("Lets's see");
-          var oList = this.getView().byId("idPackageList");
-          var items = oList.getSelectedItems();
-          console.log(items[0].oBindingContexts.undefined.sPath);
-          var aPaths = items.map((item) => item.oBindingContexts.undefined.sPath);
+          var items = this._getListItems();
+          var aPaths = items.map(
+            (item) => item.oBindingContexts.undefined.sPath
+          );
           this._pickupAll(aPaths);
-          // var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-          // oRouter.navTo("done");
         },
 
         _pickupAll: function (aPaths) {
@@ -107,11 +132,6 @@ sap.ui.define(
 
           new PkMBox(this.getView().getModel(), oRouter).onPickUpPress(aPaths);
         },
-        // _pickup: function (sPath) {
-        //   var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-
-        //   new PkMBox(this.getView().getModel(), oRouter).onPickUpPress(sPath);
-        // },
 
         eq0: function (cnt) {
           return cnt == 0;
@@ -143,7 +163,27 @@ sap.ui.define(
           return this._dic[id];
         },
 
-        onPackageListSelectionChange: function (oEvent) {},
+        onPackageListSelectionChange: function (oEvent) {
+          this._resetBtnEnablement();
+        },
+
+        _resetBtnEnablement: function () {
+          var items = this._getListItems();
+          var btn = this.getView().byId("idPickupButton");
+          if (items.length > 0) {
+            btn.setEnabled(true);
+          } else {
+            btn.setEnabled(false);
+          }
+        },
+
+        _getListItems: function () {
+          return this._getList().getSelectedItems();
+        },
+
+        _getList: function () {
+          return this.getView().byId("idPackageList");
+        },
       }
     );
   }

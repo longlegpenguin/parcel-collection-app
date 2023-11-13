@@ -9,7 +9,11 @@ using {com.sap.internal.digitallab.packagehandling.core as core} from '../../db/
 service PickupService {
 
     @readonly
-    entity Package         as projection on core.Package; //where recipient = $user;
+    entity Package         as projection on core.Package {
+        *,
+        slot.name         as slotName,
+        slot.storage.name as storageName
+    }; //where recipient = $user;
 
     @readonly
     entity PackageType     as projection on core.PackageType;
@@ -20,7 +24,8 @@ service PickupService {
     @readonly
     entity StorageSlot     as projection on core.StorageSlot {
         ID,
-        name
+        name,
+        storage.name as storageName
     };
 
     @readonly

@@ -14,6 +14,28 @@ sap.ui.define(
           this.getView().setModel(oModel, "view2");
 
           this._dic = {};
+          this._locDic = {};
+
+          var oView = this.getView();
+          oView.addEventDelegate(
+            {
+              onAfterShow: (oEvent) => {
+                this.getView().getModel().refresh();
+                $.get({
+                  url: "odata/v4/PickupService/Package",
+                  success: (oData) => {
+                    this.getView()
+                      .getModel("packages")
+                      .setProperty("/length", oData.value.length);
+                  },
+                  error: function (error) {
+                    console.log("Error: " + JSON.stringify(error, null, 4));
+                  },
+                });
+              },
+            },
+            oView
+          );
 
           $.get({
             url: "odata/v4/PickupService/DeliveryCompany",
@@ -44,6 +66,22 @@ sap.ui.define(
               console.log("Error: " + JSON.stringify(error, null, 4));
             },
           });
+
+          $.get({
+            url: "odata/v4/PickupService/StorageSlot",
+            success: (oData) => {
+              this._types = oData.value;
+              oData.value.forEach((c) => {
+                this._locDic[c.ID] = c.storageName + " | " + c.name;
+              });
+              console.log(
+                "Location Dic: " + JSON.stringify(this._locDic, null, 4)
+              );
+            },
+            error: function (error) {
+              console.log("Error: " + JSON.stringify(error, null, 4));
+            },
+          });
         },
 
         onBeforeRendering: function () {
@@ -64,6 +102,10 @@ sap.ui.define(
               console.log("Error: " + JSON.stringify(error, null, 4));
             },
           });
+        },
+
+        loc_info: function (sId) {
+          return this._locDic[sId];
         },
 
         eq0: function (cnt) {

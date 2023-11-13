@@ -88,6 +88,8 @@
                     text="Pickup"
                     type="Emphasized"
                     width=""
+                    enabled="false"
+                    id="idPickupButton"
                 />
             </OverflowToolbar>
         </footer>
