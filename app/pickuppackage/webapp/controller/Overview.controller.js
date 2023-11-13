@@ -184,6 +184,10 @@ sap.ui.define(
         _getList: function () {
           return this.getView().byId("idPackageList");
         },
+
+        loc_info: function (sId) {
+          return this._locDic[sId];
+        },
       }
     );
   }

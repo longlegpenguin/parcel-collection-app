@@ -73,7 +73,9 @@
                         <StandardListItem
                             icon="{ path: 'type_code', targetType: 'any', formatter: '.icon' }"
                             title="{path: 'type_code', targetType: 'any', formatter: '.type_name'} ({path: 'deliveryCompany_ID', targetType: 'any', formatter: '.company_name'})"
-                            description="Registered At: {comfirmationTime}"
+                            description="Registered: {comfirmationTime} Location: {path: 'slot_ID', targetType: 'any', formatter: '.loc_info'}"
+                            info=" "
+                            wrapping="true"
                         />
                     </items>
                 </List>

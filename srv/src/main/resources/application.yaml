@@ -26,6 +26,11 @@ cds:
         password: admin
         roles:
           - Administrator
+      I123456:
+        password: admin
+        roles:
+          - Administrator
+          - User
       I111111:
         password: user
         roles:
