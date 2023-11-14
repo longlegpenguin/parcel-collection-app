@@ -61,10 +61,15 @@ annotate service.Package with @(
         }, ],
     },
     UI.LineItem                  : [
+        // {
+        //     $Type             : 'UI.DataField',
+        //     Value             : recipient_ID,
+        //     ![@UI.Importance] : #High,
+        // },
         {
-            $Type             : 'UI.DataField',
-            Value             : recipient_ID,
-            ![@UI.Importance] : #High,
+            $Type : 'UI.DataFieldForAnnotation',
+            Target: 'recipient/@Communication.Contact',
+            Label : 'Recipient'
         },
         {
             $Type: 'UI.DataField',
@@ -176,9 +181,9 @@ annotate service.Package with @(
         $Type: 'UI.FieldGroupType',
         Data : [
             {
-                $Type             : 'UI.DataField',
-                Value             : recipient_ID,
-                ![@UI.Importance] : #High,
+                $Type : 'UI.DataFieldForAnnotation',
+                Target: 'recipient/@Communication.Contact',
+                Label : 'Recipient'
             },
             {
                 $Type: 'UI.DataField',
@@ -242,7 +247,7 @@ annotate service.User with @(UI.HeaderInfo: {
     TypeNamePlural: 'Users',
     Title         : {
         $Type: 'UI.DataField',
-        Value: 'User',
+        Value: 'User Info',
     },
     Description   : {
         $Type: 'UI.DataField',
@@ -252,7 +257,20 @@ annotate service.User with @(UI.HeaderInfo: {
     TypeImageUrl  : 'sap-icon://blank-tag',
 }, );
 
-// annotate service.Package with @(
+annotate service.User with @(Communication.Contact: {
+    fn   : diaplayName,
+    kind : #org,
+    email: [{
+        type   : #work,
+        address: mailAddress
+    }],
+    tel  : [{
+        type: #preferred,
+        uri : phoneNumber
+    }],
+    photo: 'sap-icon://employee'
+});
+// annotate service1.Contacts with @(
 //     Communication.Contact : {
 //         fn   : name, //full name
 //         kind : #org,

@@ -381,7 +381,8 @@ CREATE VIEW com_sap_internal_digitallab_packagehandling_service_StorageService_U
   User_0.lastName,
   User_0.mailAddress,
   User_0.phoneNumber,
-  User_0.firstName || ' ' || User_0.lastName AS fullName
+  User_0.firstName || ' ' || User_0.lastName AS fullName,
+  User_0.firstName || ' ' || User_0.lastName || ' (' || User_0.sapId || ')' AS diaplayName
 FROM com_sap_internal_digitallab_packagehandling_common_User AS User_0; 
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_StorageService_Receptionist AS SELECT
@@ -465,7 +466,8 @@ CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PickupService_Us
   User_0.lastName,
   User_0.mailAddress,
   User_0.phoneNumber,
-  User_0.firstName || ' ' || User_0.lastName AS fullName
+  User_0.firstName || ' ' || User_0.lastName AS fullName,
+  User_0.firstName || ' ' || User_0.lastName || ' (' || User_0.sapId || ')' AS diaplayName
 FROM com_sap_internal_digitallab_packagehandling_common_User AS User_0; 
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PickupService_Receptionist AS SELECT
@@ -531,7 +533,8 @@ CREATE VIEW com_sap_internal_digitallab_packagehandling_service_HistoryService_U
   User_0.lastName,
   User_0.mailAddress,
   User_0.phoneNumber,
-  User_0.firstName || ' ' || User_0.lastName AS fullName
+  User_0.firstName || ' ' || User_0.lastName AS fullName,
+  User_0.firstName || ' ' || User_0.lastName || ' (' || User_0.sapId || ')' AS diaplayName
 FROM com_sap_internal_digitallab_packagehandling_common_User AS User_0; 
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_HistoryService_Receptionist AS SELECT
@@ -591,7 +594,8 @@ CREATE VIEW com_sap_internal_digitallab_packagehandling_service_RegistrationServ
   User_0.lastName,
   User_0.mailAddress,
   User_0.phoneNumber,
-  User_0.firstName || ' ' || User_0.lastName AS fullName
+  User_0.firstName || ' ' || User_0.lastName AS fullName,
+  User_0.firstName || ' ' || User_0.lastName || ' (' || User_0.sapId || ')' AS diaplayName
 FROM com_sap_internal_digitallab_packagehandling_common_User AS User_0; 
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_RegistrationService_Receptionist AS SELECT
@@ -675,7 +679,8 @@ CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_U
   User_0.lastName,
   User_0.mailAddress,
   User_0.phoneNumber,
-  User_0.firstName || ' ' || User_0.lastName AS fullName
+  User_0.firstName || ' ' || User_0.lastName AS fullName,
+  User_0.firstName || ' ' || User_0.lastName || ' (' || User_0.sapId || ')' AS diaplayName
 FROM com_sap_internal_digitallab_packagehandling_common_User AS User_0; 
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_Receptionist AS SELECT
