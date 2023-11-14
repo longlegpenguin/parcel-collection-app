@@ -31,4 +31,9 @@ entity Package : cuid, managed {
     virtual delete_ac  : Boolean;
     virtual confirm_ac : Boolean;
     virtual pickup_ac  : Boolean;
+    dc                 : String = deliveryCompany.name;
+    bf                 : String = slot.storage.buildingFloor.name;
+    recepId            : String = receptionist.user.sapId;
+    storageName        : String = slot.storage.name;
+    typeName           : String = type.name;
 }

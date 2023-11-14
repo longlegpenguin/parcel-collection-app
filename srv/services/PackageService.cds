@@ -14,14 +14,7 @@ service PackageService {
         'UPDATE',
         'DELETE'
     ]}])
-    entity Package         as projection on core.Package {
-        *,
-        slot.storage.name               as storageName,
-        type.name                       as typeName,
-        deliveryCompany.name            as dc,
-        slot.storage.buildingFloor.name as bf,
-        receptionist.user.sapId         as recepId
-    };
+    entity Package         as projection on core.Package;
 
     @readonly
     entity PackageType     as projection on core.PackageType;

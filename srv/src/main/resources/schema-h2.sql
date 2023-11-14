@@ -8,6 +8,7 @@ DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_servic
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_StorageService_Storage;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_RegistrationService_StorageSlot;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_HistoryService_StorageSlot;
+DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_PackageService_Package;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_RegistrationService_Package;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_HistoryService_Package;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_PickupService_Package;
@@ -17,7 +18,6 @@ DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_servic
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_HistoryService_SlotStatus;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_PackageService_PackageStatus;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_PackageService_PackageType;
-DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_PackageService_Package;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_RegistrationService_PackageStatus;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_RegistrationService_PackageType;
 DROP VIEW IF EXISTS localized_com_sap_internal_digitallab_packagehandling_service_HistoryService_PackageStatus;
@@ -421,9 +421,13 @@ CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PickupService_Pa
   Package_0.status_code,
   Package_0.receptionist_ID,
   Package_0.comment,
-  slot_1.name AS slotName,
-  storage_2.name AS storageName
-FROM ((com_sap_internal_digitallab_packagehandling_core_Package AS Package_0 LEFT JOIN com_sap_internal_digitallab_packagehandling_core_StorageSlot AS slot_1 ON Package_0.slot_ID = slot_1.ID) LEFT JOIN com_sap_internal_digitallab_packagehandling_core_Storage AS storage_2 ON slot_1.storage_ID = storage_2.ID); 
+  deliveryCompany_4.name AS dc,
+  buildingFloor_3.name AS bf,
+  user_7.sapId AS recepId,
+  storage_2.name AS storageName,
+  type_5.name AS typeName,
+  slot_1.name AS slotName
+FROM (((((((com_sap_internal_digitallab_packagehandling_core_Package AS Package_0 LEFT JOIN com_sap_internal_digitallab_packagehandling_core_StorageSlot AS slot_1 ON Package_0.slot_ID = slot_1.ID) LEFT JOIN com_sap_internal_digitallab_packagehandling_core_Storage AS storage_2 ON slot_1.storage_ID = storage_2.ID) LEFT JOIN com_sap_internal_digitallab_packagehandling_common_BuildingFloor AS buildingFloor_3 ON storage_2.buildingFloor_ID = buildingFloor_3.ID) LEFT JOIN com_sap_internal_digitallab_packagehandling_core_DeliveryCompany AS deliveryCompany_4 ON Package_0.deliveryCompany_ID = deliveryCompany_4.ID) LEFT JOIN com_sap_internal_digitallab_packagehandling_core_PackageType AS type_5 ON Package_0.type_code = type_5.code) LEFT JOIN com_sap_internal_digitallab_packagehandling_common_Receptionist AS receptionist_6 ON Package_0.receptionist_ID = receptionist_6.ID) LEFT JOIN com_sap_internal_digitallab_packagehandling_common_User AS user_7 ON receptionist_6.user_ID = user_7.ID); 
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PickupService_PackageType AS SELECT
   PackageType_0.name,
@@ -495,8 +499,13 @@ CREATE VIEW com_sap_internal_digitallab_packagehandling_service_HistoryService_P
   Package_0.type_code,
   Package_0.status_code,
   Package_0.receptionist_ID,
-  Package_0.comment
-FROM (com_sap_internal_digitallab_packagehandling_core_Package AS Package_0 LEFT JOIN com_sap_internal_digitallab_packagehandling_common_User AS recipient_1 ON Package_0.recipient_ID = recipient_1.ID)
+  Package_0.comment,
+  deliveryCompany_5.name AS dc,
+  buildingFloor_4.name AS bf,
+  user_8.sapId AS recepId,
+  storage_3.name AS storageName,
+  type_6.name AS typeName
+FROM ((((((((com_sap_internal_digitallab_packagehandling_core_Package AS Package_0 LEFT JOIN com_sap_internal_digitallab_packagehandling_common_User AS recipient_1 ON Package_0.recipient_ID = recipient_1.ID) LEFT JOIN com_sap_internal_digitallab_packagehandling_core_StorageSlot AS slot_2 ON Package_0.slot_ID = slot_2.ID) LEFT JOIN com_sap_internal_digitallab_packagehandling_core_Storage AS storage_3 ON slot_2.storage_ID = storage_3.ID) LEFT JOIN com_sap_internal_digitallab_packagehandling_common_BuildingFloor AS buildingFloor_4 ON storage_3.buildingFloor_ID = buildingFloor_4.ID) LEFT JOIN com_sap_internal_digitallab_packagehandling_core_DeliveryCompany AS deliveryCompany_5 ON Package_0.deliveryCompany_ID = deliveryCompany_5.ID) LEFT JOIN com_sap_internal_digitallab_packagehandling_core_PackageType AS type_6 ON Package_0.type_code = type_6.code) LEFT JOIN com_sap_internal_digitallab_packagehandling_common_Receptionist AS receptionist_7 ON Package_0.receptionist_ID = receptionist_7.ID) LEFT JOIN com_sap_internal_digitallab_packagehandling_common_User AS user_8 ON receptionist_7.user_ID = user_8.ID)
 WHERE recipient_1.sapId = @applicationuser; 
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_HistoryService_PackageType AS SELECT
@@ -562,8 +571,13 @@ CREATE VIEW com_sap_internal_digitallab_packagehandling_service_RegistrationServ
   Package_0.type_code,
   Package_0.status_code,
   Package_0.receptionist_ID,
-  Package_0.comment
-FROM com_sap_internal_digitallab_packagehandling_core_Package AS Package_0; 
+  Package_0.comment,
+  deliveryCompany_4.name AS dc,
+  buildingFloor_3.name AS bf,
+  user_7.sapId AS recepId,
+  storage_2.name AS storageName,
+  type_5.name AS typeName
+FROM (((((((com_sap_internal_digitallab_packagehandling_core_Package AS Package_0 LEFT JOIN com_sap_internal_digitallab_packagehandling_core_StorageSlot AS slot_1 ON Package_0.slot_ID = slot_1.ID) LEFT JOIN com_sap_internal_digitallab_packagehandling_core_Storage AS storage_2 ON slot_1.storage_ID = storage_2.ID) LEFT JOIN com_sap_internal_digitallab_packagehandling_common_BuildingFloor AS buildingFloor_3 ON storage_2.buildingFloor_ID = buildingFloor_3.ID) LEFT JOIN com_sap_internal_digitallab_packagehandling_core_DeliveryCompany AS deliveryCompany_4 ON Package_0.deliveryCompany_ID = deliveryCompany_4.ID) LEFT JOIN com_sap_internal_digitallab_packagehandling_core_PackageType AS type_5 ON Package_0.type_code = type_5.code) LEFT JOIN com_sap_internal_digitallab_packagehandling_common_Receptionist AS receptionist_6 ON Package_0.receptionist_ID = receptionist_6.ID) LEFT JOIN com_sap_internal_digitallab_packagehandling_common_User AS user_7 ON receptionist_6.user_ID = user_7.ID); 
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_RegistrationService_PackageType AS SELECT
   PackageType_0.name,
@@ -624,11 +638,11 @@ CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_P
   Package_0.status_code,
   Package_0.receptionist_ID,
   Package_0.comment,
-  storage_2.name AS storageName,
-  type_5.name AS typeName,
   deliveryCompany_4.name AS dc,
   buildingFloor_3.name AS bf,
-  user_7.sapId AS recepId
+  user_7.sapId AS recepId,
+  storage_2.name AS storageName,
+  type_5.name AS typeName
 FROM (((((((com_sap_internal_digitallab_packagehandling_core_Package AS Package_0 LEFT JOIN com_sap_internal_digitallab_packagehandling_core_StorageSlot AS slot_1 ON Package_0.slot_ID = slot_1.ID) LEFT JOIN com_sap_internal_digitallab_packagehandling_core_Storage AS storage_2 ON slot_1.storage_ID = storage_2.ID) LEFT JOIN com_sap_internal_digitallab_packagehandling_common_BuildingFloor AS buildingFloor_3 ON storage_2.buildingFloor_ID = buildingFloor_3.ID) LEFT JOIN com_sap_internal_digitallab_packagehandling_core_DeliveryCompany AS deliveryCompany_4 ON Package_0.deliveryCompany_ID = deliveryCompany_4.ID) LEFT JOIN com_sap_internal_digitallab_packagehandling_core_PackageType AS type_5 ON Package_0.type_code = type_5.code) LEFT JOIN com_sap_internal_digitallab_packagehandling_common_Receptionist AS receptionist_6 ON Package_0.receptionist_ID = receptionist_6.ID) LEFT JOIN com_sap_internal_digitallab_packagehandling_common_User AS user_7 ON receptionist_6.user_ID = user_7.ID); 
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_PackageService_PackageType AS SELECT
@@ -990,28 +1004,6 @@ CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_Regist
   PackageStatus_0.criticality
 FROM localized_com_sap_internal_digitallab_packagehandling_core_PackageStatus AS PackageStatus_0; 
 
-CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_PackageService_Package AS SELECT
-  Package_0.ID,
-  Package_0.createdAt,
-  Package_0.createdBy,
-  Package_0.modifiedAt,
-  Package_0.modifiedBy,
-  Package_0.recipient_ID,
-  Package_0.comfirmationTime,
-  Package_0.pickupTime,
-  Package_0.slot_ID,
-  Package_0.deliveryCompany_ID,
-  Package_0.type_code,
-  Package_0.status_code,
-  Package_0.receptionist_ID,
-  Package_0.comment,
-  storage_2.name AS storageName,
-  type_5.name AS typeName,
-  deliveryCompany_4.name AS dc,
-  buildingFloor_3.name AS bf,
-  user_7.sapId AS recepId
-FROM (((((((localized_com_sap_internal_digitallab_packagehandling_core_Package AS Package_0 LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_core_StorageSlot AS slot_1 ON Package_0.slot_ID = slot_1.ID) LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_core_Storage AS storage_2 ON slot_1.storage_ID = storage_2.ID) LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_common_BuildingFloor AS buildingFloor_3 ON storage_2.buildingFloor_ID = buildingFloor_3.ID) LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_core_DeliveryCompany AS deliveryCompany_4 ON Package_0.deliveryCompany_ID = deliveryCompany_4.ID) LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_core_PackageType AS type_5 ON Package_0.type_code = type_5.code) LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_common_Receptionist AS receptionist_6 ON Package_0.receptionist_ID = receptionist_6.ID) LEFT JOIN com_sap_internal_digitallab_packagehandling_common_User AS user_7 ON receptionist_6.user_ID = user_7.ID); 
-
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_PackageService_PackageType AS SELECT
   PackageType_0.name,
   PackageType_0.descr,
@@ -1075,9 +1067,13 @@ CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_Pickup
   Package_0.status_code,
   Package_0.receptionist_ID,
   Package_0.comment,
-  slot_1.name AS slotName,
-  storage_2.name AS storageName
-FROM ((localized_com_sap_internal_digitallab_packagehandling_core_Package AS Package_0 LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_core_StorageSlot AS slot_1 ON Package_0.slot_ID = slot_1.ID) LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_core_Storage AS storage_2 ON slot_1.storage_ID = storage_2.ID); 
+  deliveryCompany_4.name AS dc,
+  buildingFloor_3.name AS bf,
+  user_7.sapId AS recepId,
+  storage_2.name AS storageName,
+  type_5.name AS typeName,
+  slot_1.name AS slotName
+FROM (((((((localized_com_sap_internal_digitallab_packagehandling_core_Package AS Package_0 LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_core_StorageSlot AS slot_1 ON Package_0.slot_ID = slot_1.ID) LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_core_Storage AS storage_2 ON slot_1.storage_ID = storage_2.ID) LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_common_BuildingFloor AS buildingFloor_3 ON storage_2.buildingFloor_ID = buildingFloor_3.ID) LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_core_DeliveryCompany AS deliveryCompany_4 ON Package_0.deliveryCompany_ID = deliveryCompany_4.ID) LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_core_PackageType AS type_5 ON Package_0.type_code = type_5.code) LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_common_Receptionist AS receptionist_6 ON Package_0.receptionist_ID = receptionist_6.ID) LEFT JOIN com_sap_internal_digitallab_packagehandling_common_User AS user_7 ON receptionist_6.user_ID = user_7.ID); 
 
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_HistoryService_Package AS SELECT
   Package_0.ID,
@@ -1093,8 +1089,13 @@ CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_Histor
   Package_0.type_code,
   Package_0.status_code,
   Package_0.receptionist_ID,
-  Package_0.comment
-FROM (localized_com_sap_internal_digitallab_packagehandling_core_Package AS Package_0 LEFT JOIN com_sap_internal_digitallab_packagehandling_common_User AS recipient_1 ON Package_0.recipient_ID = recipient_1.ID)
+  Package_0.comment,
+  deliveryCompany_5.name AS dc,
+  buildingFloor_4.name AS bf,
+  user_8.sapId AS recepId,
+  storage_3.name AS storageName,
+  type_6.name AS typeName
+FROM ((((((((localized_com_sap_internal_digitallab_packagehandling_core_Package AS Package_0 LEFT JOIN com_sap_internal_digitallab_packagehandling_common_User AS recipient_1 ON Package_0.recipient_ID = recipient_1.ID) LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_core_StorageSlot AS slot_2 ON Package_0.slot_ID = slot_2.ID) LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_core_Storage AS storage_3 ON slot_2.storage_ID = storage_3.ID) LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_common_BuildingFloor AS buildingFloor_4 ON storage_3.buildingFloor_ID = buildingFloor_4.ID) LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_core_DeliveryCompany AS deliveryCompany_5 ON Package_0.deliveryCompany_ID = deliveryCompany_5.ID) LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_core_PackageType AS type_6 ON Package_0.type_code = type_6.code) LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_common_Receptionist AS receptionist_7 ON Package_0.receptionist_ID = receptionist_7.ID) LEFT JOIN com_sap_internal_digitallab_packagehandling_common_User AS user_8 ON receptionist_7.user_ID = user_8.ID)
 WHERE recipient_1.sapId = @applicationuser; 
 
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_RegistrationService_Package AS SELECT
@@ -1111,8 +1112,35 @@ CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_Regist
   Package_0.type_code,
   Package_0.status_code,
   Package_0.receptionist_ID,
-  Package_0.comment
-FROM localized_com_sap_internal_digitallab_packagehandling_core_Package AS Package_0; 
+  Package_0.comment,
+  deliveryCompany_4.name AS dc,
+  buildingFloor_3.name AS bf,
+  user_7.sapId AS recepId,
+  storage_2.name AS storageName,
+  type_5.name AS typeName
+FROM (((((((localized_com_sap_internal_digitallab_packagehandling_core_Package AS Package_0 LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_core_StorageSlot AS slot_1 ON Package_0.slot_ID = slot_1.ID) LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_core_Storage AS storage_2 ON slot_1.storage_ID = storage_2.ID) LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_common_BuildingFloor AS buildingFloor_3 ON storage_2.buildingFloor_ID = buildingFloor_3.ID) LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_core_DeliveryCompany AS deliveryCompany_4 ON Package_0.deliveryCompany_ID = deliveryCompany_4.ID) LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_core_PackageType AS type_5 ON Package_0.type_code = type_5.code) LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_common_Receptionist AS receptionist_6 ON Package_0.receptionist_ID = receptionist_6.ID) LEFT JOIN com_sap_internal_digitallab_packagehandling_common_User AS user_7 ON receptionist_6.user_ID = user_7.ID); 
+
+CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_PackageService_Package AS SELECT
+  Package_0.ID,
+  Package_0.createdAt,
+  Package_0.createdBy,
+  Package_0.modifiedAt,
+  Package_0.modifiedBy,
+  Package_0.recipient_ID,
+  Package_0.comfirmationTime,
+  Package_0.pickupTime,
+  Package_0.slot_ID,
+  Package_0.deliveryCompany_ID,
+  Package_0.type_code,
+  Package_0.status_code,
+  Package_0.receptionist_ID,
+  Package_0.comment,
+  deliveryCompany_4.name AS dc,
+  buildingFloor_3.name AS bf,
+  user_7.sapId AS recepId,
+  storage_2.name AS storageName,
+  type_5.name AS typeName
+FROM (((((((localized_com_sap_internal_digitallab_packagehandling_core_Package AS Package_0 LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_core_StorageSlot AS slot_1 ON Package_0.slot_ID = slot_1.ID) LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_core_Storage AS storage_2 ON slot_1.storage_ID = storage_2.ID) LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_common_BuildingFloor AS buildingFloor_3 ON storage_2.buildingFloor_ID = buildingFloor_3.ID) LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_core_DeliveryCompany AS deliveryCompany_4 ON Package_0.deliveryCompany_ID = deliveryCompany_4.ID) LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_core_PackageType AS type_5 ON Package_0.type_code = type_5.code) LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_common_Receptionist AS receptionist_6 ON Package_0.receptionist_ID = receptionist_6.ID) LEFT JOIN com_sap_internal_digitallab_packagehandling_common_User AS user_7 ON receptionist_6.user_ID = user_7.ID); 
 
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_HistoryService_StorageSlot AS SELECT
   StorageSlot_0.ID,
