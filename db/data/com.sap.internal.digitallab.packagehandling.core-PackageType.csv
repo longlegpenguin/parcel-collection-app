@@ -1,4 +1,4 @@
-code,name,descr
-normal,Normal,Normal package.
-letter,Letter,Letter or letter sized package.
-newspaper,Newspaper,Newspaper.
+code,icon,name,descr
+normal,sap-icon://product,Normal,Normal package.
+letter,sap-icon://letter,Letter,Letter or letter sized package.
+newspaper,sap-icon://newspaper,Newspaper,Newspaper.

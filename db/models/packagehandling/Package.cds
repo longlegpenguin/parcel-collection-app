@@ -36,4 +36,5 @@ entity Package : cuid, managed {
     recepId            : String = receptionist.user.sapId;
     storageName        : String = slot.storage.name;
     typeName           : String = type.name;
+    loc                : String = slot.storage.name || ' | ' || slot.name;
 }

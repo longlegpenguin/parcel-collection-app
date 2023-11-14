@@ -35,6 +35,7 @@ annotate service.Package with {
     dc               @title: 'Delivery Company';
     recepId          @title: 'Receptionist';
     bf               @title: 'Building Floor';
+    loc              @title: 'Location';
 };
 
 

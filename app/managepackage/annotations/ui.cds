@@ -61,19 +61,20 @@ annotate service.Package with @(
         }, ],
     },
     UI.LineItem                  : [
-        // {
-        //     $Type             : 'UI.DataField',
-        //     Value             : recipient_ID,
-        //     ![@UI.Importance] : #High,
-        // },
         {
             $Type : 'UI.DataFieldForAnnotation',
             Target: 'recipient/@Communication.Contact',
-            Label : 'Recipient'
+            Label : 'Recipient',
         },
         {
             $Type: 'UI.DataField',
-            Value: type.name,
+            Value: loc,
+        },
+        {
+            $Type  : 'UI.DataField',
+            Value  : type.name,
+            IconUrl: type.icon,
+            ![@UI.Importance] : #High
         },
         {
             $Type             : 'UI.DataField',
@@ -151,8 +152,9 @@ annotate service.Package with @(
         $Type: 'UI.FieldGroupType',
         Data : [
             {
-                $Type: 'UI.DataField',
-                Value: receptionist.user.sapId,
+                $Type : 'UI.DataFieldForAnnotation',
+                Target: 'receptionist/user/@Communication.Contact',
+                Label : 'Receptionist'
             },
             {
                 $Type: 'UI.DataField',
@@ -200,6 +202,11 @@ annotate service.Package with @(
                 $Type : 'UI.DataFieldForAnnotation',
                 Target: 'recipient/@Communication.Contact',
                 Label : 'Recipient'
+            },
+            {
+                $Type : 'UI.DataFieldForAnnotation',
+                Target: '@UI.ConnectedFields#Loc',
+                Label : 'Location'
             },
             {
                 $Type: 'UI.DataField',
@@ -308,3 +315,18 @@ annotate service.User with @(Communication.Contact: {
 //         }],
 //     }
 // );
+
+annotate service.Package with @(UI.ConnectedFields #Loc: {
+    Label   : 'Location',
+    Template: '{st} | {sl}',
+    Data    : {
+        st: {
+            $Type: 'UI.DataField',
+            Value: slot.storage.name,
+        },
+        sl: {
+            $Type: 'UI.DataField',
+            Value: slot.name,
+        },
+    },
+}, );

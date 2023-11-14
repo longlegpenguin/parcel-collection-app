@@ -1,0 +1,13 @@
+<core:FragmentDefinition
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+>
+    <FlexBox alignItems="Center">
+        <items>
+            <Text
+                text="{slot/storage/name} | {slot/name}"
+                class="sapUiTinyMarginBegin"
+            />
+        </items>
+    </FlexBox>
+</core:FragmentDefinition>
