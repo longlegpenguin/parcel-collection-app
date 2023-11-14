@@ -11,6 +11,17 @@ sap.ui.define(
           this._aSelectedContext = aSelectedContext;
         },
 
+        _updateCache: function (key) {
+          var oModel = this._oExtensionAPI._view.getModel("cache");
+          oModel[key].confirmable = false;
+          oModel[key].pickable = true;
+          this._oExtensionAPI._view.setModel(oModel, "cache");
+          console.log(
+            "updated: ",
+            this._oExtensionAPI._view.getModel("cache")[key].confirmable
+          );
+        },
+
         load: function () {
           this._oExtensionAPI
             .loadFragment({
@@ -57,6 +68,7 @@ sap.ui.define(
             .then(
               () => {
                 MessageToast.show("Package(s) Confirmed!");
+                oPayload.packagesIds.forEach((key) => this._updateCache(key));
                 this._closeDialog();
               },
               (oError) => {

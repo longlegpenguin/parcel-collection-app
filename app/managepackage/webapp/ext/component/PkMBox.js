@@ -18,6 +18,16 @@ sap.ui.define(
           this._oExtensionAPI = oExtensionAPI;
         },
 
+        _updateCache: function (key) {
+          var oModel = this._oExtensionAPI._view.getModel("cache");
+          oModel[key].pickable = false;
+          this._oExtensionAPI._view.setModel(oModel, "cache");
+          console.log(
+            "updated: ",
+            this._oExtensionAPI._view.getModel("cache")[key].pickable
+          );
+        },
+
         onPickUpPress: function (oBindingContext, aSelectedContexts) {
           MessageBox.warning(
             "Pickup this package? \n\n A notification will be sent to the recipient and package process will be closed.",
@@ -38,6 +48,7 @@ sap.ui.define(
                     .then(
                       () => {
                         MessageToast.show("Package Picked Up!");
+                        this._updateCache(ctx);
                         this._oExtensionAPI.refresh();
                       },
                       (oError) => {

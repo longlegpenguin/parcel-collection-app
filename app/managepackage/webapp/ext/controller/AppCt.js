@@ -35,6 +35,18 @@ sap.ui.define(
       console.log("Edit");
     }
 
+    function _checkConfirmable(ctx, oModel) {
+      return oModel[getRaw(ctx)].confirmable;
+    }
+
+    function _checkPickable(ctx, oModel) {
+      return oModel[getRaw(ctx)].pickable;
+    }
+
+    function getRaw(ctx) {
+      return ctx.replaceAll("/Package(", "").replaceAll(")", "");
+    }
+
     return {
       showConfirmDlg: function (oBindingContext, aSelectedContexts) {
         console.log("Selected context: " + aSelectedContexts);
@@ -59,14 +71,21 @@ sap.ui.define(
 
       enabledForSingleSelect: function (oBindingContext, aSelectedContexts) {
         if (aSelectedContexts && aSelectedContexts.length === 1) {
-          return true;
+          console.log(aSelectedContexts[0].sPath);
+          return _checkPickable(
+            aSelectedContexts[0].sPath,
+            this._view.getModel("cache")
+          );
         }
         return false;
       },
 
       enabledForSelect: function (oBindingContext, aSelectedContexts) {
         if (aSelectedContexts && aSelectedContexts.length >= 1) {
-          return true;
+          return _checkConfirmable(
+            aSelectedContexts[0].sPath,
+            this._view.getModel("cache")
+          );
         }
         return false;
       },
