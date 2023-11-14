@@ -45,14 +45,22 @@
                 <f:formContainers>
                     <f:FormContainer>
                         <f:formElements>
-                            <f:FormElement label="Recipient">
+                            <f:FormElement
+                                label="Recipient"
+                                binding="/User"
+                            >
                                 <f:fields>
-                                    <Input
-                                        value="{recipient}"
-                                        id="idRecipientInput"
+                                    <Select
+                                        id="idUserSelect"
+                                        items="{/User}"
+                                        selectedKey="{recipient_ID}"
                                         required="true"
-                                        tooltip="required"
-                                    />
+                                    >
+                                        <core:Item
+                                            key="{ID}"
+                                            text="{firstName} {lastName} ({sapId})"
+                                        />
+                                    </Select>
                                 </f:fields>
                             </f:FormElement>
                             <f:FormElement
@@ -98,16 +106,29 @@
                                     />
                                 </f:fields>
                             </f:FormElement>
-                            <f:FormElement label="Receptionist">
+                            <f:FormElement
+                                label="Receptionist"
+                                binding="/Receptionist"
+                            >
                                 <f:fields>
-                                    <Input
-                                        value="{receptionist}"
-                                        id="idReceptionistInput"
+                                    <Select
+                                        id="idReceptionistSelect"
+                                        items="{/Receptionist}"
+                                        selectedKey="{receptionist_ID}"
                                         editable="false"
-                                    />
+                                    >
+                                        <core:Item
+                                            key="{ID}"
+                                            text="{user/diaplayName}"
+                                        />
+                                    </Select>
                                 </f:fields>
                             </f:FormElement>
-                            <f:FormElement label="" visible="false">
+
+                            <f:FormElement
+                                label=""
+                                visible="false"
+                            >
                                 <f:fields>
                                     <Input
                                         value="{status_code}"

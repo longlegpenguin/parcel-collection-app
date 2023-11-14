@@ -54,7 +54,7 @@ sap.ui.define(
 
           oModel.submitBatch("cmpchange").then(
             () => {
-              MessageToast.show("Package(s) Confirmed!");
+              MessageToast.show("Package Successfully Updated!");
               this._closeDialog();
             },
             (oError) => {
@@ -81,18 +81,18 @@ sap.ui.define(
         },
 
         _getInputs: function () {
-          var rp = this._byId("idRecipientInput").getValue();
+          var rp = this._byId("idUserSelect").getSelectedKey();
           var cm = this._byId("idCommentInput").getValue();
           var st = this._byId("idStatusInput").getValue();
-          var rcp = this._byId("idReceptionistInput").getValue();
+          var rcp = this._byId("idReceptionistSelect").getSelectedKey();
           var pt = this._byId("idPackageTypeSelect").getSelectedKey();
           var dc = this._byId("idDeliveryCompanySelect").getSelectedKey();
 
           return {
-            recipient: rp,
+            recipient_ID: rp,
             type_code: pt,
             deliveryCompany_ID: dc,
-            receptionist: rcp,
+            receptionist_ID: rcp,
             comment: cm,
             status_code: st,
           };
