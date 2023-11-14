@@ -19,7 +19,6 @@ sap.ui.define(
 
     function _loadConfirmDlg(oExtensionAPI, aSelectedContexts) {
       new ConfirmDlg(oExtensionAPI, aSelectedContexts).load();
-      console.log("Confirm");
     }
 
     function _loadPickUpDlg(oExtensionAPI, oBindingContext, aSelectedContexts) {
@@ -27,12 +26,10 @@ sap.ui.define(
         oBindingContext,
         aSelectedContexts
       );
-      console.log("Pickup");
     }
 
     function _loadEditDlg(oExtensionAPI, aSelectedContexts) {
       new EditDlg(oExtensionAPI, aSelectedContexts).load();
-      console.log("Edit");
     }
 
     function _checkConfirmable(ctx, oModel) {
@@ -49,7 +46,6 @@ sap.ui.define(
 
     return {
       showConfirmDlg: function (oBindingContext, aSelectedContexts) {
-        console.log("Selected context: " + aSelectedContexts);
         if (aSelectedContexts == undefined || aSelectedContexts.length == 0) {
           MessageBox.warning("Please select at least one package to confirm.");
         } else {
@@ -71,7 +67,6 @@ sap.ui.define(
 
       enabledForSingleSelect: function (oBindingContext, aSelectedContexts) {
         if (aSelectedContexts && aSelectedContexts.length === 1) {
-          console.log(aSelectedContexts[0].sPath);
           return _checkPickable(
             aSelectedContexts[0].sPath,
             this._view.getModel("cache")

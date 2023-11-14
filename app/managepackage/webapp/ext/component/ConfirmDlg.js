@@ -16,10 +16,6 @@ sap.ui.define(
           oModel[key].confirmable = false;
           oModel[key].pickable = true;
           this._oExtensionAPI._view.setModel(oModel, "cache");
-          console.log(
-            "updated: ",
-            this._oExtensionAPI._view.getModel("cache")[key].confirmable
-          );
         },
 
         load: function () {
@@ -51,14 +47,7 @@ sap.ui.define(
         },
 
         onSaveButtonPress: function (oEvent) {
-          this._aSelectedContext.forEach((elem) => {
-            console.log(
-              "Confirming Selected : " + this._parseElem(elem.toString())
-            );
-          });
-
           var oPayload = this._getInputs();
-          console.log(JSON.stringify(oPayload));
 
           this._byId("idConfirmForm")
             .getObjectBinding()
@@ -93,13 +82,9 @@ sap.ui.define(
               selectedStorageKey
             )
           );
-
-          console.log("selected storage ky: " + selectedStorageKey);
-          console.log("binding: " + oBinding);
         },
 
         onCloseButtonPress: function (oEvent) {
-          console.log("close cliacked");
           this._closeDialog();
         },
 
@@ -107,7 +92,6 @@ sap.ui.define(
           var sV4 = this._aSelectedContext.sPath;
           sV4 = sV4.replaceAll("(", "(guid'");
           sV4 = sV4.replaceAll(")", "')");
-          console.log(sV4);
           return sV4;
         },
 

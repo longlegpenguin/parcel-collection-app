@@ -24,7 +24,6 @@ sap.ui.define(["sap/fe/core/AppComponent"], function (Component) {
               this._dic[elem.ID]["confirmable"] = elem.confirm_ac;
               this._dic[elem.ID]["pickable"] = elem.pickup_ac;
             });
-            console.log(JSON.stringify(this._dic, null, 4));
           },
           error: function (error) {
             console.log("Error: " + JSON.stringify(error, null, 4));

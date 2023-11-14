@@ -22,10 +22,6 @@ sap.ui.define(
           var oModel = this._oExtensionAPI._view.getModel("cache");
           oModel[key].pickable = false;
           this._oExtensionAPI._view.setModel(oModel, "cache");
-          console.log(
-            "updated: ",
-            this._oExtensionAPI._view.getModel("cache")[key].pickable
-          );
         },
 
         onPickUpPress: function (oBindingContext, aSelectedContexts) {
@@ -39,7 +35,6 @@ sap.ui.define(
                 if (sAction === "OK") {
                   var oModel = this._oExtensionAPI.getModel();
                   var ctx = _parseElem(aSelectedContexts[0].sPath);
-                  console.log(ctx);
                   const oContext = oModel.bindContext("/pickup(...)");
 
                   oContext
