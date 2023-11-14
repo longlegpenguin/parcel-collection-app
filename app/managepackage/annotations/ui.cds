@@ -3,9 +3,9 @@ using com.sap.internal.digitallab.packagehandling.service.PackageService as serv
 annotate service.Package with @(
     UI.SelectionFields           : [
         recipient.sapId,
-        type.name,
-        deliveryCompany.name,
-        comfirmationTime
+        typeName,
+        dc,
+        storageName,
     ],
     UI.FilterFacets              : [
         {
@@ -16,9 +16,9 @@ annotate service.Package with @(
         },
         {
             $Type : 'UI.ReferenceFacet',
-            ID    : 'GeneralData',
-            Label : 'Package',
-            Target: '@UI.FieldGroup#GeneralData',
+            ID    : 'PackageData',
+            Label : 'Package Data',
+            Target: '@UI.FieldGroup#PackageData',
         },
         {
             $Type : 'UI.ReferenceFacet',
@@ -106,7 +106,8 @@ annotate service.BuildingFloor with {
 
 annotate service.Package with {
     slot             @UI.HiddenFilter: true   @UI.Hidden: false;
-    receptionist     @UI.HiddenFilter: false  @UI.Hidden: false;
+    receptionist     @UI.HiddenFilter: true   @UI.Hidden: false;
+    recipient        @UI.HiddenFilter: true   @UI.Hidden: false;
     comment          @UI.HiddenFilter: true   @UI.Hidden: false;
     delete_ac        @UI.HiddenFilter: true   @UI.Hidden: true;
     confirm_ac       @UI.HiddenFilter: true   @UI.Hidden: true;
@@ -119,6 +120,8 @@ annotate service.Package with {
     deliveryCompany  @UI.HiddenFilter: true   @UI.Hidden: true;
     type             @UI.HiddenFilter: true   @UI.Hidden: true;
     status           @UI.HiddenFilter: true   @UI.Hidden: true;
+    recepId          @UI.HiddenFilter: false  @UI.Hidden: false;
+    bf               @UI.HiddenFilter: false  @UI.Hidden: false;
 };
 
 
@@ -177,6 +180,19 @@ annotate service.Package with @(
             }
         ],
     },
+    UI.FieldGroup #PackageData: {
+        $Type: 'UI.FieldGroupType',
+        Data : [
+            {
+                $Type: 'UI.DataField',
+                Value: bf,
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: recepId,
+            }
+        ],
+    },
     UI.FieldGroup #Basic      : {
         $Type: 'UI.FieldGroupType',
         Data : [
@@ -200,6 +216,10 @@ annotate service.Package with @(
             {
                 $Type: 'UI.DataField',
                 Value: comfirmationTime,
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: pickupTime,
             }
         ],
     },

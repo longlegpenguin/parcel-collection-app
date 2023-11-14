@@ -14,7 +14,7 @@ annotate service.Storage with {
 
 annotate service.Package with {
     recipient        @title: 'Recipient'  @Common.Text: recipient.fullName  @Common.TextArrangement: #TextOnly;
-    comfirmationTime @title: 'Delivery Time';
+    comfirmationTime @title: 'Confirmation Time';
     pickupTime       @title: 'Pickup Time';
     slot             @title: 'Slot';
     deliveryCompany  @title: 'Delivery Company';
@@ -30,6 +30,11 @@ annotate service.Package with {
     createdBy        @title: 'Created By';
     modifiedAt       @title: 'Last Update On';
     modifiedBy       @title: 'Last Update By';
+    storageName      @title: 'Storage';
+    typeName         @title: 'Package Type';
+    dc               @title: 'Delivery Company';
+    recepId          @title: 'Receptionist';
+    bf               @title: 'Building Floor';
 };
 
 
