@@ -10,7 +10,7 @@
             <Image
                 src="{deliveryCompany/logo}"
                 height="50px"
-                class="sapUiTinyMarginEnd"
+                class="sapUiTinyMarginEnd circle"
             />
             <Text
                 text="{deliveryCompany/name}"

@@ -182,7 +182,7 @@
                       "properties": ["deliveryCompany"],
                       "position": {
                         "placement": "Before",
-                        "anchor": "DataField::comfirmationTime"
+                        "anchor": "DataField::pickupTime"
                       }
                     }
                   },

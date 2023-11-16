@@ -33,6 +33,13 @@ annotate service.Package with {
     createdBy        @title: 'Created By';
     modifiedAt       @title: 'Last Update On';
     modifiedBy       @title: 'Last Update By';
+    storageName      @title: 'Storage';
+    typeName         @title: 'Package Type';
+    dc               @title: 'Delivery Company';
+    recepId          @title: 'Receptionist';
+    bf               @title: 'Building Floor';
+    loc              @title: 'Location';
+    statusName       @title: 'Package Status';
 };
 
 annotate service.PackageType with {
