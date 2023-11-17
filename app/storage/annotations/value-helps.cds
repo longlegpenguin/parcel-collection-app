@@ -1,26 +1,35 @@
 using com.sap.internal.digitallab.packagehandling.service.StorageService as service from '../../../srv/services/StorageService';
 
-annotate service.BuildingFloor with @cds.odata.valuelist;
-
-annotate service with @Consumption.valueHelpDefinition: [{entity: {
-    name   : 'BuildingFloor',
-    element: 'name'
-}}];
+annotate service.Storage with {
+    bd @Common.ValueListWithFixedValues;
+    bf @Common.ValueListWithFixedValues;
+}
 
 annotate service.Storage with {
-    buildingFloor @ValueListMapping: {
-        Label         : 'Building floor help',
-        CollectionPath: 'BuildingFloor',
-        Parameters    : [
-            {
+    bf @(Common: {
+        Text           : bf,
+        TextArrangement: #TextOnly,
+        ValueList      : {
+            Label         : 'Building Floor',
+            CollectionPath: 'BuildingFloor',
+            Parameters    : [{
                 $Type            : 'Common.ValueListParameterInOut',
                 ValueListProperty: 'name',
-                LocalDataProperty: buildingFloor.name
-            },
-            {
-                $Type            : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty: 'ID'
-            }
-        ]
-    }
+                LocalDataProperty: bf
+            }]
+        }
+    });
+    bd @(Common: {
+        Text           : bf,
+        TextArrangement: #TextOnly,
+        ValueList      : {
+            Label         : 'Building',
+            CollectionPath: 'Building',
+            Parameters    : [{
+                $Type            : 'Common.ValueListParameterInOut',
+                ValueListProperty: 'name',
+                LocalDataProperty: bd
+            }]
+        }
+    });
 };

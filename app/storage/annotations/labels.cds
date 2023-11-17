@@ -10,6 +10,8 @@ annotate service.Storage with {
     currentPackages      @title: 'Current Utilizations';
     delete_ac            @title: 'Delete Action Control';
     update_ac            @title: 'Update Action Control';
+    bd                   @title: 'Building';
+    bf                   @title: 'Building Floor';
 };
 
 annotate service.Building with {

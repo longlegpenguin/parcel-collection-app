@@ -23,4 +23,6 @@ entity Storage : cuid, managed {
     virtual currentPackages : Integer;
     virtual delete_ac       : Boolean;
     virtual update_ac       : Boolean;
+    bf                      : String = buildingFloor.name;
+    bd                      : String = buildingFloor.building.name;
 }

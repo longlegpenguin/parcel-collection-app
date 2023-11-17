@@ -334,8 +334,10 @@ CREATE VIEW com_sap_internal_digitallab_packagehandling_service_StorageService_S
   Storage_0.name,
   Storage_0.buildingFloor_ID,
   Storage_0.locationInstructions,
-  Storage_0.map
-FROM com_sap_internal_digitallab_packagehandling_core_Storage AS Storage_0; 
+  Storage_0.map,
+  buildingFloor_1.name AS bf,
+  building_2.name AS bd
+FROM ((com_sap_internal_digitallab_packagehandling_core_Storage AS Storage_0 LEFT JOIN com_sap_internal_digitallab_packagehandling_common_BuildingFloor AS buildingFloor_1 ON Storage_0.buildingFloor_ID = buildingFloor_1.ID) LEFT JOIN com_sap_internal_digitallab_packagehandling_common_Building AS building_2 ON buildingFloor_1.building_ID = building_2.ID); 
 
 CREATE VIEW com_sap_internal_digitallab_packagehandling_service_StorageService_StorageSlot AS SELECT
   StorageSlot_0.ID,
@@ -1199,8 +1201,10 @@ CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_Storag
   Storage_0.name,
   Storage_0.buildingFloor_ID,
   Storage_0.locationInstructions,
-  Storage_0.map
-FROM localized_com_sap_internal_digitallab_packagehandling_core_Storage AS Storage_0; 
+  Storage_0.map,
+  buildingFloor_1.name AS bf,
+  building_2.name AS bd
+FROM ((localized_com_sap_internal_digitallab_packagehandling_core_Storage AS Storage_0 LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_common_BuildingFloor AS buildingFloor_1 ON Storage_0.buildingFloor_ID = buildingFloor_1.ID) LEFT JOIN localized_com_sap_internal_digitallab_packagehandling_common_Building AS building_2 ON buildingFloor_1.building_ID = building_2.ID); 
 
 CREATE VIEW localized_com_sap_internal_digitallab_packagehandling_service_HistoryService_DeliveryCompany AS SELECT
   DeliveryCompany_0.ID,

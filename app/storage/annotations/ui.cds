@@ -5,14 +5,14 @@ using com.sap.internal.digitallab.packagehandling.service.StorageService as serv
  */
 annotate service.Storage with @(
     UI.SelectionFields: [
-        buildingFloor.name,
-        buildingFloor.building.name
+        bf,
+        bd
     ],
     UI.FilterFacets   : [{
         $Type : 'UI.ReferenceFacet',
-        ID    : 'GeneratedFacet1',
+        ID    : 'ManagedFilter',
         Label : 'General Information',
-        Target: '@UI.FieldGroup#StorageShowFields',
+        Target: '@UI.FieldGroup#AdminData',
     }],
     UI.LineItem       : [
         {
@@ -30,32 +30,24 @@ annotate service.Storage with @(
         },
         {
             $Type: 'UI.DataField',
-            Label: 'Total Number of Packages',
             Value: totalPackages,
         },
         {
             $Type: 'UI.DataField',
-            Label: 'Current Utilization',
             Value: currentPackages,
         },
         {
-            $Type         : 'UI.DataFieldWithIntentBasedNavigation',
-            Value         : ID,
-            Action        : 'manage',
-            Mapping : [
-                {
-                    $Type : 'Common.SemanticObjectMappingType',
-                    LocalProperty : ID,
-                    SemanticObjectProperty : 'slot_ID',
-                },
-            ],
+            $Type: 'UI.DataField',
+            Value: bf,
+            ![@UI.Hidden] ,
         },
+        {
+            $Type: 'UI.DataField',
+            Value: bd,
+            ![@UI.Hidden] ,
+        }
     ],
 );
-
-annotate service.Storage with {
-    totalPackages @Common.SemanticObject: 'Packages'
-};
 
 
 annotate service.BuildingFloor with {
@@ -71,6 +63,27 @@ annotate service.Building with {
  * Storage object detail page
  */
 annotate service.Storage with @(
+    UI.FieldGroup #AdminData        : {
+        $Type: 'UI.FieldGroupType',
+        Data : [
+            {
+                $Type: 'UI.DataField',
+                Value: createdAt,
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: createdBy,
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: modifiedAt,
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: modifiedBy,
+            },
+        ]
+    },
     UI.FieldGroup #StorageShowFields: {
         $Type: 'UI.FieldGroupType',
         Data : [
@@ -109,6 +122,23 @@ annotate service.Storage with @(
     }]
 );
 
+annotate service.Storage with {
+    ID                    @UI.HiddenFilter: true   @UI.Hidden: true;
+    buildingFloor         @UI.HiddenFilter: true   @UI.Hidden: true;
+    delete_ac             @UI.HiddenFilter: true   @UI.Hidden: true;
+    update_ac             @UI.HiddenFilter: true   @UI.Hidden: true;
+    map                   @UI.HiddenFilter: true   @UI.Hidden: true;
+    totalPackages         @UI.HiddenFilter: true   @UI.Hidden: false;
+    currentPackages       @UI.HiddenFilter: true   @UI.Hidden: false;
+    locationInstructions  @UI.HiddenFilter: true   @UI.Hidden: false;
+    name                  @UI.HiddenFilter: true   @UI.Hidden: false;
+    createdAt             @UI.HiddenFilter: false  @UI.Hidden: false;
+    createdBy             @UI.HiddenFilter: false  @UI.Hidden: false;
+    modifiedAt            @UI.HiddenFilter: false  @UI.Hidden: false;
+    modifiedBy            @UI.HiddenFilter: false  @UI.Hidden: false;
+    bf                    @UI.HiddenFilter: false  @UI.Hidden: false;
+    bd                    @UI.HiddenFilter: false  @UI.Hidden: false;
+};
 
 /*
  * Slot list page.
@@ -124,9 +154,10 @@ annotate service.StorageSlot with @UI: {LineItem: [
         Value: totalPackages,
     },
     {
-        $Type: 'UI.DataField',
-        Label: 'Status',
-        Value: status_code,
+        $Type             : 'UI.DataField',
+        Criticality       : status.criticality,
+        Value             : status.name,
+        ![@UI.Importance] : #High
     },
 ], };
 

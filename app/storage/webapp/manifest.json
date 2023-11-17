@@ -169,20 +169,7 @@
               "initialLoad": true,
               "content": {
                 "header": {
-                  "actions": {
-                    "upload": {
-                      "press": "com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.controller.UploadController.showUploadDialog",
-                      "text": "Import Books"
-                    },
-                    "tableSettings": {
-                      "entitySet": "Storage",
-                      "createWithParameterDialog": {
-                        "fields": {
-                          "name": { "path": "name" }
-                        }
-                      }
-                    }
-                  }
+                  "actions": {}
                 }
               },
               "controlConfiguration": {
@@ -194,6 +181,21 @@
                     "createWithParameterDialog": {
                       "fields": {
                         "name": { "path": "name" }
+                      }
+                    }
+                  },
+                  "columns": {
+                    "MColumn": {
+                      "key": "MColumn",
+                      "header": "Map",
+                      "template": "com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.view.MapLink",
+                      "availability": "Default",
+                      "horizontalAlign": "Left",
+                      "width": "auto",
+                      "properties": ["map", "locationInstructions"],
+                      "position": {
+                        "placement": "After",
+                        "anchor": "DataField::currentPackages"
                       }
                     }
                   },

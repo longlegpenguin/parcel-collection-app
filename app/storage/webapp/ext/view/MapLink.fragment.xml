@@ -1,0 +1,22 @@
+<core:FragmentDefinition
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+>
+    <CustomListItem>
+        <HBox alignItems="End">
+            <core:Icon
+                size="1.5rem"
+                src="sap-icon://map"
+                class=" "
+            />
+            <VBox class="sapUiSmallMarginBegin ">
+                <Link
+                    text="Map"
+                    target="_blank"
+                    href="{map}"
+                    emphasized="true"
+                />
+            </VBox>
+        </HBox>
+    </CustomListItem>
+</core:FragmentDefinition>
