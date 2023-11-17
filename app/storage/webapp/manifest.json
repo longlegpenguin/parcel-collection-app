@@ -48,6 +48,12 @@
             "additionalParameters": "allowed"
           }
         }
+      },
+      "outbounds": {
+        "ExternalNavigation": {
+          "semanticObject": "Packages",
+          "action": "manage"
+        }
       }
     }
   },
@@ -188,6 +194,13 @@
                     "createWithParameterDialog": {
                       "fields": {
                         "name": { "path": "name" }
+                      }
+                    }
+                  },
+                  "@com.sap.vocabularies.UI.v1.DataField#totalPackages": {
+                    "navigation": {
+                      "targetOutbound": {
+                        "outbound": "ExternalNavigation"
                       }
                     }
                   },

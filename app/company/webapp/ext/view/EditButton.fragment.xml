@@ -1,0 +1,14 @@
+<core:FragmentDefinition
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+>
+    <FlexBox alignItems="Center">
+        <items>
+            <Button
+                text=""
+                icon="sap-icon://edit"
+                press="com.sap.internal.digitallab.packagehandling.app.manage.companies.ext.controller.AppCt.showCCompanyDlg"
+            />
+        </items>
+    </FlexBox>
+</core:FragmentDefinition>

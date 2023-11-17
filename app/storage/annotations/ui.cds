@@ -38,8 +38,25 @@ annotate service.Storage with @(
             Label: 'Current Utilization',
             Value: currentPackages,
         },
-    ]
+        {
+            $Type         : 'UI.DataFieldWithIntentBasedNavigation',
+            Value         : ID,
+            Action        : 'manage',
+            Mapping : [
+                {
+                    $Type : 'Common.SemanticObjectMappingType',
+                    LocalProperty : ID,
+                    SemanticObjectProperty : 'slot_ID',
+                },
+            ],
+        },
+    ],
 );
+
+annotate service.Storage with {
+    totalPackages @Common.SemanticObject: 'Packages'
+};
+
 
 annotate service.BuildingFloor with {
     name @Common.Label: 'Building Floor';

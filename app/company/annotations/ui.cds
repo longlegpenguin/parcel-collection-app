@@ -51,11 +51,6 @@ annotate service.DeliveryCompany with @(
             Value: name
         }
     },
-    // UI.HeaderFacets: [{
-    //     $Type : 'UI.ReferenceFacet',
-    //     Label : '',
-    //     Target: '@UI.FieldGroup#Company'
-    // }],
     UI.Facets      : [{
         $Type : 'UI.ReferenceFacet',
         ID    : 'AdministrativeData',
