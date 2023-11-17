@@ -1,0 +1,10 @@
+.bigger {
+    font-size: x-large;
+  }
+  
+  .circle {
+    border-radius: 25px;
+  }
+  .round {
+    border-radius: 10px;
+  }

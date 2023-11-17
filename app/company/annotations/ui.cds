@@ -2,22 +2,19 @@ using com.sap.internal.digitallab.packagehandling.service.CompanyService as serv
 
 
 annotate service.DeliveryCompany with @(
-    UI.FilterFacets: [{
+    UI.SelectionFields: [
+        createdBy,
+        createdAt,
+        modifiedBy,
+        modifiedAt
+    ],
+    UI.FilterFacets   : [{
         $Type : 'UI.ReferenceFacet',
         ID    : 'AdministrativeData',
         Label : 'Administrative Data',
         Target: '@UI.FieldGroup#AdministrativeData',
     }, ],
-    UI.LineItem    : [
-        {
-            $Type             : 'UI.DataField',
-            Value             : logo,
-            ![@UI.Importance] : #High
-        },
-        {
-            $Type: 'UI.DataField',
-            Value: name,
-        },
+    UI.LineItem       : [
         {
             $Type: 'UI.DataField',
             Value: createdAt,
@@ -25,59 +22,55 @@ annotate service.DeliveryCompany with @(
         {
             $Type: 'UI.DataField',
             Value: createdBy,
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: name,
+            ![@UI.Hidden]
         }
     ]
 );
 
-// annotate service.DeliveryCompany with {
-//     logo @odata.mediaContentType: 'image/jpeg'
-//          @Common.Text           : name  @Core.MediaType: 'image/jpeg';
-// };
 annotate service.DeliveryCompany with {
-    logo  @Core.MediaType: 'image/jpeg'  @IsImageUrl: true;
+    name        @UI.Hidden: false  @UI.HiddenFilter: true;
+    createdAt   @UI.Hidden: false  @UI.HiddenFilter: false;
+    createdBy   @UI.Hidden: false  @UI.HiddenFilter: false;
+    modifiedAt  @UI.Hidden: false  @UI.HiddenFilter: false;
+    modifiedBy  @UI.Hidden: false  @UI.HiddenFilter: false;
+    ID          @UI.Hidden: true   @UI.HiddenFilter: true;
+    logo        @UI.Hidden: true   @UI.HiddenFilter: true;
 };
-
-annotate service.DeliveryCompany with {
-    name        @UI.HiddenFilter: true;
-    createdAt   @UI.Hidden      : false  @UI.HiddenFilter: false;
-    createdBy   @UI.Hidden      : false  @UI.HiddenFilter: false;
-    modifiedAt  @UI.Hidden      : false  @UI.HiddenFilter: false;
-    modifiedBy  @UI.Hidden      : false  @UI.HiddenFilter: false;
-    ID          @UI.HiddenFilter: true;
-};
-
 
 annotate service.DeliveryCompany with @(
-
-UI.Facets: [
-    {
-        $Type : 'UI.ReferenceFacet',
-        ID    : 'Company',
-        Label : 'General Information',
-        Target: '@UI.FieldGroup#Company',
+    UI.HeaderInfo  : {
+        TypeName      : 'Delivery Company',
+        TypeNamePlural: 'Delivery Companies',
+        ImageUrl      : '',
+        Title         : {
+            $Type: 'UI.DataField',
+            Value: name
+        }
     },
-    {
+    // UI.HeaderFacets: [{
+    //     $Type : 'UI.ReferenceFacet',
+    //     Label : '',
+    //     Target: '@UI.FieldGroup#Company'
+    // }],
+    UI.Facets      : [{
         $Type : 'UI.ReferenceFacet',
         ID    : 'AdministrativeData',
         Label : 'Administrative Data',
         Target: '@UI.FieldGroup#AdministrativeData',
-    },
-]);
+    }, ]
+);
 
 annotate service.DeliveryCompany with @(
     UI.FieldGroup #Company           : {
         $Type: 'UI.FieldGroupType',
-        Data : [
-            {
-                $Type             : 'UI.DataField',
-                Value             : logo,
-                ![@UI.Importance] : #High
-            },
-            {
-                $Type: 'UI.DataField',
-                Value: name,
-            }
-        ]
+        Data : [{
+            $Type: 'UI.DataField',
+            Value: name,
+        }]
     },
     UI.FieldGroup #AdministrativeData: {
         $Type: 'UI.FieldGroupType',

@@ -109,7 +109,11 @@
       }
     },
     "resources": {
-      "css": []
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
     },
     "routing": {
       "routes": [
@@ -144,10 +148,22 @@
               "controlConfiguration": {
                 "@com.sap.vocabularies.UI.v1.LineItem": {
                   "tableSettings": {
-                    "type": "GridTable",
-                    "selectionMode": "Auto",
-                    "creationMode": {
-                      "name": "InlineCreationRows"
+                    "type": "ResponsiveTable",
+                    "selectionMode": "Auto"
+                  },
+                  "columns": {
+                    "DCColumn": {
+                      "key": "DCColumn",
+                      "header": "Delivery Company",
+                      "template": "com.sap.internal.digitallab.packagehandling.app.manage.companies.ext.view.CompanyCol",
+                      "availability": "Default",
+                      "horizontalAlign": "Left",
+                      "width": "auto",
+                      "properties": ["createdAt"],
+                      "position": {
+                        "placement": "Before",
+                        "anchor": "DataField::createdAt"
+                      }
                     }
                   },
                   "actions": {
