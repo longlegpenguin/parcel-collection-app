@@ -184,6 +184,19 @@
                         "placement": "Before",
                         "anchor": "DataField::pickupTime"
                       }
+                    },
+                    "StColumn": {
+                      "key": "StColumn",
+                      "header": "Type",
+                      "template": "com.sap.internal.digitallab.packagehandling.app.manage.package.ext.view.StatusCol",
+                      "availability": "Default",
+                      "horizontalAlign": "Left",
+                      "width": "auto",
+                      "properties": ["type"],
+                      "position": {
+                        "placement": "Before",
+                        "anchor": "DataField::typeName"
+                      }
                     }
                   },
                   "actions": {

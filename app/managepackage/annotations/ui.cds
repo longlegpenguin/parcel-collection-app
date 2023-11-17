@@ -71,10 +71,9 @@ annotate service.Package with @(
             Value: loc,
         },
         {
-            $Type  : 'UI.DataField',
-            Value  : type.name,
-            IconUrl: type.icon,
-            ![@UI.Importance] : #High
+            $Type: 'UI.DataField',
+            Value: typeName,
+            ![@UI.Hidden] ,
         },
         {
             $Type             : 'UI.DataField',
