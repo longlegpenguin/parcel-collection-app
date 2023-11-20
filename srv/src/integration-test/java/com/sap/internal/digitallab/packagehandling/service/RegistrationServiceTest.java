@@ -52,7 +52,7 @@ public class RegistrationServiceTest extends BaseServiceTest {
     void testAuthorizationAccessToPackageType() {
         String url = host + port + prefix + "PackageType";
         read(ADMIN_KEY, mockUsers.get(ADMIN_KEY), url).then().statusCode(200);
-        read(MGR_KEY, mockUsers.get(MGR_KEY), url).then().statusCode(200);
+        read(MGR_KEY, mockUsers.get(MGR_KEY), url).then().statusCode(403);
         read(RECEPTIONIST_KEY, mockUsers.get(RECEPTIONIST_KEY), url).then().statusCode(200);
         read(USER_KEY, mockUsers.get(USER_KEY), url).then().statusCode(403);
     }
@@ -61,7 +61,7 @@ public class RegistrationServiceTest extends BaseServiceTest {
     void testAuthorizationAccessToPackageStatus() {
         String url = host + port + prefix + "PackageStatus";
         read(ADMIN_KEY, mockUsers.get(ADMIN_KEY), url).then().statusCode(200);
-        read(MGR_KEY, mockUsers.get(MGR_KEY), url).then().statusCode(200);
+        read(MGR_KEY, mockUsers.get(MGR_KEY), url).then().statusCode(403);
         read(RECEPTIONIST_KEY, mockUsers.get(RECEPTIONIST_KEY), url).then().statusCode(200);
         read(USER_KEY, mockUsers.get(USER_KEY), url).then().statusCode(403);
     }
@@ -70,7 +70,7 @@ public class RegistrationServiceTest extends BaseServiceTest {
     void testAuthorizationAccessToDeliveryCompany() {
         String url = host + port + prefix + "DeliveryCompany";
         read(ADMIN_KEY, mockUsers.get(ADMIN_KEY), url).then().statusCode(200);
-        read(MGR_KEY, mockUsers.get(MGR_KEY), url).then().statusCode(200);
+        read(MGR_KEY, mockUsers.get(MGR_KEY), url).then().statusCode(403);
         read(RECEPTIONIST_KEY, mockUsers.get(RECEPTIONIST_KEY), url).then().statusCode(200);
         read(USER_KEY, mockUsers.get(USER_KEY), url).then().statusCode(403);
     }

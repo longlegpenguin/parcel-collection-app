@@ -68,7 +68,7 @@ public class PackageServiceTest extends BaseServiceTest {
     void testAuthorizationAccessToPackageType() {
         String url = host + port + prefix + "PackageType";
         read(ADMIN_KEY, mockUsers.get(ADMIN_KEY), url).then().statusCode(200);
-        read(MGR_KEY, mockUsers.get(MGR_KEY), url).then().statusCode(200);
+        read(MGR_KEY, mockUsers.get(MGR_KEY), url).then().statusCode(403);
         read(RECEPTIONIST_KEY, mockUsers.get(RECEPTIONIST_KEY), url).then().statusCode(200);
         read(USER_KEY, mockUsers.get(USER_KEY), url).then().statusCode(403);
     }
@@ -77,7 +77,7 @@ public class PackageServiceTest extends BaseServiceTest {
     void testAuthorizationAccessToPackageStatus() {
         String url = host + port + prefix + "PackageStatus";
         read(ADMIN_KEY, mockUsers.get(ADMIN_KEY), url).then().statusCode(200);
-        read(MGR_KEY, mockUsers.get(MGR_KEY), url).then().statusCode(200);
+        read(MGR_KEY, mockUsers.get(MGR_KEY), url).then().statusCode(403);
         read(RECEPTIONIST_KEY, mockUsers.get(RECEPTIONIST_KEY), url).then().statusCode(200);
         read(USER_KEY, mockUsers.get(USER_KEY), url).then().statusCode(403);
     }
@@ -86,7 +86,7 @@ public class PackageServiceTest extends BaseServiceTest {
     void testAuthorizationAccessToStorageSlot() {
         String url = host + port + prefix + "StorageSlot";
         read(ADMIN_KEY, mockUsers.get(ADMIN_KEY), url).then().statusCode(200);
-        read(MGR_KEY, mockUsers.get(MGR_KEY), url).then().statusCode(200);
+        read(MGR_KEY, mockUsers.get(MGR_KEY), url).then().statusCode(403);
         read(RECEPTIONIST_KEY, mockUsers.get(RECEPTIONIST_KEY), url).then().statusCode(200);
         read(USER_KEY, mockUsers.get(USER_KEY), url).then().statusCode(403);
     }
@@ -95,7 +95,7 @@ public class PackageServiceTest extends BaseServiceTest {
     void testAuthorizationAccessToStorage() {
         String url = host + port + prefix + "Storage";
         read(ADMIN_KEY, mockUsers.get(ADMIN_KEY), url).then().statusCode(200);
-        read(MGR_KEY, mockUsers.get(MGR_KEY), url).then().statusCode(200);
+        read(MGR_KEY, mockUsers.get(MGR_KEY), url).then().statusCode(403);
         read(RECEPTIONIST_KEY, mockUsers.get(RECEPTIONIST_KEY), url).then().statusCode(200);
         read(USER_KEY, mockUsers.get(USER_KEY), url).then().statusCode(403);
     }
@@ -106,8 +106,6 @@ public class PackageServiceTest extends BaseServiceTest {
         testUnsupportedOpForRole(ADMIN_KEY, mockUsers.get(ADMIN_KEY), url);
         url = host + port + prefix + "StorageSlot";
         testUnsupportedOpForRole(RECEPTIONIST_KEY, mockUsers.get(RECEPTIONIST_KEY), url);
-        url = host + port + prefix + "PackageStatus";
-        testUnsupportedOpForRole(MGR_KEY, mockUsers.get(MGR_KEY), url);
         url = host + port + prefix + "PackageType";
         testUnsupportedOpForRole(ADMIN_KEY, mockUsers.get(ADMIN_KEY), url);
     }
