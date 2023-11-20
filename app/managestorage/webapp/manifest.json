@@ -35,7 +35,7 @@
         }
       }
     },
-    "ach": "app",
+    "ach": "INT-DLH-PH",
     "crossNavigation": {
       "inbounds": {
         "Launchpad-lauch": {
@@ -326,7 +326,7 @@
     }
   },
   "sap.fiori": {
-    "registrationIds": ["storageui"],
+    "registrationIds": ["FDLH0101"],
     "archeType": "transactional"
   }
 }

@@ -99,7 +99,7 @@ modules:
       target-path: resources/
 - name: managestorages
   type: html5
-  path: app/storage
+  path: app/managestorage
   build-parameters:
     build-result: dist
     builder: custom
@@ -109,7 +109,7 @@ modules:
     supported-platforms: []
 - name: managecompanies
   type: html5
-  path: app/company
+  path: app/managecompany
   build-parameters:
     build-result: dist
     builder: custom
@@ -119,7 +119,7 @@ modules:
     supported-platforms: []
 - name: registerpackages
   type: html5
-  path: app/registration
+  path: app/registerpackage
   build-parameters:
     build-result: dist
     builder: custom
@@ -129,7 +129,7 @@ modules:
     supported-platforms: []
 - name: listhistory
   type: html5
-  path: app/history
+  path: app/browsepackage
   build-parameters:
     build-result: dist
     builder: custom
@@ -139,7 +139,7 @@ modules:
     supported-platforms: []
 - name: managepackage
   type: html5
-  path: app/package
+  path: app/managepackage
   build-parameters:
     build-result: dist
     builder: custom

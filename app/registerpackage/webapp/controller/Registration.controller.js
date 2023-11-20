@@ -33,22 +33,6 @@ sap.ui.define(
               console.log("Error: " + JSON.stringify(error, null, 4));
             },
           });
-
-          // sap.ushell.Container.getServiceAsync(
-          //   "CrossApplicationNavigation"
-          // ).then(function (oService) {
-          //   oService
-          //     .hrefForExternalAsync({
-          //       target: {
-          //         semanticObject: "Packages",
-          //         action: "manage",
-          //       },
-          //       params: {},
-          //     })
-          //     .then(function (sHref) {
-          //       // Place sHref somewhere in the DOM
-          //     });
-          // });
         },
 
         onBeforeRendering: function () {

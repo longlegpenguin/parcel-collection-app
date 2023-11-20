@@ -1,7 +1,7 @@
 {
   "_version": "1.58.0",
   "sap.app": {
-    "id": "com.sap.internal.digitallab.packagehandling.app.list.history",
+    "id": "com.sap.internal.digitallab.packagehandling.app.manage.companies",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
@@ -13,11 +13,11 @@
     "sourceTemplate": {
       "id": "@sap/generator-fiori:lrop",
       "version": "1.11.3",
-      "toolsId": "8d710df7-4f79-4196-aff7-e77fe502fa6d"
+      "toolsId": "d4d04ba0-c352-4719-a2ad-59b99b7a8aff"
     },
     "dataSources": {
       "mainService": {
-        "uri": "/odata/v4/HistoryService/",
+        "uri": "/odata/v4/CompanyService/",
         "type": "OData",
         "settings": {
           "annotations": [],
@@ -26,7 +26,7 @@
         }
       },
       "myService": {
-        "uri": "/odata/v2/HistoryService/",
+        "uri": "/odata/v2/CompanyService/",
         "type": "OData",
         "settings": {
           "annotations": [],
@@ -35,7 +35,7 @@
         }
       }
     },
-    "ach": "app"
+    "ach": "INT-DLH-PH"
   },
   "sap.ui": {
     "technology": "UI5",
@@ -79,7 +79,7 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "com.sap.internal.digitallab.packagehandling.app.list.history.i18n.i18n"
+          "bundleName": "com.sap.internal.digitallab.packagehandling.app.manage.companies.i18n.i18n"
         }
       },
       "": {
@@ -119,53 +119,84 @@
       "routes": [
         {
           "pattern": ":?query:",
-          "name": "PackageList",
-          "target": "PackageList"
+          "name": "DeliveryCompanyList",
+          "target": "DeliveryCompanyList"
+        },
+        {
+          "pattern": "DeliveryCompany({key}):?query:",
+          "name": "DeliveryCompanyObjectPage",
+          "target": "DeliveryCompanyObjectPage"
         }
       ],
       "targets": {
-        "PackageList": {
+        "DeliveryCompanyList": {
           "type": "Component",
-          "id": "PackageList",
+          "id": "DeliveryCompanyList",
           "name": "sap.fe.templates.ListReport",
           "options": {
             "settings": {
-              "contextPath": "/Package",
+              "contextPath": "/DeliveryCompany",
               "variantManagement": "Page",
-              "navigation": {},
+              "navigation": {
+                "DeliveryCompany": {
+                  "detail": {
+                    "route": "DeliveryCompanyObjectPage"
+                  }
+                }
+              },
               "initialLoad": true,
               "controlConfiguration": {
                 "@com.sap.vocabularies.UI.v1.LineItem": {
                   "tableSettings": {
                     "type": "ResponsiveTable",
-                    "selectionMode": "Multi"
+                    "selectionMode": "Auto"
                   },
                   "columns": {
                     "DCColumn": {
                       "key": "DCColumn",
                       "header": "Delivery Company",
-                      "template": "com.sap.internal.digitallab.packagehandling.app.list.history.ext.view.CompanyCol",
+                      "template": "com.sap.internal.digitallab.packagehandling.app.manage.companies.ext.view.CompanyCol",
                       "availability": "Default",
                       "horizontalAlign": "Left",
                       "width": "auto",
-                      "properties": ["deliveryCompany"],
+                      "properties": ["createdAt"],
                       "position": {
                         "placement": "Before",
-                        "anchor": "DataField::comfirmationTime"
+                        "anchor": "DataField::createdAt"
                       }
+                    }
+                  },
+                  "actions": {
+                    "CCompany": {
+                      "press": "com.sap.internal.digitallab.packagehandling.app.manage.companies.ext.controller.AppCt.showCCompanyDlg",
+                      "enabled": true,
+                      "visible": true,
+                      "text": "Create"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "DeliveryCompanyObjectPage": {
+          "type": "Component",
+          "id": "DeliveryCompanyObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/DeliveryCompany",
+              "content": {
+                "header": {
+                  "actions": {
+                    "ECompany": {
+                      "press": "com.sap.internal.digitallab.packagehandling.app.manage.companies.ext.controller.AppCt.showECompanyDlg",
+                      "text": "Edit",
+                      "type": "Emphasized"
                     },
-                    "StColumn": {
-                      "key": "StColumn",
-                      "header": "Type",
-                      "template": "com.sap.internal.digitallab.packagehandling.app.list.history.ext.view.StatusCol",
-                      "availability": "Default",
-                      "horizontalAlign": "Left",
-                      "width": "auto",
-                      "properties": ["type"],
-                      "position": {
-                        "placement": "Before",
-                        "anchor": "DataField::typeName"
-                      }
+                    "tableSettings": {
+                      "entitySet": "Company"
                     }
                   }
                 }
@@ -174,10 +205,15 @@
           }
         }
       }
+    },
+    "extends": {
+      "extensions": {
+        "sap.ui.controllerExtensions": {}
+      }
     }
   },
   "sap.fiori": {
-    "registrationIds": ["historyui"],
+    "registrationIds": ["FDLH0102"],
     "archeType": "transactional"
   }
 }

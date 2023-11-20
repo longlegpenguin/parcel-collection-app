@@ -122,7 +122,7 @@
               "resolutionResult": {
                 "applicationType": "SAPUI5",
                 "additionalInformation": "SAPUI5.Component=com.sap.internal.digitallab.packagehandling.app.manage.companies",
-                "url": "/company/webapp"
+                "url": "/managecompany/webapp"
               }
             },
             "manage-packages": {
@@ -148,7 +148,7 @@
               "resolutionResult": {
                 "applicationType": "SAPUI5",
                 "additionalInformation": "SAPUI5.Component=com.sap.internal.digitallab.packagehandling.app.register.packages",
-                "url": "/registration/webapp"
+                "url": "/registerpackage/webapp"
               }
             },
             "packages-list": {
@@ -161,7 +161,7 @@
               "resolutionResult": {
                 "applicationType": "SAPUI5",
                 "additionalInformation": "SAPUI5.Component=com.sap.internal.digitallab.packagehandling.app.list.history",
-                "url": "/history/webapp"
+                "url": "/browsepackage/webapp"
               }
             },
             "package-pickup": {
