@@ -291,7 +291,7 @@
                       "text": "Edit"
                     },
                     "deleteSlot": {
-                      "press": "com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.controller.DSlotMBoxCt.onWarning2MessageBoxPress",
+                      "press": "com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.component.DSlotMBox.onDeletePress",
                       "text": "Delete"
                     }
                   }

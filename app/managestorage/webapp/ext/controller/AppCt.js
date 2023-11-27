@@ -1,6 +1,5 @@
 sap.ui.define(
   [
-    "sap/ui/base/ManagedObject",
     "com/sap/internal/digitallab/packagehandling/app/manage/storages/ext/component/CStorageDlg",
     "com/sap/internal/digitallab/packagehandling/app/manage/storages/ext/component/UStorageDlg",
     "com/sap/internal/digitallab/packagehandling/app/manage/storages/ext/component/CSlotDlg",
@@ -8,7 +7,6 @@ sap.ui.define(
     "com/sap/internal/digitallab/packagehandling/app/manage/storages/ext/component/MassCreateDlg",
   ],
   function (
-    ManagedObject,
     CStorageDlg,
     UStorageDlg,
     CSlotDlg,
@@ -38,26 +36,48 @@ sap.ui.define(
     }
 
     return {
+      /**
+       * Displays the create storage dialog
+       * @param {Object} oBindingContext 
+       * @param {Array} aSelectedContexts 
+       */
       showCStorageDlg: function (oBindingContext, aSelectedContexts) {
         _loadCStorageDlg(this);
       },
 
+      /**
+       * Displays the edit storage dialog
+       * @param {Object} oBindingContext 
+       * @param {Array} aSelectedContexts 
+       */
       showUStorageDlg: function (oBindingContext, aSelectedContexts) {
         _loadUStorageDlg(this, aSelectedContexts);
       },
 
+      /**
+       * Displays the create slot dialog
+       * @param {Object} oBindingContext 
+       * @param {Array} aSelectedContexts 
+       */
       showCSlotDlg: function (oBindingContext, aSelectedContexts) {
-        console.log(oBindingContext);
         _loadCStlotDlg(this, oBindingContext);
       },
 
+      /**
+       * Displays the edit slot dialog
+       * @param {Object} oBindingContext 
+       * @param {Array} aSelectedContexts 
+       */
       showUSlotDlg: function (oBindingContext, aSelectedContexts) {
-        console.log(oBindingContext);
         _loadUSlotDlg(this, oBindingContext);
       },
 
+      /**
+       * Displays the mass create slots dialog
+       * @param {Object} oBindingContext 
+       * @param {Array} aSelectedContexts 
+       */
       showMassCreateDlg: function (oBindingContext, aSelectedContexts) {
-        console.log(oBindingContext);
         _loadMassCreateDlg(this, oBindingContext);
       },
     };

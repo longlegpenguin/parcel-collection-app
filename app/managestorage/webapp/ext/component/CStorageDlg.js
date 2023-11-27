@@ -9,6 +9,9 @@ sap.ui.define(
           this._oExtensionAPI = oExtensionAPI;
         },
 
+        /**
+         * Loads the create storage dialog.
+         */
         load: function () {
           this._oExtensionAPI
             .loadFragment({
@@ -21,21 +24,32 @@ sap.ui.define(
             });
         },
 
+        /**
+         * Assigns dependencies before dialog opens.
+         * @param {Object} oEvent 
+         */
         onDialogBeforeOpen: function (oEvent) {
-          console.log("onBeforeOpen");
           this._oCStorageDlg = oEvent.getSource();
           this._oExtensionAPI.addDependent(this._oCStorageDlg);
         },
 
+        /**
+         * Removes the dialog and refresh the page after dialog closed.
+         * @param {Object} oEvent 
+         */
         onDialogAfterClose: function (oEvent) {
-          console.log("onAfterClose");
           this._oExtensionAPI.removeDependent(this._oCStorageDlg);
           this._oCStorageDlg.destroy();
           this._oCStorageDlg = undefined;
           this._oExtensionAPI.refresh();
         },
 
+        /**
+         * On press the create button, submits the filled content to back-end.
+         * @param {Object} oEvent 
+         */
         onCreateButtonPress: function (oEvent) {
+          this._setBusy(true);
           var postData = this._getInputs();
           var oModel = this._oExtensionAPI.getModel("MyModel");
 
@@ -58,21 +72,22 @@ sap.ui.define(
           });
 
           oModel.submitChanges({
-            success: function () {},
-            error: function () {},
+            success: function () { },
+            error: function () { },
           });
           oContext.delete();
         },
 
+        /**
+         * Closes the dialog.
+         */
         onCloseButtonPress: function (oEvent) {
-          console.log("close cliacked");
           this._closeDialog();
         },
 
         _getInputs: function () {
           var name = this._byId("idNameInput").getValue();
           var bf = this._byId("idBuildingFloorSelect").getSelectedKey();
-          console.log(bf);
           var map = this._byId("idMapInput").getValue();
           var locIns = this._byId("idTextLocInsInput").getValue();
 
@@ -88,11 +103,10 @@ sap.ui.define(
           return JSON.parse(oError.responseText).error.message.value;
         },
 
-        _setOkButtonEnabled: function (bOk) {
-          this._oCStorageDlg &&
-            this._oCStorageDlg.getBeginButton().setEnabled(bOk);
-        },
-
+        /**
+         * Sets the dialog state to busy or not busy.
+         * @param {Boolean} bBusy busy or not busy
+         */
         _setBusy: function (bBusy) {
           this._oCStorageDlg.setBusy(bBusy);
         },
@@ -100,6 +114,7 @@ sap.ui.define(
         _closeDialog: function () {
           this._oCStorageDlg && this._oCStorageDlg.close();
         },
+
         _byId: function (sId) {
           return sap.ui.core.Fragment.byId("csdlg", sId);
         },

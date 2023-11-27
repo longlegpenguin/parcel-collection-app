@@ -7,11 +7,12 @@ sap.ui.define(
       {
         constructor: function (oExtensionAPI, oBindingContext) {
           this._oExtensionAPI = oExtensionAPI;
-          console.log(oBindingContext);
           this._oSelectedContext = oBindingContext;
-          console.log(this._byId("idIdInput"));
         },
 
+        /**
+         * Loads the create slot dialog.
+         */
         load: function () {
           this._oExtensionAPI
             .loadFragment({
@@ -24,22 +25,30 @@ sap.ui.define(
             });
         },
 
+        /**
+         * Assigns dependencies before dialog opens.
+         * Preloads data from back-end into the dialog local models.
+         * @param {Object} oEvent the event by which the dialog open
+         */
         onDialogBeforeOpen: function (oEvent) {
           this._oCSlotDlg = oEvent.getSource();
           this._oExtensionAPI.addDependent(this._oCSlotDlg);
 
           var fnSuccess = function (oData) {
-            var d = JSON.stringify(oData, null, 4);
             sap.ui.core.Fragment.byId("csldlg", "idIdInput").setValue(oData.ID)
           };
 
           var oModel = this._oExtensionAPI.getModel("MyModel");
           oModel.read(this._getSelected(), {
             success: fnSuccess,
-            error: function () {},
+            error: function () { },
           });
         },
 
+        /**
+         * Removes the dialog and refresh the page after dialog closed.
+         * @param {Object} oEvent 
+         */
         onDialogAfterClose: function (oEvent) {
           this._oExtensionAPI.removeDependent(this._oCSlotDlg);
           this._oCSlotDlg.destroy();
@@ -47,9 +56,13 @@ sap.ui.define(
           this._oExtensionAPI.refresh();
         },
 
+        /**
+         * On press the create button, submits the filled content to back-end.
+         * @param {Object} oEvent 
+         */
         onCreateButtonPress: function (oEvent) {
+          this._setBusy(true);
           var oData = this._getInputs();
-          console.log(JSON.stringify(oData));
           var oModel = this._oExtensionAPI.getModel("MyModel");
 
           var fnSuccess = function () {
@@ -71,33 +84,36 @@ sap.ui.define(
           });
 
           oModel.submitChanges({
-            success: function () {},
-            error: function () {},
+            success: function () { },
+            error: function () { },
           });
           oContext.delete();
         },
 
         onCloseButtonPress: function (oEvent) {
-          console.log("close cliacked");
           this._closeDialog();
         },
 
+        /**
+        * Transform the v4 syntax context path to v2 syntax context path.
+        * @returns the v2 context path of selected list item. 
+        */
         _getSelected: function () {
-          var sV4 = this._oSelectedContext.sPath
-          sV4 = sV4.replaceAll('(', "(guid'")
-          sV4 = sV4.replaceAll(')', "')")
-          console.log(sV4);
-          return sV4;
+          var sV4 = this._oSelectedContext.sPath;
+          var sV2 = sV4.replace("(", "(guid'").replace(")", "')");
+          return sV2;
         },
 
+        /**
+         * Get the user inputs from the dialog.
+         * @returns dictionary of attribute value pair.
+         */
         _getInputs: function () {
           var name = this._byId("idNameInput").getValue();
           var av = this._byId("idAvailableCheckBox").getSelected();
           var stId = this._byId("idIdInput").getValue();
-          
+
           var sc = av ? "empty" : "unavailable"
-          console.log("aval " + av + " " + sc);
-          console.log(stId);
           return {
             storage_ID: stId,
             name: name,
@@ -109,10 +125,6 @@ sap.ui.define(
           return JSON.parse(oError.responseText).error.message.value;
         },
 
-        _setOkButtonEnabled: function (bOk) {
-          this._oCSlotDlg &&
-            this._oCSlotDlg.getBeginButton().setEnabled(bOk);
-        },
 
         _setBusy: function (bBusy) {
           this._oCSlotDlg.setBusy(bBusy);
@@ -121,6 +133,7 @@ sap.ui.define(
         _closeDialog: function () {
           this._oCSlotDlg && this._oCSlotDlg.close();
         },
+
         _byId: function (sId) {
           return sap.ui.core.Fragment.byId("csldlg", sId);
         },

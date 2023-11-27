@@ -7,11 +7,12 @@ sap.ui.define(
       {
         constructor: function (oExtensionAPI, oBindingContext) {
           this._oExtensionAPI = oExtensionAPI;
-          console.log(oBindingContext);
           this._oSelectedContext = oBindingContext;
-          console.log(this._byId("idIdInput"));
         },
 
+        /**
+         * Loads the edit slots dialog.
+         */
         load: function () {
           this._oExtensionAPI
             .loadFragment({
@@ -24,13 +25,16 @@ sap.ui.define(
             });
         },
 
+        /**
+         * Assigns dependencies.
+         * Preloads the data from back-end service into local data before dialog opens.
+         * @param {Object} oEvent
+         */
         onDialogBeforeOpen: function (oEvent) {
           this._oUSlotDlg = oEvent.getSource();
           this._oExtensionAPI.addDependent(this._oUSlotDlg);
 
           var fnSuccess = function (oData) {
-            var d = JSON.stringify(oData, null, 4);
-            // console.log(d);
             var byId = (sId) => sap.ui.core.Fragment.byId("usldlg", sId);
             var setInput = (sId, sValue) => byId(sId).setValue(sValue);
             setInput("idIdInput", oData.storage_ID);
@@ -44,10 +48,14 @@ sap.ui.define(
           var oModel = this._oExtensionAPI.getModel("MyModel");
           oModel.read(this._getSelected(), {
             success: fnSuccess,
-            error: function () {},
+            error: function () { },
           });
         },
 
+        /**
+         * Removes the dialog and refresh the page after dialog closed.
+         * @param {Object} oEvent 
+         */
         onDialogAfterClose: function (oEvent) {
           this._oExtensionAPI.removeDependent(this._oUSlotDlg);
           this._oUSlotDlg.destroy();
@@ -55,41 +63,46 @@ sap.ui.define(
           this._oExtensionAPI.refresh();
         },
 
+        /**
+         * On press the edit button, submits the edited content to back-end.
+         * @param {Object} oEvent 
+         */
         onSaveButtonPress: function (oEvent) {
           var oData = this._getInputs();
           var oModel = this._oExtensionAPI.getModel("MyModel");
-
           var fnSuccess = function () {
-            this._setBusy(false);
             this._closeDialog();
             MessageToast.show("Updated!");
           }.bind(this);
-
           var fnError = function (oError) {
-            this._setBusy(false);
             var msg = this._getErrorMsg(oError);
             MessageBox.error(msg);
           }.bind(this);
 
-          console.log("Update data:" + JSON.stringify(oData, null, 4));
           oModel.update(this._getSelected(), oData, {
             success: fnSuccess,
             error: fnError,
           });
         },
 
+        /**
+         * Closes the dialog.
+         * @param {Object} oEvent 
+         */
         onCloseButtonPress: function (oEvent) {
-          console.log("close cliacked");
           this._closeDialog();
         },
 
+        /**
+         * Translate the v4 syntax context path to v2 syntax context path.
+         * Extracts and create the pure context path for the selected slot 
+         * (without storage info).
+         * @returns the v2 context path of selected slot. 
+         */
         _getSelected: function () {
-          console.log(this._oSelectedContext.sPath.split("/"));
           var sV4 = this._oSelectedContext.sPath.split("/")[2];
-          sV4 = sV4.replaceAll("(", "(guid'");
-          sV4 = sV4.replaceAll(")", "')").replaceAll("storageSlot", "StorageSlot");
-          console.log("selected slot: " + sV4);
-          return "/" + sV4;
+          var sV2 = sV4.replaceAll("(", "(guid'").replaceAll(")", "')").replaceAll("storageSlot", "StorageSlot");
+          return "/" + sV2;
         },
 
         _getInputs: function () {
@@ -99,8 +112,6 @@ sap.ui.define(
           var stc = this._byId("idStatisInput").getValue();
 
           var sc = av ? stc : "unavailable";
-          console.log("aval " + av + " " + sc);
-          console.log(stId);
           return {
             storage_ID: stId,
             name: name,
@@ -112,10 +123,6 @@ sap.ui.define(
           return JSON.parse(oError.responseText).error.message.value;
         },
 
-        _setOkButtonEnabled: function (bOk) {
-          this._oUSlotDlg && this._oUSlotDlg.getBeginButton().setEnabled(bOk);
-        },
-
         _setBusy: function (bBusy) {
           this._oUSlotDlg.setBusy(bBusy);
         },
@@ -123,6 +130,7 @@ sap.ui.define(
         _closeDialog: function () {
           this._oUSlotDlg && this._oUSlotDlg.close();
         },
+
         _byId: function (sId) {
           return sap.ui.core.Fragment.byId("usldlg", sId);
         },

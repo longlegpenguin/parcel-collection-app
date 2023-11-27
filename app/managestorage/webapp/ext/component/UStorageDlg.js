@@ -8,9 +8,11 @@ sap.ui.define(
         constructor: function (oExtensionAPI, aSelectedContexts) {
           this._oExtensionAPI = oExtensionAPI;
           this._oSelectedContext = aSelectedContexts[0];
-          console.log(this._oSelectedContext.sPath);
         },
 
+        /**
+         * Loads the edit storage dialog.
+         */
         load: function () {
           this._oExtensionAPI
             .loadFragment({
@@ -23,14 +25,16 @@ sap.ui.define(
             });
         },
 
+        /**
+         * Assigns dependencies.
+         * Preloads the data from back-end service into local data before dialog opens.
+         * @param {Object} oEvent
+         */
         onDialogBeforeOpen: function (oEvent) {
-          console.log("onBeforeOpen");
           this._oCStorageDlg = oEvent.getSource();
           this._oExtensionAPI.addDependent(this._oCStorageDlg);
 
           var fnSuccess = function (oData) {
-            var d = JSON.stringify(oData, null, 4);
-            console.log(d);
             var byId = (sId) => sap.ui.core.Fragment.byId("usdlg", sId);
             var setInput = (sId, sValue) => byId(sId).setValue(sValue);
             setInput("idNameInput", oData.name);
@@ -42,18 +46,25 @@ sap.ui.define(
           var oModel = this._oExtensionAPI.getModel("MyModel");
           oModel.read(this._getSelected(), {
             success: fnSuccess,
-            error: function () {},
+            error: function () { },
           });
         },
 
+        /**
+         * Removes the dialog and refresh the page after dialog closed.
+         * @param {Object} oEvent 
+         */
         onDialogAfterClose: function (oEvent) {
-          console.log("onAfterClose");
           this._oExtensionAPI.removeDependent(this._oCStorageDlg);
           this._oCStorageDlg.destroy();
           this._oCStorageDlg = undefined;
           this._oExtensionAPI.refresh();
         },
 
+        /**
+         * On press the save button, submits the edited content to back-end.
+         * @param {Object} oEvent 
+         */
         onSaveButtonPress: function (oEvent) {
           var oData = this._getInputs();
           var oModel = this._oExtensionAPI.getModel("MyModel");
@@ -76,18 +87,18 @@ sap.ui.define(
           });
         },
 
+        /**
+         * Closes the dialog.
+         * @param {Object} oEvent 
+         */
         onCloseButtonPress: function (oEvent) {
-          console.log("close cliacked");
           this._closeDialog();
         },
 
         _getSelected: function () {
-          var sV4 = this._oSelectedContext.sPath
-          sV4 = sV4.replace('(', "(guid'")
-          sV4 = sV4.replace(')', "')")
-          console.log(sV4);
-          ///Storage(2f33d046-13a8-442c-aebc-5a687891be7e)
-          return sV4;
+          var sV4 = this._oSelectedContext.sPath;
+          var sV2 = sV4.replace("(", "(guid'").replace(")", "')");
+          return sV2;
         },
 
         _getInputs: function () {
@@ -106,10 +117,6 @@ sap.ui.define(
 
         _getErrorMsg: (oError) =>
           JSON.parse(oError.responseText).error.message.value,
-        _setOkButtonEnabled: function (bOk) {
-          this._oCStorageDlg &&
-            this._oCStorageDlg.getBeginButton().setEnabled(bOk);
-        },
 
         _setBusy: function (bBusy) {
           this._oCStorageDlg.setBusy(bBusy);
@@ -117,10 +124,6 @@ sap.ui.define(
 
         _closeDialog: function () {
           this._oCStorageDlg && this._oCStorageDlg.close();
-        },
-
-        _showError: function (sMessage) {
-          MessageBox.error(sMessage || "Upload failed");
         },
 
         _byId: function (sId) {
