@@ -7,6 +7,9 @@ sap.ui.define(
         this._oExtensionAPI = oExtensionAPI;
       },
 
+      /**
+       * Loads the create company dialog.
+       */
       load: function () {
         this._oExtensionAPI
           .loadFragment({
@@ -19,12 +22,19 @@ sap.ui.define(
           });
       },
 
+      /**
+       * Assigns dependencies before dialog opens.
+       * @param {Object} oEvent the event by which the dialog open
+       */
       onDialogBeforeOpen: function (oEvent) {
-        console.log("onBeforeOpen");
         this._oCCompanyDlg = oEvent.getSource();
         this._oExtensionAPI.addDependent(this._oCCompanyDlg);
       },
 
+      /**
+       * Removes the dialog and refresh the page after dialog closed.
+       * @param {Object} oEvent 
+       */
       onDialogAfterClose: function (oEvent) {
         this._oExtensionAPI.removeDependent(this._oCCompanyDlg);
         this._oCCompanyDlg.destroy();
@@ -32,6 +42,10 @@ sap.ui.define(
         this._oExtensionAPI.refresh();
       },
 
+      /**
+       * On press the create button, submits the filled content to back-end.
+       * @param {Object} oEvent 
+       */
       onCreateButtonPress: function (oEvent) {
         this._setBusy(true);
         var postData = this._getInputs();
@@ -55,12 +69,16 @@ sap.ui.define(
         });
 
         oModel.submitChanges({
-          success: function () {},
-          error: function () {},
+          success: function () { },
+          error: function () { },
         });
         oContext.delete();
       },
 
+      /**
+       * On press the close button, close the dialog.
+       * @param {Object} oEvent 
+       */
       onCloseButtonPress: function (oEvent) {
         console.log("close cliacked");
         this._closeDialog();
@@ -69,7 +87,7 @@ sap.ui.define(
       _getInputs: function () {
         var name = this._byId("idNameInput").getValue();
         var logo = this._byId("idLogoInput").getValue();
-        
+
         return {
           name: name,
           logo: logo,
