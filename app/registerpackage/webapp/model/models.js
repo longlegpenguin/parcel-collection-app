@@ -1,7 +1,7 @@
 sap.ui.define([
     "sap/ui/model/json/JSONModel",
     "sap/ui/Device"
-], 
+],
     /**
      * provide app-view type models (as in the first "V" in MVVC)
      * 
@@ -18,6 +18,24 @@ sap.ui.define([
                 var oModel = new JSONModel(Device);
                 oModel.setDefaultBindingMode("OneWay");
                 return oModel;
-        }
-    };
-});
+            },
+
+            /**
+             * Creates local data model contains data entries 
+             * for the package registration form.
+             * @returns {JSONModel}
+             */
+            createLocalModel: function () {
+                var oData = {
+                    data: {
+                        recipient_ID: "",
+                        type: "normal",
+                        company: null,
+                        receptionist_ID: "",
+                    },
+                };
+                var oModel = new JSONModel(oData);
+                return oModel;
+            }
+        };
+    });

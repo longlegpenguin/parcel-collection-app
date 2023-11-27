@@ -31,19 +31,7 @@ sap.ui.define(
 
         // set the device model
         this.setModel(models.createDeviceModel(), "device");
-
-        var oData = {
-          data: {
-            recipient_ID: "",
-            type: "normal",
-            company: null,
-            receptionist_ID: "",
-          },
-        };
-        var oModel = new JSONModel(oData);
-        this.setModel(oModel, "localData");
-
-        console.log("model? " + this.getModel());
+        this.setModel(models.createLocalModel(), "localData");
       },
     });
   }

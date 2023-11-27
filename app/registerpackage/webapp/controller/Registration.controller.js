@@ -3,24 +3,21 @@ sap.ui.define(
     "sap/ui/core/mvc/Controller",
     "sap/m/MessageBox",
     "sap/m/MessageToast",
-    "sap/ui/core/routing/History",
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
    */
-  function (BaseController, MessageBox, MessageToast, History) {
+  function (BaseController, MessageBox, MessageToast) {
     "use strict";
 
     return BaseController.extend(
       "com.sap.internal.digitallab.packagehandling.app.register.packages.controller.Registration",
       {
+        /**
+         * On init, read and cached useful data from back-end 
+         * into dictionary.
+         */
         onInit: function () {
-          console.log("Registration Controller alive!");
-
-          console.log("Me " + this.getView());
-          console.log("Owner Component " + this.getOwnerComponent());
-          console.log("model: " + this.getView().getModel());
-          console.log("device model: " + this.getView().getModel("device"));
           this._dic = {};
           $.get({
             url: "odata/v4/RegistrationService/User",
@@ -35,8 +32,11 @@ sap.ui.define(
           });
         },
 
+        /**
+         * Preselects the receptionist as the current user.
+         * If the current user is a receptionist.
+         */
         onBeforeRendering: function () {
-          console.log("Here I am");
           var oUser = sap.ushell.Container.getUser();
           var sCurrentUser = oUser.getId();
           this.getView()
@@ -44,6 +44,11 @@ sap.ui.define(
             .setSelectedKey(sCurrentUser);
         },
 
+        /**
+         * Submits the form data to back-end.
+         * Navigates to manage package page.
+         * @param {Object} oEvent 
+         */
         onSaveButtonPress: function (oEvent) {
           var oData = this._getInputs();
           var fnSuccess = function () {
@@ -54,6 +59,11 @@ sap.ui.define(
           this._postPack(oData, fnSuccess);
         },
 
+        /**
+         * Submits the form data to back-end.
+         * Clear form and waits for another entry.
+         * @param {Object} oEvent 
+         */
         onSaveAndNewButtonPress: function (oEvent) {
           var oData = this._getInputs();
           var fnSuccess = function () {
@@ -63,11 +73,18 @@ sap.ui.define(
           this._postPack(oData, fnSuccess);
         },
 
+        /**
+         * Clear form and navigate back for one step.
+         * @param {Object} oEvent 
+         */
         onDiscardButtonPress: function (oEvent) {
           this._resetInputs();
           this._navBack();
         },
 
+        /**
+         * Navigates to manage package application. 
+         */
         _navToPack: function () {
           var oCrossAppNavigator = sap.ushell.Container.getService(
             "CrossApplicationNavigation"
@@ -81,9 +98,13 @@ sap.ui.define(
           oCrossAppNavigator.toExternal(targetApp);
         },
 
+        /**
+         * Post request for a package with given data.
+         * @param {Object} oData payload
+         * @param {Function} fnSuccess function to be executed if success.
+         */
         _postPack(oData, fnSuccess) {
           var oModel = this.getView().getModel("MyModel");
-          console.log(JSON.stringify(oData, null, 4));
 
           var fnError = function (oError) {
             this._showErrorMsg(oError);
@@ -96,15 +117,10 @@ sap.ui.define(
           });
 
           oModel.submitChanges({
-            success: function () {},
-            error: function () {},
+            success: function () { },
+            error: function () { },
           });
           oContext.delete();
-        },
-
-        _showErrorMsg(oError) {
-          var msg = this._getErrorMsg(oError);
-          MessageBox.error(msg);
         },
 
         _showErrorMsg(oError) {
@@ -117,8 +133,6 @@ sap.ui.define(
         },
 
         _resetInputs() {
-          var oUser = sap.ushell.Container.getUser();
-          var sCurrentUser = oUser.getId();
           var oLocalModel = this.getView().getModel("localData");
           oLocalModel.setProperty("/data/recipient_ID", "");
           oLocalModel.setProperty("/data/type", "normal");
@@ -131,8 +145,6 @@ sap.ui.define(
         },
 
         _getInputs() {
-          var oUser = sap.ushell.Container.getUser();
-          var sCurrentUser = oUser.getId();
           var sRecipient = this.getView()
             .getModel("localData")
             .getProperty("/data/recipient_ID");
@@ -148,7 +160,6 @@ sap.ui.define(
           var recep = this.getView()
             .getModel("localData")
             .getProperty("/data/receptionist_ID");
-          console.log(sRecipient);
           return {
             recipient_ID: sRecipient,
             type_code: tp,
