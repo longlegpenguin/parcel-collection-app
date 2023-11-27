@@ -11,13 +11,9 @@ sap.ui.define(
           this._aSelectedContext = aSelectedContext;
         },
 
-        _updateCache: function (key) {
-          var oModel = this._oExtensionAPI._view.getModel("cache");
-          oModel[key].confirmable = false;
-          oModel[key].pickable = true;
-          this._oExtensionAPI._view.setModel(oModel, "cache");
-        },
-
+        /**
+         * Loads the confirm package dialog.
+         */
         load: function () {
           this._oExtensionAPI
             .loadFragment({
@@ -30,11 +26,19 @@ sap.ui.define(
             });
         },
 
+        /**
+         * Assigns dependencies before dialog opens.
+         * @param {Object} oEvent the event by which the dialog open
+         */
         onDialogBeforeOpen: function (oEvent) {
           this._oConfirmDlg = oEvent.getSource();
           this._oExtensionAPI.addDependent(this._oConfirmDlg);
         },
 
+        /**
+         * Removes the dialog and refresh the page after dialog closed.
+         * @param {Object} oEvent 
+         */
         onDialogAfterClose: function (oEvent) {
           this._oExtensionAPI.removeDependent(this._oConfirmDlg);
           this._oConfirmDlg.destroy();
@@ -42,10 +46,11 @@ sap.ui.define(
           this._oExtensionAPI.refresh();
         },
 
-        _parseElem(elem) {
-          return elem.replaceAll("(", ")").split(")")[1];
-        },
-
+        /**
+         * On press the save button, submits the confirm request to back-end.
+         * Updates the package status in cache local model.
+         * @param {Object} oEvent 
+         */
         onSaveButtonPress: function (oEvent) {
           var oPayload = this._getInputs();
 
@@ -70,6 +75,10 @@ sap.ui.define(
             );
         },
 
+        /**
+         * Filters the slot drop down value according to the storage dropdown selection.
+         * @param {Object} oEvent 
+         */
         onStorageSelectChange: function (oEvent) {
           var selectedStorageKey = oEvent.getSource().getSelectedKey();
           var oSlotComboBox = this._byId("idStorageSlotSelect");
@@ -84,23 +93,23 @@ sap.ui.define(
           );
         },
 
+        /**
+         * On press the close button, close the dialog.
+         * @param {Object} oEvent 
+         */
         onCloseButtonPress: function (oEvent) {
           this._closeDialog();
         },
 
-        _getSelected: function () {
-          var sV4 = this._aSelectedContext.sPath;
-          sV4 = sV4.replaceAll("(", "(guid'");
-          sV4 = sV4.replaceAll(")", "')");
-          return sV4;
-        },
-
+        /**
+         * Retrieves data required for confirmation from the user interface. 
+         * @returns dictionary of attribute value pair.
+         */
         _getInputs: function () {
           var sl = this._byId("idStorageSlotSelect").getSelectedKey();
           var aPackIds = this._aSelectedContext.map((elem) =>
             this._parseElem(elem.toString())
           );
-
           return {
             slotId: sl,
             packagesIds: aPackIds,
@@ -111,20 +120,28 @@ sap.ui.define(
           return JSON.parse(oError.responseText).error.message.value;
         },
 
-        _setOkButtonEnabled: function (bOk) {
-          this._oConfirmDlg &&
-            this._oConfirmDlg.getBeginButton().setEnabled(bOk);
-        },
-
-        _setBusy: function (bBusy) {
-          this._oConfirmDlg.setBusy(bBusy);
-        },
-
         _closeDialog: function () {
           this._oConfirmDlg && this._oConfirmDlg.close();
         },
+
         _byId: function (sId) {
           return sap.ui.core.Fragment.byId("cdlg", sId);
+        },
+
+        /**
+         * Parse out the package id from the context path
+         * @param {String} elem the context path `/...(...)`
+         * @returns the package id
+         */
+        _parseElem(elem) {
+          return elem.replaceAll("(", ")").split(")")[1];
+        },
+
+        _updateCache: function (key) {
+          var oModel = this._oExtensionAPI._view.getModel("cache");
+          oModel[key].confirmable = false;
+          oModel[key].pickable = true;
+          this._oExtensionAPI._view.setModel(oModel, "cache");
         },
       }
     );

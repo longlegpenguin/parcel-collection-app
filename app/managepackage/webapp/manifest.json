@@ -188,7 +188,7 @@
                     "StColumn": {
                       "key": "StColumn",
                       "header": "Type",
-                      "template": "com.sap.internal.digitallab.packagehandling.app.manage.package.ext.view.StatusCol",
+                      "template": "com.sap.internal.digitallab.packagehandling.app.manage.package.ext.view.TypeCol",
                       "availability": "Default",
                       "horizontalAlign": "Left",
                       "width": "auto",

@@ -1,16 +1,12 @@
 sap.ui.define(
   [
-    "sap/ui/base/ManagedObject",
     "sap/m/MessageBox",
-    "sap/m/MessageToast",
     "com/sap/internal/digitallab/packagehandling/app/manage/package/ext/component/ConfirmDlg",
     "com/sap/internal/digitallab/packagehandling/app/manage/package/ext/component/EditDlg",
     "com/sap/internal/digitallab/packagehandling/app/manage/package/ext/component/PkMBox",
   ],
   function (
-    ManagedObject,
     MessageBox,
-    MessageToast,
     ConfirmDlg,
     EditDlg,
     PkMBox
@@ -45,6 +41,11 @@ sap.ui.define(
     }
 
     return {
+      /**
+       * Displays the confirmation dialog.
+       * @param {Object} oBindingContext 
+       * @param {Array} aSelectedContexts 
+       */
       showConfirmDlg: function (oBindingContext, aSelectedContexts) {
         if (aSelectedContexts == undefined || aSelectedContexts.length == 0) {
           MessageBox.warning("Please select at least one package to confirm.");
@@ -53,6 +54,11 @@ sap.ui.define(
         }
       },
 
+      /**
+       * Displays the pickup dialog.
+       * @param {Object} oBindingContext 
+       * @param {Array} aSelectedContexts 
+       */
       showPickUpMBox: function (oBindingContext, aSelectedContexts) {
         if (aSelectedContexts == undefined || aSelectedContexts.length !== 1) {
           MessageBox.warning("Please select exactly one package to pickup.");
@@ -61,10 +67,21 @@ sap.ui.define(
         }
       },
 
+      /**
+       * Displays the edit package dialog.
+       * @param {Object} oBindingContext 
+       * @param {Array} aSelectedContexts 
+       */
       showEditDlg: function (oBindingContext, aSelectedContexts) {
         _loadEditDlg(this, aSelectedContexts);
       },
 
+      /**
+       * 
+       * @param {Object} oBindingContext 
+       * @param {Array} aSelectedContexts 
+       * @returns true if only one package is selected and is pickable, otherwise, false.
+       */
       enabledForSingleSelect: function (oBindingContext, aSelectedContexts) {
         if (aSelectedContexts && aSelectedContexts.length === 1) {
           return _checkPickable(
@@ -75,6 +92,12 @@ sap.ui.define(
         return false;
       },
 
+      /**
+       * 
+       * @param {Object} oBindingContext 
+       * @param {Array} aSelectedContexts 
+       * @returns true if at least one package is selected and the selected package are confirmable, otherwise, false.
+       */
       enabledForSelect: function (oBindingContext, aSelectedContexts) {
         if (aSelectedContexts && aSelectedContexts.length >= 1) {
           return _checkConfirmable(

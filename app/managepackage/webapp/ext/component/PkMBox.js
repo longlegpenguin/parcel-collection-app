@@ -24,6 +24,11 @@ sap.ui.define(
           this._oExtensionAPI._view.setModel(oModel, "cache");
         },
 
+        /**
+         * Sends the pickup request to back-end if 'OK' is chosen by the user.
+         * @param {Object} oBindingContext 
+         * @param {Array} aSelectedContexts 
+         */
         onPickUpPress: function (oBindingContext, aSelectedContexts) {
           MessageBox.warning(
             "Pickup this package? \n\n A notification will be sent to the recipient and package process will be closed.",
