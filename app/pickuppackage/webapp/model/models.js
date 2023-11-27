@@ -18,27 +18,27 @@ sap.ui.define(
         return oModel;
       },
 
+      /**
+       * Creates json local model of logged in user.
+       * @returns {Object} JSON model
+       */
       createLocalUsrModel: function () {
         var oModel = new JSONModel({
-            uname: "John"
+          uname: "John"
         });
         return oModel;
       },
 
+      /**
+       * Creates json local model of packages count.
+       * @returns {Object} JSON model
+       */
       createLocalPackModel: function () {
         var oModel = new JSONModel({
-            length: 0
+          length: 0
         });
         return oModel;
       },
-      // createLocalCompanyModel: function () {
-      //   var oModel = new JSONModel({
-      //       values: [
-      //         {"0": }
-      //       ]
-      //   });
-      //   return oModel;
-      // },
     };
   }
 );
