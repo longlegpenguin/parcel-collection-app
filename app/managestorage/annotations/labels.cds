@@ -15,7 +15,7 @@ annotate service.Storage with {
 };
 
 annotate service.Building with {
-    name        @title: 'Name';
+    name        @title: 'Building';
     address     @title: 'Address';
     coordinates @title: 'Coordinates';
     phoneNumber @title: 'Phone Number';
@@ -23,18 +23,18 @@ annotate service.Building with {
 };
 
 annotate service.BuildingFloor with {
-    name     @title: 'Name';
+    name     @title: 'Building Floor';
     building @title: 'Building';
     map      @title: 'Map';
 };
 
 annotate service.SlotStatus with {
-    name @title: 'Name';
+    name @title: 'Slot Status';
     code @title: 'Code';
 };
 
 annotate service.StorageSlot with {
-    name          @title: 'Name';
+    name          @title: 'Storage Slot';
     storage       @title: 'Storage';
     status        @title: 'Status';
     packages      @title: 'Packages';

@@ -14,6 +14,7 @@
                 text=""
                 icon="sap-icon://delete"
                 press=".extension.com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.controller.ObjectPageExt.onDeletePress"
+                visible="{delete_ac}"
             />
         </items>
     </FlexBox>

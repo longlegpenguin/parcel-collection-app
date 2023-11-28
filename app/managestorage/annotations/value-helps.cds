@@ -20,7 +20,7 @@ annotate service.Storage with {
         }
     });
     bd @(Common: {
-        Text           : bf,
+        Text           : bd,
         TextArrangement: #TextOnly,
         ValueList      : {
             Label         : 'Building',

@@ -117,7 +117,7 @@ public class StorageSlotManager {
     }
 
     private String translateSlotNameCode(int code, String type) {
-        return type.equals("C") ? (char) (code + 65) + "" : (code + "");
+        return type.equals("C") ? (char) (code + 64) + "" : (code + "");
     }
 
     /**

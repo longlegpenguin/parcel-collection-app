@@ -49,12 +49,7 @@
           }
         }
       },
-      "outbounds": {
-        "ExternalNavigation": {
-          "semanticObject": "Packages",
-          "action": "manage"
-        }
-      }
+      "outbounds": {}
     }
   },
   "sap.ui": {
@@ -182,10 +177,7 @@
                       "availability": "Default",
                       "horizontalAlign": "Left",
                       "width": "auto",
-                      "properties": [
-                        "map",
-                        "locationInstructions"
-                      ],
+                      "properties": ["map", "locationInstructions"],
                       "position": {
                         "placement": "After",
                         "anchor": "DataField::currentPackages"
@@ -259,7 +251,7 @@
                       "properties": [],
                       "position": {
                         "placement": "After",
-                        "anchor": "DataField::bd"
+                        "anchor": "DataField::ID"
                       }
                     }
                   }
@@ -281,9 +273,7 @@
     }
   },
   "sap.fiori": {
-    "registrationIds": [
-      "FDLH0101"
-    ],
+    "registrationIds": ["FDLH0101"],
     "archeType": "transactional"
   }
 }
