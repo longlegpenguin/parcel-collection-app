@@ -1,6 +1,11 @@
 sap.ui.define(
-  ["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "sap/m/MessageToast"],
-  function (Controller, MessageBox, MessageToast) {
+  [
+    "sap/ui/core/mvc/Controller",
+    "sap/m/MessageBox",
+    "sap/m/MessageToast",
+    "sap/ui/core/Fragment"
+  ],
+  function (Controller, MessageBox, MessageToast, Fragment) {
     "use strict";
     return Controller.extend(
       "com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.component.USlotDlg",
@@ -14,15 +19,13 @@ sap.ui.define(
          * Loads the edit slots dialog.
          */
         load: function () {
-          this._oExtensionAPI
-            .loadFragment({
-              id: "usldlg",
-              name: "com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.view.USlotDlg",
-              controller: this,
-            })
-            .then(function (oDialog) {
-              oDialog.open();
-            });
+          Fragment.load({
+            id: "usldlg",
+            name: "com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.view.USlotDlg",
+            controller: this,
+          }).then(function (oDialog) {
+            oDialog.open();
+          });
         },
 
         /**
@@ -48,24 +51,24 @@ sap.ui.define(
           var oModel = this._oExtensionAPI.getModel("MyModel");
           oModel.read(this._getSelected(), {
             success: fnSuccess,
-            error: function () { },
+            error: function () {},
           });
         },
 
         /**
          * Removes the dialog and refresh the page after dialog closed.
-         * @param {Object} oEvent 
+         * @param {Object} oEvent
          */
         onDialogAfterClose: function (oEvent) {
           this._oExtensionAPI.removeDependent(this._oUSlotDlg);
           this._oUSlotDlg.destroy();
           this._oUSlotDlg = undefined;
-          this._oExtensionAPI.refresh();
+          this._oExtensionAPI.getController().extensionAPI.refresh();
         },
 
         /**
          * On press the edit button, submits the edited content to back-end.
-         * @param {Object} oEvent 
+         * @param {Object} oEvent
          */
         onSaveButtonPress: function (oEvent) {
           var oData = this._getInputs();
@@ -87,7 +90,7 @@ sap.ui.define(
 
         /**
          * Closes the dialog.
-         * @param {Object} oEvent 
+         * @param {Object} oEvent
          */
         onCloseButtonPress: function (oEvent) {
           this._closeDialog();
@@ -95,13 +98,16 @@ sap.ui.define(
 
         /**
          * Translate the v4 syntax context path to v2 syntax context path.
-         * Extracts and create the pure context path for the selected slot 
+         * Extracts and create the pure context path for the selected slot
          * (without storage info).
-         * @returns the v2 context path of selected slot. 
+         * @returns the v2 context path of selected slot.
          */
         _getSelected: function () {
           var sV4 = this._oSelectedContext.sPath.split("/")[2];
-          var sV2 = sV4.replaceAll("(", "(guid'").replaceAll(")", "')").replaceAll("storageSlot", "StorageSlot");
+          var sV2 = sV4
+            .replaceAll("(", "(guid'")
+            .replaceAll(")", "')")
+            .replaceAll("storageSlot", "StorageSlot");
           return "/" + sV2;
         },
 
