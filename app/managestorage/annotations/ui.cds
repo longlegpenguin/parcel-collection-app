@@ -39,12 +39,12 @@ annotate service.Storage with @(
         {
             $Type: 'UI.DataField',
             Value: bf,
-            ![@UI.Hidden] ,
+            ![@UI.Hidden],
         },
         {
             $Type: 'UI.DataField',
             Value: bd,
-            ![@UI.Hidden] ,
+            ![@UI.Hidden],
         }
     ],
 );
@@ -154,84 +154,56 @@ annotate service.StorageSlot with @UI: {LineItem: [
         Value: totalPackages,
     },
     {
-        $Type             : 'UI.DataField',
-        Criticality       : status.criticality,
-        Value             : status.name,
-        ![@UI.Importance] : #High
+        $Type            : 'UI.DataField',
+        Criticality      : status.criticality,
+        Value            : status.name,
+        ![@UI.Importance]: #High
+    },
+    {
+        $Type: 'UI.DataField',
+        Value: ID,
+        ![@UI.Hidden],
     },
 ], };
 
-/**
- * Slot object page
- */
-annotate service.StorageSlot with @(
-    UI.FieldGroup #SlotInputFields: {
-        $Type: 'UI.FieldGroupType',
-        Data : [
-            {
-                $Type: 'UI.DataField',
-                Value: name,
-            },
-            {
-                $Type: 'UI.DataField',
-                Label: 'Storage',
-                Value: storage.name,
-            },
-            {
-                $Type: 'UI.DataField',
-                Label: 'Status',
-                Value: status.name,
-            },
-        ],
-    },
-    UI.Facets                     : [{
-        $Type : 'UI.ReferenceFacet',
-        ID    : 'SlotFacet',
-        Label : 'General Information',
-        Target: '@UI.FieldGroup#SlotInputFields',
-    }, ]
-);
-
-
-/*
+/* ------------------------------------------------
  * Storage object page
+ * ------------------------------------------------
  */
 annotate service.Storage with @(
 
-UI.HeaderInfo: {
-    TypeName      : 'Storage',
-    TypeNamePlural: 'Storages',
-    ImageUrl      : '',
-    Title         : {
-        $Type: 'UI.DataField',
-        Value: name
+    UI.HeaderInfo  : {
+        TypeName      : 'Storage',
+        TypeNamePlural: 'Storages',
+        ImageUrl      : '',
+        Title         : {
+            $Type: 'UI.DataField',
+            Value: name
+        },
+        Description   : {
+            $Type: 'UI.DataField',
+            Value: locationInstructions
+        }
     },
-    Description   : {
-        $Type: 'UI.DataField',
-        Value: locationInstructions
-    }
-});
 
-annotate service.Storage with @(
-
-UI.HeaderFacets: [
-    {
-        $Type : 'UI.ReferenceFacet',
-        Label : '',
-        Target: '@UI.FieldGroup#ObjHeaderInfo'
-    },
-    {
-        $Type : 'UI.ReferenceFacet',
-        Label : '',
-        Target: '@UI.FieldGroup#ObjHeaderCalculated'
-    },
-    {
-        $Type : 'UI.ReferenceFacet',
-        Label : '',
-        Target: '@UI.FieldGroup#ObjHeaderCalculated2'
-    }
-]);
-
+    UI.HeaderFacets: [
+        {
+            $Type : 'UI.ReferenceFacet',
+            Label : '',
+            Target: '@UI.FieldGroup#ObjHeaderInfo'
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
+            Label : '',
+            Target: '@UI.FieldGroup#ObjHeaderCalculated'
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
+            Label : '',
+            Target: '@UI.FieldGroup#ObjHeaderCalculated2'
+        }
+    ]
+);
 
 annotate service.Storage with @(UI.FieldGroup #ObjHeaderInfo: {Data: [
     {
@@ -246,7 +218,6 @@ annotate service.Storage with @(UI.FieldGroup #ObjHeaderInfo: {Data: [
         Url  : map
     }
 ]});
-
 
 annotate service.Storage with @(UI.FieldGroup #ObjHeaderCalculated: {Data: [{
     $Type: 'UI.DataField',

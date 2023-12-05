@@ -3,14 +3,12 @@ sap.ui.define(
     "com/sap/internal/digitallab/packagehandling/app/manage/storages/ext/component/CStorageDlg",
     "com/sap/internal/digitallab/packagehandling/app/manage/storages/ext/component/UStorageDlg",
     "com/sap/internal/digitallab/packagehandling/app/manage/storages/ext/component/CSlotDlg",
-    "com/sap/internal/digitallab/packagehandling/app/manage/storages/ext/component/USlotDlg",
     "com/sap/internal/digitallab/packagehandling/app/manage/storages/ext/component/MassCreateDlg",
   ],
   function (
     CStorageDlg,
     UStorageDlg,
     CSlotDlg,
-    USlotDlg,
     MassCreateDlg
   ) {
     "use strict";
@@ -25,10 +23,6 @@ sap.ui.define(
 
     function _loadUStorageDlg(oExtensionAPI, aSelectedContexts) {
       new UStorageDlg(oExtensionAPI, aSelectedContexts).load();
-    }
-
-    function _loadUSlotDlg(oExtensionAPI, aSelectedContexts) {
-      new USlotDlg(oExtensionAPI, aSelectedContexts).load();
     }
 
     function _loadMassCreateDlg(oExtensionAPI, aSelectedContexts) {
@@ -61,15 +55,6 @@ sap.ui.define(
        */
       showCSlotDlg: function (oBindingContext, aSelectedContexts) {
         _loadCStlotDlg(this, oBindingContext);
-      },
-
-      /**
-       * Displays the edit slot dialog
-       * @param {Object} oBindingContext 
-       * @param {Array} aSelectedContexts 
-       */
-      showUSlotDlg: function (oBindingContext, aSelectedContexts) {
-        _loadUSlotDlg(this, oBindingContext);
       },
 
       /**

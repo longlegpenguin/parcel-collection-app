@@ -49,12 +49,7 @@
           }
         }
       },
-      "outbounds": {
-        "ExternalNavigation": {
-          "semanticObject": "Packages",
-          "action": "manage"
-        }
-      }
+      "outbounds": {}
     }
   },
   "sap.ui": {
@@ -143,11 +138,6 @@
           "pattern": "Storage({key}):?query:",
           "name": "StorageObjectPage",
           "target": "StorageObjectPage"
-        },
-        {
-          "pattern": "Storage({key})/storageSlot({key2}):?query:",
-          "name": "StorageSlotObjectPage",
-          "target": "StorageSlotObjectPage"
         }
       ],
       "targets": {
@@ -177,12 +167,7 @@
                   "tableSettings": {
                     "type": "ResponsiveTable",
                     "selectionMode": "Auto",
-                    "entitySet": "Storage",
-                    "createWithParameterDialog": {
-                      "fields": {
-                        "name": { "path": "name" }
-                      }
-                    }
+                    "entitySet": "Storage"
                   },
                   "columns": {
                     "MColumn": {
@@ -196,13 +181,6 @@
                       "position": {
                         "placement": "After",
                         "anchor": "DataField::currentPackages"
-                      }
-                    }
-                  },
-                  "@com.sap.vocabularies.UI.v1.DataField#totalPackages": {
-                    "navigation": {
-                      "targetOutbound": {
-                        "outbound": "ExternalNavigation"
                       }
                     }
                   },
@@ -230,13 +208,7 @@
               "sectionLayout": "Page",
               "variantManagement": "Control",
               "showRelatedApps": true,
-              "navigation": {
-                "storageSlot": {
-                  "detail": {
-                    "route": "StorageSlotObjectPage"
-                  }
-                }
-              },
+              "navigation": {},
               "content": {
                 "header": {
                   "actions": {
@@ -267,32 +239,20 @@
                   "tableSettings": {
                     "type": "GridTable",
                     "selectionMode": "Multi"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "StorageSlotObjectPage": {
-          "type": "Component",
-          "id": "StorageSlotObjectPage",
-          "name": "sap.fe.templates.ObjectPage",
-          "options": {
-            "settings": {
-              "editableHeaderContent": false,
-              "contextPath": "/Storage/storageSlot",
-              "entitySet": "StorageSlot",
-              "sectionLayout": "Page",
-              "content": {
-                "header": {
-                  "actions": {
-                    "editSlot": {
-                      "press": "com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.controller.AppCt.showUSlotDlg",
-                      "text": "Edit"
-                    },
-                    "deleteSlot": {
-                      "press": "com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.component.DSlotMBox.onDeletePress",
-                      "text": "Delete"
+                  },
+                  "columns": {
+                    "EditDeleteBtnColumn": {
+                      "key": "EditDeleteBtnColumn",
+                      "header": "",
+                      "template": "com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.view.EditDeleteButtons",
+                      "availability": "Default",
+                      "horizontalAlign": "Right",
+                      "width": "auto",
+                      "properties": [],
+                      "position": {
+                        "placement": "After",
+                        "anchor": "DataField::ID"
+                      }
                     }
                   }
                 }
@@ -304,24 +264,11 @@
     },
     "extends": {
       "extensions": {
-        "sap.ui.controllerExtentions": {
-          "sap.suite.ui.generic.template.ListReport.view.ListReport": {
-            "controllerName": "com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.controller.StorageListExt",
-            "sap.ui.generic.app": {
-              "Storage": {
-                "EntitySet": "Storage",
-                "Actions": {
-                  "CreateStorageAction": {
-                    "id": "createStorageBtn",
-                    "press": ".onPressCreateStorageAction",
-                    "text": "{i18n>Create}"
-                  }
-                }
-              }
-            }
+        "sap.ui.controllerExtensions": {
+          "sap.fe.templates.ObjectPage.ObjectPageController": {
+            "controllerName": "com.sap.internal.digitallab.packagehandling.app.manage.storages.ext.controller.ObjectPageExt"
           }
-        },
-        "sap.ui.controllerExtensions": {}
+        }
       }
     }
   },
