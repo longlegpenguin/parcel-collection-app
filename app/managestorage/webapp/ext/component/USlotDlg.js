@@ -42,10 +42,13 @@ sap.ui.define(
             var setInput = (sId, sValue) => byId(sId).setValue(sValue);
             setInput("idIdInput", oData.storage_ID);
             setInput("idNameInput", oData.name);
-            setInput("idStatisInput", oData.status_code);
+            setInput("idStatusInput", oData.status_code);
             byId("idAvailableCheckBox").setSelected(
               oData.status_code !== "unavailable"
             );
+              byId("idAvailableCheckBox").setDisplayOnly(
+                  oData.status_code === "inuse"
+              );
           };
 
           var oModel = this._oExtensionAPI.getModel("MyModel");
@@ -114,12 +117,18 @@ sap.ui.define(
         _getInputs: function () {
           var name = this._byId("idNameInput").getValue();
           var av = this._byId("idAvailableCheckBox").getSelected();
-          var stId = this._byId("idIdInput").getValue();
-          var stc = this._byId("idStatisInput").getValue();
-
-          var sc = av ? stc : "unavailable";
+          var storageId = this._byId("idIdInput").getValue();
+          var oldStatus = this._byId("idStatusInput").getValue();
+          var sc = "";
+          if (!av) {
+              sc = "unavailable";
+          } else if (oldStatus !== "unavailable") {
+              sc = oldStatus;
+          } else if (oldStatus === "unavailable") {
+              sc = "empty";
+          }
           return {
-            storage_ID: stId,
+            storage_ID: storageId,
             name: name,
             status_code: sc,
           };

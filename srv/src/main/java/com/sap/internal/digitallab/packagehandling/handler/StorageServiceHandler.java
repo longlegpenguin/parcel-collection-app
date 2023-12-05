@@ -92,14 +92,16 @@ public class StorageServiceHandler implements EventHandler {
     }
 
     /**
-     * At CREATE event, autofill the status.
+     * At CREATE event, the status is by default empty.
      *
      * @param slot slot to be created
      */
     @On(event = {CqnService.EVENT_CREATE}, entity = StorageSlot_.CDS_NAME)
     @HandlerOrder(HandlerOrder.EARLY)
     public void onCreateStorageSlot(StorageSlot slot) {
-        slot.setStatusCode("empty");
+        if (slot.getStatusCode() == null) {
+            slot.setStatusCode("empty");
+        }
         LOGGER.info("Creating: {}", slot);
     }
 }

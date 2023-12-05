@@ -50,7 +50,7 @@
                                 <f:fields>
                                     <Input
                                         value=""
-                                        id="idStatisInput"
+                                        id="idStatusInput"
                                         visible="false"
                                     />
                                 </f:fields>
