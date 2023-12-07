@@ -77,6 +77,7 @@ sap.ui.define(
 
         /**
          * Filters the slot drop down value according to the storage dropdown selection.
+         * Filters also the unavailable slots.
          * @param {Object} oEvent 
          */
         onStorageSelectChange: function (oEvent) {
@@ -85,11 +86,21 @@ sap.ui.define(
           var oBinding = oSlotComboBox.getBinding("items");
 
           oBinding.filter(
-            new sap.ui.model.Filter(
-              "storage_ID",
-              sap.ui.model.FilterOperator.EQ,
-              selectedStorageKey
-            )
+            new sap.ui.model.Filter({
+                filters: [
+                    new sap.ui.model.Filter({
+                        path: "storage_ID",
+                        operator: sap.ui.model.FilterOperator.EQ,
+                        value1: selectedStorageKey,
+                    }),
+                    new sap.ui.model.Filter({
+                        path: "status_code",
+                        operator: sap.ui.model.FilterOperator.NE,
+                        value1: "unavailable",
+                    })
+                ],
+                and: true
+            })
           );
         },
 

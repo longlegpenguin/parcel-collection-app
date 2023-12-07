@@ -140,7 +140,7 @@ sap.ui.define(
 
         _resetInputs() {
           var oLocalModel = this.getView().getModel("localData");
-          oLocalModel.setProperty("/data/recipient_ID", "");
+          oLocalModel.setProperty("/data/recipient_ID", "default_user");
           oLocalModel.setProperty("/data/type", "normal");
           oLocalModel.setProperty("/data/company", "DHL");
           oLocalModel.setProperty("/data/comment", "");

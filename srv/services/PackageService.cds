@@ -26,7 +26,8 @@ service PackageService {
     entity StorageSlot     as projection on core.StorageSlot {
         ID,
         name,
-        storage
+        storage,
+        status
     };
 
     @readonly
