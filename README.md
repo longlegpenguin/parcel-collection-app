@@ -10,3 +10,6 @@ mvn clean install
 mvn spring-boot:run
 ```
 Navigated to [localhost:8084](localhost:8084) on Firefox.
+
+## Preview
+![img.png](readme/img.png)
