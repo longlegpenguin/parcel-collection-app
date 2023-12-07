@@ -47,7 +47,7 @@ sap.ui.define(
        * @param {Array} aSelectedContexts 
        */
       showConfirmDlg: function (oBindingContext, aSelectedContexts) {
-        if (aSelectedContexts == undefined || aSelectedContexts.length == 0) {
+        if (aSelectedContexts === undefined || aSelectedContexts.length === 0) {
           MessageBox.warning("Please select at least one package to confirm.");
         } else {
           _loadConfirmDlg(this, aSelectedContexts);

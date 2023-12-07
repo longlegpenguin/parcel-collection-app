@@ -27,7 +27,7 @@ public class RegistrationServiceHandler implements EventHandler {
         pack.setStatusCode("new");
         Set<String> userRoles = context.getUserInfo().getRoles();
         String userId = context.getUserInfo().getId();
-        if (userRoles.contains("Receptionist")) {
+        if (!userId.startsWith("mock") && userRoles.contains("Receptionist")) {
             pack.setReceptionistId(userId);
         }
         LOGGER.info("Creating package: {}", pack);

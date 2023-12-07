@@ -27,7 +27,13 @@ sap.ui.define(
               });
             },
             error: function (error) {
-              console.log("Error: " + JSON.stringify(error, null, 4));
+              MessageBox.error("You are not authorised. Please go back.", {
+                  actions: ["Back"],
+                  emphasizedAction: "Back",
+                  onClose: function(sAction) {
+                      window.history.go(-1);
+                  }
+              });
             },
           });
         },

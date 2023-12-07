@@ -12,7 +12,7 @@ cds:
         - test/data
         - test/data/**
         - ../test/data/**
-  sql.supportedLocales: "*" ## cut
+  sql.supportedLocales: "*"
   # odata-v4.endpoint.path: "/odata/v4"
   # odata-v2.endpoint.path: "/odata/v2"
   odata-v4.serializer.enabled: true
@@ -22,10 +22,6 @@ cds:
   security:
     authentication.normalize-provider-tenant: true
     mock.users:
-      admin:
-        password: admin
-        roles:
-          - Administrator
       I123456:
         password: admin
         roles:
@@ -35,11 +31,11 @@ cds:
         password: user
         roles:
           - User
-      manager:
+      I234567:
         password: manager
         roles:
           - FacilityManager
-      recep:
+      C456789:
         password: recep
         roles:
           - Receptionist
@@ -51,12 +47,6 @@ spring:
   config.activate.on-profile: test
   sql.init.schema-locations: classpath:schema-h2.sql
   web.resources.static-locations: "file:./app/"
-  security:
-    user:
-      name: admin
-      password: admin
-      roles:
-        - Administrator
 cds:
   dataSource:
     autoConfig:

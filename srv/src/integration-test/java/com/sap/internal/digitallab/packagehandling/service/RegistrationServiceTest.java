@@ -25,7 +25,7 @@ public class RegistrationServiceTest extends BaseServiceTest {
     }
 
     @Test
-    void testCreatePackageByReceptionistShouldAutoFillRecep() {
+    void testCreatePackageByReceptionistShouldAutoFillStatus() {
         String url = host + port + prefix + "Package";
         String body = "{" +
                 "  \"recipient_ID\": \"CD5B6B86-90E4-4F19-BA3B-1F3366F92F18\"," +
@@ -37,7 +37,7 @@ public class RegistrationServiceTest extends BaseServiceTest {
         create(RECEPTIONIST_KEY, mockUsers.get(RECEPTIONIST_KEY), url, body)
                 .then()
                 .statusCode(201)
-                .body("receptionist_ID", Matchers.equalTo("mock/recep"))
+                .body("status_code", Matchers.equalTo("new"))
                 .body("ID", Matchers.notNullValue());
     }
 
