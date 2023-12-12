@@ -111,10 +111,14 @@ public class PackageServiceHandler implements EventHandler {
                 packages.toList(), userRoles, userId, context.getUserInfo().getName());
     }
 
-    @On(event = {CqnService.EVENT_DELETE})
-    public void onDeletePackage(CdsDeleteEventContext context) {
+    /**
+     * @param context context of the deletion event
+     */
+    @After(event = {CqnService.EVENT_DELETE})
+    public void afterDeletePackage(CdsDeleteEventContext context) {
         EmailSender.sendEmail(" Removed a package");
         LOGGER.info("On delete a package Cqn {} ", context.getCqn());
+        packMgr.afterDelete();
     }
 
 }

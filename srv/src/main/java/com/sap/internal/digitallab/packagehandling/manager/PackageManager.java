@@ -153,4 +153,11 @@ public class PackageManager {
     public CqnSelect getFilterUserAndConfirmedStatusCqn(String uname) {
         return packRepo.getFilterUserAndStatusCqn(uname, packStatusMgr.CONFIRMED_STATUS_CODE);
     }
+
+    /**
+     * After deletion of a package, updates the inuse slots' status.
+     */
+    public void afterDelete() {
+        slotMgr.updateStatus();
+    }
 }

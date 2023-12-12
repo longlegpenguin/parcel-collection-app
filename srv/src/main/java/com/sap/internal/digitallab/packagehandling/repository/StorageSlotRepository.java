@@ -58,6 +58,18 @@ public class StorageSlotRepository {
     }
 
     /**
+     * SELECT * FROM storageslot WHERE status_code = "inuse";
+     *
+     * @return Result rows.
+     */
+    public Result selectInuseSlots() {
+        CqnSelect select = Select
+                .from(StorageSlot_.class)
+                .where(s -> s.status_code().eq("inuse"));
+        return db.run(select);
+    }
+
+    /**
      * Updates a slot entry with new status code.
      *
      * @param statusCode status code to fill in.

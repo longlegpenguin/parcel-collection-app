@@ -145,4 +145,13 @@ public class StorageSlotManager {
     private String genSlotName(int rowCode, int colCode, String rowType, String colType) {
         return translateSlotNameCode(rowCode, rowType) + " - " + translateSlotNameCode(colCode, colType);
     }
+
+    /**
+     * Tries to update the status of all slots with inuse status.
+     */
+    public void updateStatus() {
+        slotResp.selectInuseSlots()
+                .stream()
+                .forEach(r -> refreshStatus(r.get("ID").toString()));
+    }
 }
