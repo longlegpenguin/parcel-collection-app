@@ -10,19 +10,6 @@
         afterClose=".onDialogAfterClose"
     >
         <content>
-            <!-- <List
-                id="idSomeList"
-                headerText="List Example"
-                items="{/Package}"
-                visible="true"
-            >
-                <items>
-                    <StandardListItem
-                        title="{name}"
-                        description="shabi"
-                    />
-                </items>
-            </List> -->
             <f:Form
                 id="idEditForm"
                 editable="true"
@@ -145,17 +132,10 @@
         <beginButton>
             <Button
                 id="idSaveButton"
-                text="Save"
+                text="Done"
                 press=".onSaveButtonPress"
                 type="Emphasized"
             />
         </beginButton>
-        <endButton>
-            <Button
-                id="idCloseButton"
-                text="Close"
-                press=".onCloseButtonPress"
-            />
-        </endButton>
     </Dialog>
 </core:FragmentDefinition>

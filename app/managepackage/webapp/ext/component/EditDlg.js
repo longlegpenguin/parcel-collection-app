@@ -75,14 +75,6 @@ sap.ui.define(
           );
         },
 
-        /**
-         * On press the close button, close the dialog.
-         * @param {Object} oEvent 
-         */
-        onCloseButtonPress: function (oEvent) {
-          this._closeDialog();
-        },
-
         _getErrorMsg(oError) {
           return JSON.parse(oError.responseText).error.message.value;
         },
